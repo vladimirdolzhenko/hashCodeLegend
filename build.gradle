@@ -1,0 +1,80 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.6'
+	compile group: 'org.openjdk.jmh', name: 'jmh-core', version: '1.17.3'
+	compile group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: '1.17.3'
+}
+
+task ObjectReallocation(type:JavaExec) {
+	main = "com.ObjectReallocation"
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectReallocationGC(type:JavaExec) {
+	main = "com.ObjectReallocation"
+	jvmArgs = ['-verbose:gc', '-XX:+PrintGC', '-XX:+PrintGCDetails']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectMemoryDump(type:JavaExec) {
+	main = "com.ObjectMemoryDump"
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectMemoryDumpAddress(type:JavaExec) {
+	main = "com.ObjectMemoryDump"
+	jvmArgs = ['-XX:hashCode=4']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task IdentityHashCodeCollision(type:JavaExec) {
+	main = "com.IdentityHashCodeCollision"
+	jvmArgs = ['-XX:hashCode=4']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task ThreadedIdentityHashCodeCollision(type:JavaExec) {
+	main = "com.ThreadedIdentityHashCodeCollision"
+	jvmArgs = ['-XX:hashCode=4']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task IdentityHashCodeCollisionTLAB(type:JavaExec) {
+	main = "com.IdentityHashCodeCollision"
+	jvmArgs = ['-XX:hashCode=4', '-XX:+PrintTLAB']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task AllocationPerfTest(type:JavaExec) {
+	main = "com.AllocationPerfTest"
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task AllocationPerfTestNoTLAB(type:JavaExec) {
+	main = "com.AllocationPerfTest"
+	jvmArgs = ['-XX:-UseTLAB']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task BiasedLockingDump(type:JavaExec) {
+	main = "com.BiasedLockingDump"
+	jvmArgs = ['-XX:BiasedLockingStartupDelay=0']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task BiasedLockingPerfTest(type:JavaExec) {
+	main = "com.BiasedLockingPerfTest"
+	jvmArgs = ['-XX:BiasedLockingStartupDelay=0', '-XX:+UseBiasedLocking']
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task BiasedLockingPerfTestNoBiasedLocking(type:JavaExec) {
+	main = "com.BiasedLockingPerfTest"
+	jvmArgs = ['-XX:BiasedLockingStartupDelay=0', '-XX:-UseBiasedLocking']
+	classpath = sourceSets.main.runtimeClasspath
+}
