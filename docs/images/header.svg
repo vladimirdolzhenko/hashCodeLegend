@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<svg height="420" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style type="text/css"><![CDATA[
+
+.code1 {
+  fill:red;
+  opacity:0.5;
+}
+
+.code2 {
+  fill:green;
+  opacity:0.5;
+}
+
+.code3 {
+  fill:blue;
+  opacity:0.5;
+}
+
+.code4 {
+  fill:orange;
+  opacity:0.5;
+}
+
+.code10 {
+  fill:white;
+}
+
+.code20 {
+  fill:#888;
+}
+
+.code30 {
+  fill:#222;
+}
+
+.code40 {
+  fill:#000;
+}
+
+.code10, .code20, .code30, .code40 {
+  opacity:0.5;
+  stroke:black;
+  stroke-width:2;
+}
+    ]]></style>
+  </defs>
+  <g transform="translate(20 20) scale(2)">
+    <g transform="translate(10 30)">
+      <text class="comment" x="0" y="-10">class</text>
+      <text class="comment" x="0" y="25">address</text>
+      <text class="comment" x="0" y="60">size</text>
+      <text class="comment" x="0" y="95">hashCode</text>
+      <text class="comment" x="0" y="130">dump</text>
+    </g>
+    <g transform="translate(90 30)">
+      <text class="code" x="0" y="-10">java.lang.Object</text>
+      <!--text class="code" x="0" y="25">0x 07 6B A3 6B 50</text-->
+      <text class="code" x="0" y="25">0x 07</text>
+      <g transform="translate(29 -35)">
+        <g transform="translate(24 40)">
+          <rect class="code10" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">6B</text>
+        </g>
+        <g transform="translate(53 40)">
+          <rect class="code20" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">A3</text>
+        </g>
+        <g transform="translate(82 40)">
+          <rect class="code30" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">6D</text>
+        </g>
+        <g transform="translate(111 40)">
+          <rect class="code40" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">B8</text>
+        </g>
+      </g>
+      <text class="code" x="0" y="60">16</text>
+      <g transform="translate(0 35)">
+        <text class="code" x="0" y="60">0x</text>
+        <g transform="translate(24 40)">
+          <rect class="code1" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">2A</text>
+        </g>
+        <g transform="translate(53 40)">
+          <rect class="code2" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">AE</text>
+        </g>
+        <g transform="translate(82 40)">
+          <rect class="code3" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">91</text>
+        </g>
+        <g transform="translate(111 40)">
+          <rect class="code4" height="30" width="29" x="0" y="0"/>
+          <text class="code" text-anchor="middle" x="14" y="20">90</text>
+        </g>
+        <g transform="translate(0 35)">
+          <g transform="translate(24 40)">
+            <rect class="code4" height="30" width="29" x="0" y="0"/>
+            <text class="code" text-anchor="middle" x="14" y="20">90</text>
+          </g>
+          <g transform="translate(53 40)">
+            <rect class="code3" height="30" width="29" x="0" y="0"/>
+            <text class="code" text-anchor="middle" x="14" y="20">91</text>
+          </g>
+          <g transform="translate(82 40)">
+            <rect class="code2" height="30" width="29" x="0" y="0"/>
+            <text class="code" text-anchor="middle" x="14" y="20">AE</text>
+          </g>
+          <g transform="translate(111 40)">
+            <rect class="code1" height="30" width="29" x="0" y="0"/>
+            <text class="code" text-anchor="middle" x="14" y="20">2A</text>
+          </g>
+        </g>
+        <text class="code" x="0" y="95">01</text>
+        <text class="code" x="146" y="95">00 00 00</text>
+        <text class="code" x="0" y="130">E5 01 00 F8 00 00 00 00</text>
+      </g>
+    </g>
+  </g>
+</svg>

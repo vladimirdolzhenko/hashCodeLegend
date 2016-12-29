@@ -1,0 +1,95 @@
+.footer {
+    color: black;
+    position: fixed;
+    top: 95%;
+    text-align:center;
+    width:100%;
+}
+
+i, em {
+    font-style: italic !important;
+}
+
+b, strong {
+   font-weight: bold !important;
+}
+
+table.rmdtable th {
+    background: -webkit-linear-gradient(top, #434343 40%, #2a2a2a 80%) no-repeat !important;
+}
+
+slides > slide {
+    font-size: 30px !important;
+    font-family: 'PT Sans', 'Open Sans', Arial, sans-serif  !important;
+}
+
+slides > slide > hgroup + article {
+    margin-top: 20px !important;
+}
+
+slides > slide > hgroup + article p {
+    margin-bottom: 1em !important;
+    margin-top: 1em !important;
+}
+
+.segue code {
+    color: white !important;
+}
+
+.segue a {
+    color: #d6d6d6 !important;
+    border-bottom: 1px solid white !important;
+}
+
+.segue a:hover {
+    color: #ffffff !important;
+}
+
+.segue pre.prettyprint {
+    left: -120px !important;
+}
+
+span.huge {
+    text-align: center;
+    font-size: 1.3em !important;
+    font-weight: bold;
+    display: inline-block;
+}
+
+pre {
+    font-size: 24px !important;
+    font-family: 'PT Mono', 'monospace'  !important;
+}
+
+.unsafe > pre {
+    font-size: 18px !important;
+    font-family: 'PT Mono', 'monospace'  !important;
+}
+
+slide > hgroup + article.unsafe {
+    /*margin-top: -50px !important;*/
+}
+
+.segue hgroup {
+    /*bottom: 150px !important;*/
+}
+
+span.bad {
+    color: black !important;
+    background-color: #FAA !important;
+    font-weight: bold !important;
+}
+
+td > span.bad {
+    padding: 10px !important;
+}
+
+span.good {
+    color: black !important;
+    background-color: #AFA !important;
+    font-weight: bold !important;
+}
+
+td > span.good {
+    padding: 10px !important;
+}

@@ -1,0 +1,6 @@
+pos,alloc,value
+1,single-threaded,3.721
+2,sync,397.149
+3,cas,245.776
+4,tlab,21.427
+

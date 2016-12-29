@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<svg height="150" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style type="text/css"><![CDATA[
+.address{
+    font-size:18px;
+    fill:#000000;
+    font-family:PT Mono;
+}
+
+.used {
+  fill:#40C040;
+  opacity:0.75;
+}
+
+.unused {
+  fill:#C08080;
+  opacity:0.75;
+}
+
+.dim {
+  fill:none;
+  stroke:black;
+  stroke-width:1.2;
+  marker-start:url(#TriangleInL);
+  marker-end:url(#TriangleOutL);
+}
+
+    ]]></style>
+  </defs>
+  <marker id="TriangleOutL" orient="auto" ref0="0.0" refY="0.0" style="overflow:visible">
+    <path d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z " id="path4051" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
+  </marker>
+  <marker id="TriangleInL" orient="auto" ref0="0.0" refY="0.0" style="overflow:visible">
+    <g transform="rotate(180)">
+      <path d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z " id="path4051" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
+    </g>
+  </marker>
+  <g transform="translate(20 20) scale(2)">
+    <!--g transform="translate(0 5)">
+      <text class="bigcomment" text-anchor="start" x="0" y="10">если array.length = 2</text>
+      <text class="comment" text-anchor="start" x="170" y="0">k</text>
+    </g-->
+    <g transform="translate(10 25)">
+      <rect class="unused" height="50" width="323" x="-2" y="-30"/>
+      <rect class="used" height="50" width="69" x="321" y="-30"/>
+      <text class="note" text-anchor="middle" x="355" y="32">k bits</text>
+      <path class="dim" d="M325,35 385,35"/>
+      <text class="address" text-anchor="middle" x="163" y="0">00000000 00000000 00000000 00</text>
+      <text class="address" text-anchor="middle" x="355" y="0">111111</text>
+    </g>
+    <!--text class="bigcomment" text-anchor="start" x="0" y="115">hashCode % array.length = </text>
+    <text class="bigcomment" text-anchor="start" x="50" y="140"> = hashCode &amp; (array.length - 1)</text-->
+  </g>
+</svg>

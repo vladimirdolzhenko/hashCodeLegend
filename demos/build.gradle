@@ -1,0 +1,106 @@
+dependencies {
+    compile group: 'net.sf.trove4j', name: 'trove4j', version: '3.0.3'
+    compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.6'
+}
+
+task ObjectReallocation(type:JavaExec) {
+    main = "com.ObjectReallocation"
+    jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectReallocationGC(type:JavaExec) {
+    main = "com.ObjectReallocation"
+    jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC', '-verbose:gc', '-XX:+PrintGC', '-XX:+PrintGCDetails']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectHashReallocation(type:JavaExec) {
+    main = "com.ObjectHashReallocation"
+    jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectMemoryDump(type:JavaExec) {
+    main = "com.ObjectMemoryDump"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ObjectMemoryDumpAddress(type:JavaExec) {
+    main = "com.ObjectMemoryDump"
+    jvmArgs = ['-XX:hashCode=4']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task IdentityHashCodeCollision(type:JavaExec) {
+    main = "com.IdentityHashCodeCollision"
+    jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC', '-XX:hashCode=4']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ThreadedIdentityHashCodeCollision(type:JavaExec) {
+    main = "com.ThreadedIdentityHashCodeCollision"
+    jvmArgs = ['-XX:hashCode=4', '-Xms256m', '-Xmx256m', '-XX:+UseSerialGC']
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['10']
+}
+
+task ThreadedIdentityHashCodeCollisionTLABGC(type:JavaExec) {
+    main = "com.ThreadedIdentityHashCodeCollision"
+    jvmArgs = ['-XX:hashCode=4', '-Xms256m', '-Xmx256m', '-XX:+PrintTLAB', '-XX:+UseSerialGC', '-verbose:gc', '-XX:+PrintGC', '-XX:+PrintGCDetails']
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['2']
+}
+
+task SingleObjectThreadedHashCode(type:JavaExec) {
+    main = "com.SingleObjectThreadedHashCode"
+    jvmArgs = ['-XX:hashCode=4', '-Xms256m', '-Xmx256m', '-XX:+UseSerialGC']
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['4']
+}
+
+task SingleObjectThreadedHashCodeNoTLAB(type:JavaExec) {
+    main = "com.SingleObjectThreadedHashCode"
+    jvmArgs = ['-XX:hashCode=4', '-Xms256m', '-Xmx256m', '-XX:+UseSerialGC', '-XX:-UseTLAB']
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['4']
+}
+
+task AllocationPerfTest(type:JavaExec) {
+    main = "com.AllocationPerfTest"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task AllocationPerfTestNoTLAB(type:JavaExec) {
+    main = "com.AllocationPerfTest"
+    jvmArgs = ['-XX:-UseTLAB']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task BiasedLockingDump(type:JavaExec) {
+    main = "com.BiasedLockingDump"
+    jvmArgs = ['-XX:BiasedLockingStartupDelay=0']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task StringBufferPerfTest(type:JavaExec) {
+    main = "com.StringBufferPerfTest"
+    jvmArgs = ['-XX:BiasedLockingStartupDelay=0', '-XX:+UseBiasedLocking']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task StringBufferPerfTestNoBiasedLocking(type:JavaExec) {
+    main = "com.StringBufferPerfTest"
+    jvmArgs = ['-XX:BiasedLockingStartupDelay=0', '-XX:-UseBiasedLocking']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task MallocPerfTest(type:JavaExec) {
+    main = "com.MallocPerfTest"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task ScalePerfTest(type:JavaExec) {
+    main = "com.ScalePerfTest"
+    classpath = sourceSets.main.runtimeClasspath
+}
