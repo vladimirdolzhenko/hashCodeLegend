@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<svg height="232" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style type="text/css"><![CDATA[
+
+.code0 {
+  fill:#888;
+  opacity:0.5;
+}
+
+.code10, .code20, .code30, .code40 {
+  opacity:0.5;
+  stroke:black;
+  stroke-width:2;
+}
+
+.code10 {
+  fill:white;
+}
+
+.code20 {
+  fill:#888;
+}
+
+.code30 {
+  fill:#222;
+}
+
+.code40 {
+  fill:#000;
+}
+
+.biased {
+  opacity:0.2;
+  fill: #888;
+}
+
+.hashCode {
+  opacity:0.2;
+  fill: #22F;
+}
+    ]]></style>
+  </defs>
+  <g transform="translate(-20 -40) scale(2)">
+    <g transform="translate(0 35)">
+      <g transform="translate(10 15)">
+        <text class="comment" x="0" y="0">tid</text>
+      </g>
+      <g transform="translate(90 -80)">
+        <g transform="translate(0 0)">
+          <g transform="translate(60 35)">
+            <!--  00 02 13 80 -->
+            <g transform="translate(24 40)">
+              <rect class="code10" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">00</text>
+            </g>
+            <g transform="translate(53 40)">
+              <rect class="code20" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">02</text>
+            </g>
+            <g transform="translate(82 40)">
+              <rect class="code30" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">13</text>
+            </g>
+            <g transform="translate(111 40)">
+              <rect class="code40" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">80</text>
+            </g>
+            <g transform="translate(140 40)">
+              <text class="code" text-anchor="middle" x="14" y="20">00</text>
+            </g>
+          </g>
+        </g>
+        <text class="code" x="0" y="95">00 00 00 </text>
+      </g>
+    </g>
+    <g transform="translate(0 75)">
+      <g transform="translate(10 15)">
+        <text class="comment" x="0" y="0">dump</text>
+      </g>
+      <g transform="translate(90 -80)">
+        <g transform="translate(0 0)">
+          <g transform="translate(0 35)">
+            <g transform="translate(-5 40)">
+              <rect class="code10" height="30" width="29" x="0" y="0" stroke-dasharray="4,4,4"/>
+              <text class="code" text-anchor="middle" x="14" y="20">05</text>
+            </g>
+            <g transform="translate(24 40)">
+              <!-- 80 13 02 00 -->
+              <rect class="code40" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">80</text>
+            </g>
+            <g transform="translate(53 40)">
+              <rect class="code30" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">13</text>
+            </g>
+            <g transform="translate(82 40)">
+              <rect class="code20" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">02</text>
+            </g>
+            <g transform="translate(111 40)">
+              <rect class="code10" height="30" width="29" x="0" y="0"/>
+              <text class="code" text-anchor="middle" x="14" y="20">00</text>
+            </g>
+          </g>
+          <text class="code" x="146" y="95">00 00 00</text>
+          <text class="code" x="0" y="130">E5 01 00 F8 00 00 00 00</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

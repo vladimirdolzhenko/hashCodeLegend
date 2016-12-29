@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<svg height="500" version="1.1" width="1200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style type="text/css"><![CDATA[
+
+.link {
+  fill:none;
+  stroke:black;
+  stroke-width:1.2;
+  marker-end:url(#TriangleOutL);
+}
+
+.code{
+  font-size:14px;
+    fill:#000000;
+    font-family:PT Mono;
+}
+    ]]></style>
+  </defs>
+  <g transform="translate(-120 20) scale(2)">
+    <g transform="translate(0 20)">
+      <text class="code" x="70" y="0">eden space 65536K, 2% used</text>
+      <rect class="code1" height="20" width="152" x="78" y="15"/>
+      <rect class="code2" height="20" width="152" x="397" y="15"/>
+      <text class="code" x="70" y="30">[0x000000012a700000,0x000000012a8db400,0x000000012e700000)</text>
+      <rect class="code3" height="20" width="100" x="218" y="45"/>
+      <rect class="code4" height="20" width="100" x="345" y="45"/>
+      <text class="code" x="70" y="60">Барух переехал: с 0x12A8109F0 -&gt; 0x12E7200F8</text>
+      <rect class="code1" height="20" width="152" x="169" y="85"/>
+      <text class="code" text-anchor="end" x="320" y="100">0x000000012A700000</text>
+      <text class="code" text-anchor="start" x="330" y="100">начало Eden</text>
+      <rect class="code3" height="20" width="100" x="224" y="115"/>
+      <text class="code" text-anchor="start" x="330" y="130">старый адрес</text>
+      <text class="code" text-anchor="end" x="320" y="130">0x12A8109F0</text>
+      <rect class="code2" height="20" width="152" x="169" y="145"/>
+      <text class="code" text-anchor="start" x="330" y="160">конец Eden</text>
+      <text class="code" text-anchor="end" x="320" y="160">0x000000012E700000</text>
+      <rect class="code4" height="20" width="100" x="224" y="175"/>
+      <text class="code" text-anchor="start" x="330" y="190">новый адрес</text>
+      <text class="code" text-anchor="end" x="320" y="190">0x12E7200F8</text>
+    </g>
+  </g>
+</svg>
