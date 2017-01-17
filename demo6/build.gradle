@@ -40,3 +40,8 @@ task UsernameCollisionLoadTest(type:JavaExec) {
     main = "com.UsernameCollisionLoadTest"
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task UsernameCollisionStrLoadTest(type:JavaExec) {
+    main = "com.UsernameCollisionStrLoadTest"
+    classpath = sourceSets.main.runtimeClasspath
+}

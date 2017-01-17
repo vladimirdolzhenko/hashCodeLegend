@@ -1,13 +1,15 @@
 package com;
 
-import gnu.trove.set.TIntSet;
-import gnu.trove.set.hash.TIntHashSet;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Phaser;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
+
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 
 /**
  * <code>-XX:hashCode=4 -Xms256m -Xmx256m -XX:+UseSerialGC</code>
@@ -21,51 +23,68 @@ public class ThreadedIdentityHashCodeCollision {
 
     public static void main(String[] args) throws InterruptedException {
         final int threads = Integer.parseInt(args[0]);
+        final String prefix = "Нагнетатель-";
 
-        final TIntSet уникальныеКоды = new TIntHashSet();
-        final CountDownLatch startLatch = new CountDownLatch(1);
-        final CountDownLatch threadStartLatch = new CountDownLatch(threads);
         final CountDownLatch shutDownLatch = new CountDownLatch(threads);
 
-        final AtomicInteger totalSize = new AtomicInteger();
+        final List туса = new ArrayList(2_000_000);
+        final TIntSet уникальныеКоды = new TIntHashSet(2_000_000);
+        final int[] hashCodesНагнетателей = new int[threads];
 
-        IntStream.range(0, threads).forEach(k -> {
-            Thread thread = new Thread(() -> {
+        final Phaser этапщик = new Phaser(threads);
+        final AtomicBoolean драка = new AtomicBoolean(false);
+
+        IntStream.range(0, threads).forEach(t -> { Thread thread = new Thread(() -> {
                 try {
-                    System.out.printf("%s запущена\n", Thread.currentThread().getName());
-                    final List туса = new ArrayList();
-                    threadStartLatch.countDown();
-                    startLatch.await();
+                    while (!драка.get()) {
+                        этапщик.arriveAndAwaitAdvance();
 
-                    while (true) {
                         synchronized (уникальныеКоды) {
                             final Object чувак = new Object();
                             туса.add(чувак);
-                            int hashCode = чувак.hashCode();
-                            if (!уникальныеКоды.add(hashCode)) {
-                                totalSize.addAndGet(туса.size());
-                                throw new RuntimeException(
-                                        String.format("\n%s: Драка по hashcode 0x%04X после набега %,d чуваков",
-                                                Thread.currentThread().getName(),
-                                                hashCode,
-                                                туса.size()));
-                            }
+                            hashCodesНагнетателей[t] = чувак.hashCode();
+                            драка.compareAndSet(false, !уникальныеКоды.add(чувак.hashCode()));
                         }
                     }
-                } catch (Throwable e) {
-                    e.printStackTrace();
                 } finally {
-                    System.out.printf("%s завершена\n", Thread.currentThread().getName());
+                    этапщик.arriveAndDeregister();
                     shutDownLatch.countDown();
                 }
             });
-            thread.setName("НагнетательТусы-" + k);
+            thread.setName(prefix + t);
             thread.start();
         });
-        threadStartLatch.await();
-        startLatch.countDown();
 
         shutDownLatch.await();
-        System.out.printf("total objects: %,d\n", totalSize.get());
+        synchronized (уникальныеКоды) {
+            System.out.printf("размер тусы: %,d\n", туса.size());
+
+            StringIntPair[] stringIntPairs = new StringIntPair[hashCodesНагнетателей.length];
+            for (int i = 0; i < stringIntPairs.length; i++) {
+                stringIntPairs[i] = new StringIntPair(prefix + i, hashCodesНагнетателей[i]);
+            }
+            Arrays.sort(stringIntPairs);
+
+            for (int i = 1; i < threads; i++) {
+                System.out.printf("разница %s - %s : %,d\n",
+                        stringIntPairs[i].string, stringIntPairs[i - 1].string,
+                        stringIntPairs[i].value - stringIntPairs[i - 1].value);
+            }
+        }
+    }
+
+    private static class StringIntPair implements Comparable<StringIntPair> {
+        final String string;
+        final int value;
+
+        public StringIntPair(String string, int value) {
+            this.string = string;
+            this.value = value;
+        }
+
+        @Override
+        public int compareTo(StringIntPair o) {
+            return Integer.compare(value, o.value);
+        }
     }
 }

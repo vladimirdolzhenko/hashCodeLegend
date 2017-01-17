@@ -10,8 +10,6 @@ output:
 ```{r setup, include=FALSE}
 library(gdata)
 library(ggplot2)
-library(dplyr)
-library(sqldf)
 
 Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
 
@@ -26,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE)
     + GC
     + Аллокации
 * Правила вычисления hashCode
-* DDOS-атака с примененимем hashCode
+* DoS-атака с примененимем hashCode
 * Удешевление блокировок
 
 ## Телефонная книга
@@ -62,9 +60,8 @@ String key = "23derevo";
 
 for ( int index = 0; i < array.length; i++ ) {
 
-    if ( keys[index].equals( key ) ){
+    if ( keys[index].equals( key ) )
         return values[index];
-    }
 
 }
 
@@ -386,51 +383,6 @@ while (true) {
 
 `22 bit = 4_194_304` уникальных значений
 
-## Даёшь больше потоков!
-
-```java
-final TIntSet уникальныеКоды = new TIntHashSet();
-
-new Thread(() -> {
-      final List туса = new ArrayList();
-      while (true) {
-          synchronized (уникальныеКоды) {
-              final Object чувак = new Object();
-
-              туса.add(чувак);
-              int hashCode = чувак.hashCode();
-              if (!уникальныеКоды.add(hashCode))
-                  throw new RuntimeException();
-          }
-      }
-}).start();
-```
-
-```-Xms256m -Xmx256m -XX:+UseSerialGC```
-
-## Всё ли в порядке ?
-
-нить-0: Драка по hashcode 0x30577220 после набега <span class="huge">520_271</span> чуваков
-
-нить-1: Драка по hashcode 0x30695E88 после набега <span class="huge">436_503</span> чуваков
-
-нить-2: Драка по hashcode 0x307F1988 после набега <span class="huge">157_580</span> чуваков
-
-нить-3: Драка по hashcode 0x30A60DB8 после набега <span class="huge">150_222</span> чуваков
-
-всего <span class="huge">1_264_576</span>
-
-## Почему такие коллизии ?
-
-нить-0: Драка по hashcode 0x30<span class="huge">57</span>7220 после набега 520_271 чуваков
-
-нить-1: Драка по hashcode 0x30<span class="huge">69</span>5E88 после набега 436_503 чуваков
-
-нить-2: Драка по hashcode 0x30<span class="huge">7F</span>1988 после набега 157_580 чуваков
-
-нить-3: Драка по hashcode 0x30<span class="huge">A6</span>0DB8 после набега 150_222 чуваков
-
-
 ## Упрощённый memory allocation
 
 ```java
@@ -539,43 +491,44 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 # Можно ли ещё лучше ?
 
-## Распределение адресов по нитям
+## До первой крови
 
 ```java
-new Thread(() -> {
-    final List туса = new ArrayList();
+final TIntSet уникальныеКоды = new TIntHashSet(2_000_000);
+final int[] hashCodesНагнетателей = new int[threads];
+final Phaser этапщик = new Phaser(threads);
+final AtomicBoolean драка = new AtomicBoolean(false);
 
-    synchronized (hashCodes){
-
-        final Object чувак = new Object();
-        туса.add(чувак);
-
-        System.out.printf("0x%08X\n", чувак.hashCode());
+IntStream.range(0, threads).forEach(t -> { new Thread(() -> {
+    while (!драка.get()) {
+      этапщик.arriveAndAwaitAdvance();
+      
+      synchronized (уникальныеКоды) {
+          final Object чувак = new Object();
+          туса.add(чувак);
+          hashCodesНагнетателей[t] = чувак.hashCode();
+          драка.compareAndSet(false, !уникальныеКоды.add(чувак.hashCode()));
+      }
     }
-
-}).start();
+}).start();});
 ```
+```-Xms256m -Xmx256m -XX:+UseSerialGC```
 
-## Распределение hashCode по нитям
+## Распределение hashCode по нагнетателям
 
-```
-hashCode: 0x30578380
-hashCode: 0x306D5D60
-hashCode: 0x30835D90
-hashCode: 0x30993500
-```
+размер тусы: 1_566_762
 
-разница между 1 и 0 : <span class="huge">1_432_032</span>
+разница Нагнетатель-0 - Нагнетатель-3 : <span class="huge">718_720</span>
 
-разница между 2 и 1 : <span class="huge">1_441_840</span>
+разница Нагнетатель-1 - Нагнетатель-0 : <span class="huge">737_824</span>
 
-разница между 3 и 2 : <span class="huge">1_431_408</span>
+разница Нагнетатель-2 - Нагнетатель-1 : <span class="huge">786_280</span>
 
-
-## Даёшь **БОЛЬШИЕ** куски памяти !
+## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
 ```java
 public class TLABLikeAllocator implements Allocator {
     private static final long SIZE = 1024L * 1024L;
+    
     private final AtomicLong memoryPointer = new AtomicLong();
     private final ThreadLocal<AddressHolder> threadLocal =
          ThreadLocal.withInitial(() -> new AddressHolder());
@@ -639,40 +592,39 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 <embed src="images/tlab4.svg" type="image/svg+xml" />
 
 
-## Распределение адресов по нитям без TLAB
+## До первой крови БЕЗ TLAB
 
 ```java
-new Thread(() -> {
-    final List туса = new ArrayList();
+final TIntSet уникальныеКоды = new TIntHashSet(2_000_000);
+final int[] hashCodesНагнетателей = new int[threads];
+final Phaser этапщик = new Phaser(threads);
+final AtomicBoolean драка = new AtomicBoolean(false);
 
-    synchronized (hashCodes){
-
-        final Object чувак = new Object();
-        туса.add(чувак);
-
-        System.out.printf("0x%08X\n", чувак.hashCode());
+IntStream.range(0, threads).forEach(t -> { new Thread(() -> {
+    while (!драка.get()) {
+      этапщик.arriveAndAwaitAdvance();
+      
+      synchronized (уникальныеКоды) {
+          final Object чувак = new Object();
+          туса.add(чувак);
+          hashCodesНагнетателей[t] = чувак.hashCode();
+          драка.compareAndSet(false, !уникальныеКоды.add(чувак.hashCode()));
+      }
     }
-
-}).start();
+}).start();});
 ```
 
 ```-XX:-UseTLAB -Xms256m -Xmx256m -XX:+UseSerialGC```
 
-## Распределение адресов по нитям без TLAB
+## Распределение hashCode по нагнетателям БЕЗ TLAB
 
-0x30213F<span class="huge">2</span>8
+размер тусы: 1,650,138
 
-0x30213F<span class="huge">3</span>8
+разница Нагнетатель-1 - Нагнетатель-2 : <span class="huge">16</span>
 
-0x30213F<span class="huge">4</span>8
+разница Нагнетатель-3 - Нагнетатель-1 : <span class="huge">16</span>
 
-0x30213F<span class="huge">5</span>8
-
-```
-разница между 1 и 0 : 16
-разница между 2 и 1 : 16
-разница между 3 и 2 : 16
-```
+разница Нагнетатель-0 - Нагнетатель-3 : <span class="huge">16</span>
 
 ## Стоимость TLAB
 
@@ -714,13 +666,17 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 
 `-XX:+UseTLAB`
 
+
+разница Нагнетатель-0 - Нагнетатель-3 : <span class="huge">718_720</span>
+
+разница Нагнетатель-1 - Нагнетатель-0 : <span class="huge">737_824</span>
+
+разница Нагнетатель-2 - Нагнетатель-1 : <span class="huge">786_280</span>
+
 ```
-разница между 1 и 0 : 1,432,032
-разница между 2 и 1 : 1,441,840
-разница между 3 и 2 : 1,431,408
 ```
 
-⟹ 18 bit / нить
+⟹ 17 bit / нить
 
 # Может быть Random ?
 
@@ -751,8 +707,11 @@ $$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx 77162 $$
 ## Распределение 10 млн объектов в 10 нитях
 ```{r  fig.width=10, fig.height=5, echo = FALSE}
 
-addressHashCode = read.csv(file = "csv/addressHashCode.csv", header = TRUE)
-defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", header = TRUE)
+#rows = 1000
+rows = 10000000
+
+addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
 ggplot(alpha=0.75) +
   geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.5, bins = 800) +
   geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.5, bins = 800) +
@@ -948,6 +907,36 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
      x = "количество ключей",
      y = "") +
   theme_classic() +
+  coord_cartesian(xlim = c(0,200000), ylim = c(0, 115)) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 18, face = "bold")) +
+  theme(aspect.ratio = 1/1)
+```
+
+
+## "username" коллизии :: zoom-in 500x 
+
+```{r, fig.width=10,fig.height=5}
+df = read.csv(file = "csv/username.csv", header = TRUE)
+df78 <- subset(df, java == "java 8" | java == 'java 7')
+d <- transform(df78, time_per_op = time / size, time_msec = time / (10^6))
+
+ggplot(data=d, aes(x=size, y=time_msec, group=java, colour=java)) +
+  geom_line(linetype="solid", size=2) +
+  geom_point(aes(shape=java),size=6) +
+  scale_color_manual(values=c("java 8"="#1fbec3", "java 7"="#f57670")) +
+  scale_shape_manual(values=c("java 8"=17, "java 7"=19))+
+  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
+  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
+  labs(title = "миллисекунды",
+     x = "количество ключей",
+     y = "") +
+  theme_classic() +
+  coord_cartesian(xlim = c(0,200000), ylim = c(0, 220)) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
@@ -976,6 +965,36 @@ ggplot(data=d, aes(x=size, y=time_per_op, group=java, colour=java)) +
   labs(title = "одна вставка",
      x = "количество ключей",
      y = "наносекунды") +
+  theme_classic() +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(axis.title.y=element_text(margin=margin(r=20))) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(title = element_text(size = 18, face = "bold")) +
+  theme(aspect.ratio = 1/1)
+
+
+```
+
+## "username" коллизии :: Comparable
+
+```{r, fig.width=10,fig.height=5}
+df <- read.csv(file = "csv/cmp.csv", header = TRUE)
+
+d <- transform(df, time_per_op = time / size, time_ms = time / (10^6), time_sec = time / (10^9))
+
+ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
+  geom_line(linetype="solid", size=2) +
+  geom_point(aes(shape=type),size=6) +
+  scale_color_manual(values=c("comparable"="#1fbec3", "non-comparable"="#f57670")) +
+  scale_shape_manual(values=c("comparable"=17, "non-comparable"=18))+
+  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
+  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
+  labs(title = "",
+     x = "количество ключей",
+     y = "секунды") +
   theme_classic() +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
