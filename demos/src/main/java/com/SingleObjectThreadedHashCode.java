@@ -1,6 +1,8 @@
 package com;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
@@ -49,7 +51,7 @@ public class SingleObjectThreadedHashCode {
                     shutDownLatch.countDown();
                 }
             });
-            thread.setName("НагнетательТусы-" + k);
+            thread.setName("Нагнетатель-" + k);
             thread.start();
         });
         threadStartLatch.await();

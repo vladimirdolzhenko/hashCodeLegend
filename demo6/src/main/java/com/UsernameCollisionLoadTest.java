@@ -1,7 +1,7 @@
 package com;
 
 /*
- * java 6
+ * java 6 (not a mac)
  * Benchmark                                 (size)  Mode  Cnt         Score         Error  Units
  * UsernameCollisionLoadTest.fillMap              1  avgt    5             9.962 ±           0.044  ns/op
  * UsernameCollisionLoadTest.fillMap           1000  avgt    5       1931634.601 ±      113897.195  ns/op
@@ -14,32 +14,37 @@ package com;
  * UsernameCollisionLoadTest.fillMap         200000  avgt    5  109694806276.400 ± 10469215538.308  ns/op
  *
  * java 7
- * Benchmark                                 (size)  Mode  Cnt         Score         Error  Units
- * UsernameCollisionLoadTest.fillMap              1  avgt    5             9.471 ±         0.135  ns/op
- * UsernameCollisionLoadTest.fillMap           1000  avgt    5       2049179.356 ±     28326.870  ns/op
- * UsernameCollisionLoadTest.fillMap          10000  avgt    5     194263597.062 ±   5029755.968  ns/op
- * UsernameCollisionLoadTest.fillMap          25000  avgt    5    1223330855.920 ±  20596750.532  ns/op
- * UsernameCollisionLoadTest.fillMap          50000  avgt    5    4738248388.800 ± 234238554.562  ns/op
- * UsernameCollisionLoadTest.fillMap          75000  avgt    5   13446065672.200 ±  58996456.901  ns/op
- * UsernameCollisionLoadTest.fillMap         100000  avgt    5   24496043250.200 ± 929146451.362  ns/op
- * UsernameCollisionLoadTest.fillMap         150000  avgt    5   61568261391.400 ± 322953060.361  ns/op
- * UsernameCollisionLoadTest.fillMap         200000  avgt    5  103814620471.000 ± 536345021.313  ns/op
+ * Benchmark                          (size)  Mode  Cnt            Score            Error  Units
+ * UsernameCollisionLoadTest.fillMap       1  avgt    5           12.557 ±          0.325  ns/op
+ * UsernameCollisionLoadTest.fillMap      50  avgt    5         5588.936 ±         96.353  ns/op
+ * UsernameCollisionLoadTest.fillMap     100  avgt    5        21259.873 ±        594.770  ns/op
+ * UsernameCollisionLoadTest.fillMap     500  avgt    5       584719.878 ±      23920.273  ns/op
+ * UsernameCollisionLoadTest.fillMap    1000  avgt    5      2361111.117 ±     103313.001  ns/op
+ * UsernameCollisionLoadTest.fillMap   10000  avgt    5    194573507.692 ±    4796333.527  ns/op
+ * UsernameCollisionLoadTest.fillMap   25000  avgt    5   1247632160.000 ±   29788933.078  ns/op
+ * UsernameCollisionLoadTest.fillMap   50000  avgt    5   5029241000.000 ±   45118305.719  ns/op
+ * UsernameCollisionLoadTest.fillMap   75000  avgt    5  12220774600.000 ± 1037376125.903  ns/op
+ * UsernameCollisionLoadTest.fillMap  100000  avgt    5  22579315600.000 ±  465110007.717  ns/op
+ * UsernameCollisionLoadTest.fillMap  150000  avgt    5  54292533200.000 ±  544912668.712  ns/op
+ * UsernameCollisionLoadTest.fillMap  200000  avgt    5  99357551800.000 ± 2454618823.386  ns/op
  *
  * java 8
- * Benchmark                                 (size)  Mode  Cnt         Score         Error  Units
- * UsernameCollisionLoadTest.fillMap              1  avgt    5        11.440 ±       0.176  ns/op
- * UsernameCollisionLoadTest.fillMap           1000  avgt    5    163476.496 ±    2920.057  ns/op
- * UsernameCollisionLoadTest.fillMap          10000  avgt    5   2339982.587 ±  102194.633  ns/op
- * UsernameCollisionLoadTest.fillMap          25000  avgt    5   7775987.507 ±  691068.451  ns/op
- * UsernameCollisionLoadTest.fillMap          50000  avgt    5  16999481.954 ±  552311.650  ns/op
- * UsernameCollisionLoadTest.fillMap          75000  avgt    5  25960890.208 ± 1125405.867  ns/op
- * UsernameCollisionLoadTest.fillMap         100000  avgt    5  37741043.032 ± 1582403.620  ns/op
- * UsernameCollisionLoadTest.fillMap         150000  avgt    5  62764186.005 ± 1379224.960  ns/op
- * UsernameCollisionLoadTest.fillMap         200000  avgt    5  84648199.214 ± 2708582.451  ns/op
+ * Benchmark                          (size)  Mode  Cnt          Score         Error  Units
+ * UsernameCollisionLoadTest.fillMap       1  avgt    5         11.579 ±       0.555  ns/op
+ * UsernameCollisionLoadTest.fillMap      50  avgt    5       4321.073 ±      98.726  ns/op
+ * UsernameCollisionLoadTest.fillMap     100  avgt    5      10728.407 ±     193.052  ns/op
+ * UsernameCollisionLoadTest.fillMap     500  avgt    5      71925.047 ±    1464.926  ns/op
+ * UsernameCollisionLoadTest.fillMap    1000  avgt    5     178058.172 ±    6404.673  ns/op
+ * UsernameCollisionLoadTest.fillMap   10000  avgt    5    2649472.992 ±   32398.127  ns/op
+ * UsernameCollisionLoadTest.fillMap   25000  avgt    5    7861746.071 ±  252674.713  ns/op
+ * UsernameCollisionLoadTest.fillMap   50000  avgt    5   18756168.751 ±  879683.760  ns/op
+ * UsernameCollisionLoadTest.fillMap   75000  avgt    5   29293273.679 ±  948687.190  ns/op
+ * UsernameCollisionLoadTest.fillMap  100000  avgt    5   40904931.254 ± 1682045.361  ns/op
+ * UsernameCollisionLoadTest.fillMap  150000  avgt    5   70209460.365 ± 5197427.422  ns/op
+ * UsernameCollisionLoadTest.fillMap  200000  avgt    5  100019022.533 ± 2835663.126  ns/op
  */
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -77,7 +82,7 @@ public class UsernameCollisionLoadTest {
 
     private String[] keys;
 
-    @Param( {"1", "1000", "10000", "25000", "50000", "75000", "100000", "150000", "200000"})
+    @Param( {"1", "50", "100", "500", "1000", "10000", "25000", "50000", "75000", "100000", "150000", "200000"})
     private int size;
     private Map<String, String> map;
 
