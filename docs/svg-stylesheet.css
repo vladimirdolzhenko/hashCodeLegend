@@ -18,7 +18,7 @@ rect.focused {
   stroke-width:3;
 }
 
-.code {
+.code, .codeX {
     font-size:16px;
     fill:#000000;
     font-family:PT Mono;
@@ -50,17 +50,15 @@ rect.focused {
 }
 
 .code1, .code2, .code3, .code4 {
-   opacity:0.5;
+   opacity:0.8;
 }
 
 .code1 {
   fill:red;
-  stop-color: red;
 }
 
 .code2 {
   fill:green;
-  stop-color: green;
 }
 
 .code3 {
@@ -71,12 +69,45 @@ rect.focused {
   fill:orange;
 }
 
+.header.code1 {
+  /*fill:red;*/
+  fill: #0F0;
+}
+
+.header.code2 {
+  /*fill:green;*/
+  fill: #0C0;
+}
+
+.header.code3 {
+  /*fill:blue;*/
+  fill: #0A0;
+}
+
+.header.code4 {
+  /*fill:orange;*/
+  fill: #080;
+}
+
 
 rect.unused, rect.used {
   stroke:black;
   stroke-width:1;
   opacity:1;
   fill:#ddd;
+}
+
+rect.log {
+  stroke:none;
+  stroke-width:0;
+  opacity:0.5;
+  fill:#ddf;
+}
+
+path.log {
+  fill: none;
+  stroke: #88F;
+  stroke-width:2;
 }
 
 rect.t1 {

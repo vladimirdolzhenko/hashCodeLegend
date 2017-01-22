@@ -1,10 +1,12 @@
 package com;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.VMTools.checkVMHashCodeAsAddress;
 
 /**
  * <code>-XX:hashCode=4 -Xms256m -Xmx256m -XX:+UseSerialGC</code>
@@ -16,21 +18,29 @@ import java.util.List;
  */
 public class IdentityHashCodeCollision {
 
-	public static void main(String[] args) {
-		final List туса = new ArrayList(2_000_000);
-		final TIntSet уникальныеКоды = new TIntHashSet(2_000_000);
+    public static void main(String[] args) {
+        checkVMHashCodeAsAddress();
 
-		while (true) {
-			final Object чувак = new Object();
-			туса.add(чувак);
+        final List gcKeeper = new ArrayList();
+        final TIntSet uniqueHashCodes = new TIntHashSet();
+        final int maxCollisions = 10;
+        final int[] collisions = new int[maxCollisions];
 
-			int hashCode = чувак.hashCode();
+        for (int collisionNo = 0; collisionNo < maxCollisions; ) {
+            final Object obj = new Object();
+            gcKeeper.add(obj);
 
-			if (!уникальныеКоды.add(hashCode)) {
-				throw new RuntimeException(
-						String.format("\nДрака по hash code 0x%04x после набега %,d чуваков",
-								hashCode, туса.size()));
-			}
-		}
-	}
+            int hashCode = obj.hashCode();
+
+            if (!uniqueHashCodes.add(hashCode)) {
+                collisions[collisionNo++] = hashCode;
+            }
+        }
+
+        System.out.printf("after %,d allocation:\n", gcKeeper.size());
+        for (int i = 0; i < collisions.length; i++) {
+            System.out.printf("hash code collision 0x%04X\n", collisions[i]);
+        }
+
+    }
 }

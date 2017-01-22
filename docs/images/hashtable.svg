@@ -19,16 +19,7 @@
     <path d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z " id="path4051" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.8)"/>
   </marker>
   <g transform="translate(20 20) scale(2)">
-    <g transform="translate(10 25)">
-      <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
-      <g transform="translate(80 -30)">
-        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
-      </g>
-      <text class="comment" x="140" y="0">) = 15</text>
-      <text class="comment" x="250" y="0">index = 15 % array.length = 1</text>
-    </g>
-    <g transform="translate(0 70)">
+    <g transform="translate(0 10)">
       <rect class="arrayKeyItem" height="50" width="50" x="0" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
@@ -38,7 +29,7 @@
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
       <g transform="translate(50 0)">
         <rect class="arrayKeyItem selected focused" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
+        <text class="note" text-anchor="middle" x="25" y="28">имя</text>
         <path class="link" d="M25,50 25,63"/>
       </g>
       <g transform="translate(0 70)">
@@ -51,7 +42,7 @@
         <rect class="arrayValueItem" height="50" width="50" x="300" y="0"/>
         <g transform="translate(50 0)">
           <rect class="arrayValueItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">+791..</text>
+          <text class="note" text-anchor="middle" x="25" y="28">телефон</text>
         </g>
       </g>
     </g>

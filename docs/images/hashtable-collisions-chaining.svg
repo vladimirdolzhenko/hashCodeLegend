@@ -23,33 +23,32 @@
     <rect class="arrayKeyItem" height="50" width="50" x="150" y="0"/>
     <g transform="translate(0 0)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">shipilёv</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
     <g transform="translate(100 0)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">23derevo</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
     </g>
     <g transform="translate(50 0)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">jbaruch</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
       <path class="link" d="M30,50 45,57"/>
     </g>
     <g transform="translate(100 60)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">gAmUssA</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
       <path class="link" d="M30,50 45,57"/>
     </g>
     <g transform="translate(150 120)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="18">anton</text>
-      <text class="note" text-anchor="middle" x="25" y="38">arhipov</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
       <path class="link" d="M30,50 45,57"/>
     </g>
     <g transform="translate(200 180)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">a_abashev</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Jan</text>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>

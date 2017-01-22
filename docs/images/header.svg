@@ -7,26 +7,6 @@
   <defs>
     <style type="text/css"><![CDATA[
 
-.code1 {
-  fill:red;
-  opacity:0.5;
-}
-
-.code2 {
-  fill:green;
-  opacity:0.5;
-}
-
-.code3 {
-  fill:blue;
-  opacity:0.5;
-}
-
-.code4 {
-  fill:orange;
-  opacity:0.5;
-}
-
 .code10 {
   fill:white;
 }
@@ -64,19 +44,19 @@
       <text class="code" x="0" y="25">0x 07</text>
       <g transform="translate(29 -35)">
         <g transform="translate(24 40)">
-          <rect class="code10" height="30" width="29" x="0" y="0"/>
+          <rect class="header code10" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">6B</text>
         </g>
         <g transform="translate(53 40)">
-          <rect class="code20" height="30" width="29" x="0" y="0"/>
+          <rect class="header code20" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">A3</text>
         </g>
         <g transform="translate(82 40)">
-          <rect class="code30" height="30" width="29" x="0" y="0"/>
+          <rect class="header code30" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">6D</text>
         </g>
         <g transform="translate(111 40)">
-          <rect class="code40" height="30" width="29" x="0" y="0"/>
+          <rect class="header code40" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">B8</text>
         </g>
       </g>
@@ -84,36 +64,36 @@
       <g transform="translate(0 35)">
         <text class="code" x="0" y="60">0x</text>
         <g transform="translate(24 40)">
-          <rect class="code1" height="30" width="29" x="0" y="0"/>
+          <rect class="header code1" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">2A</text>
         </g>
         <g transform="translate(53 40)">
-          <rect class="code2" height="30" width="29" x="0" y="0"/>
+          <rect class="header code2" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">AE</text>
         </g>
         <g transform="translate(82 40)">
-          <rect class="code3" height="30" width="29" x="0" y="0"/>
+          <rect class="header code3" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">91</text>
         </g>
         <g transform="translate(111 40)">
-          <rect class="code4" height="30" width="29" x="0" y="0"/>
+          <rect class="header code4" height="30" width="29" x="0" y="0"/>
           <text class="code" text-anchor="middle" x="14" y="20">90</text>
         </g>
         <g transform="translate(0 35)">
           <g transform="translate(24 40)">
-            <rect class="code4" height="30" width="29" x="0" y="0"/>
+            <rect class="header code4" height="30" width="29" x="0" y="0"/>
             <text class="code" text-anchor="middle" x="14" y="20">90</text>
           </g>
           <g transform="translate(53 40)">
-            <rect class="code3" height="30" width="29" x="0" y="0"/>
+            <rect class="header code3" height="30" width="29" x="0" y="0"/>
             <text class="code" text-anchor="middle" x="14" y="20">91</text>
           </g>
           <g transform="translate(82 40)">
-            <rect class="code2" height="30" width="29" x="0" y="0"/>
+            <rect class="header code2" height="30" width="29" x="0" y="0"/>
             <text class="code" text-anchor="middle" x="14" y="20">AE</text>
           </g>
           <g transform="translate(111 40)">
-            <rect class="code1" height="30" width="29" x="0" y="0"/>
+            <rect class="header code1" height="30" width="29" x="0" y="0"/>
             <text class="code" text-anchor="middle" x="14" y="20">2A</text>
           </g>
         </g>

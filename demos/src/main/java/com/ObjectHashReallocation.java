@@ -3,6 +3,8 @@ package com;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ObjectMemoryDump.getAddress;
+
 /**
  * Run with <code>-Xms256m -Xmx256m -XX:+UseSerialGC</code>
  * <p>
@@ -14,26 +16,24 @@ import java.util.List;
 public class ObjectHashReallocation {
 
     public static void main(String[] args) {
-        final Object БАРУХ = new Object();
-        final int hashCodeБаруха = БАРУХ.hashCode();
+        final Object theObject = new Object();
+        final long initialHashCode = theObject.hashCode();
 
-        List туса = new ArrayList();
-        туса.add(БАРУХ);
+        List gcKeeper = new ArrayList();
+        gcKeeper.add(theObject);
 
-        while (true) {
-            Object чувак = new Object();
+        long currentHashCode = initialHashCode;
+        while (initialHashCode == currentHashCode) {
+            Object o = new Object();
 
-            туса.add(чувак);
+            gcKeeper.add(o);
 
-            int инойHashCodeБаруха = БАРУХ.hashCode();
-
-            if (hashCodeБаруха != инойHashCodeБаруха) {
-                throw new RuntimeException(
-                        String.format("\nHashCode Баруха переехал: с 0x%08X -> 0x%08X"
-                                        + "\nпосле набега %,d чуваков\n",
-                                hashCodeБаруха, инойHashCodeБаруха, туса.size()));
-            }
+            currentHashCode = theObject.hashCode();
         }
+
+        System.out.printf("HashCode has been changed: 0x%08X -> 0x%08X"
+                        + "\nafter %,d allocations\n",
+                initialHashCode, currentHashCode, gcKeeper.size());
     }
 
 }

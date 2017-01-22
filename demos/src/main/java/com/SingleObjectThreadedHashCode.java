@@ -7,6 +7,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
+import static com.VMTools.checkVMHashCodeAsAddress;
+
 /**
  * <code>-XX:hashCode=4 -Xms256m -Xmx256m -XX:+UseSerialGC</code>
  * <p>
@@ -20,6 +22,8 @@ import java.util.stream.IntStream;
 public class SingleObjectThreadedHashCode {
 
     public static void main(String[] args) throws InterruptedException {
+        checkVMHashCodeAsAddress();
+
         final int threads = Integer.parseInt(args[0]);
         final CountDownLatch startLatch = new CountDownLatch(1);
         final CountDownLatch shutDownLatch = new CountDownLatch(threads);
@@ -31,27 +35,23 @@ public class SingleObjectThreadedHashCode {
         IntStream.range(0, threads).forEach(k -> {
             Thread thread = new Thread(() -> {
                 try {
-                    //System.out.printf("%s запущена\n", Thread.currentThread().getName());
-
                     final List туса = new ArrayList( 1000 );
                     threadStartLatch.countDown();
                     startLatch.await();
 
                     synchronized (hashCodes){
-                        final Object чувак = new Object();
-                        int hashCode = чувак.hashCode();
+                        final Object object = new Object();
+                        int hashCode = object.hashCode();
                         hashCodes[index.getAndIncrement()] = hashCode;
-                        туса.add(чувак);
+                        туса.add(object);
                     }
-
                 } catch (Throwable e) {
                     e.printStackTrace();
                 } finally {
-                    //System.out.printf("%s завершена\n", Thread.currentThread().getName());
                     shutDownLatch.countDown();
                 }
             });
-            thread.setName("Нагнетатель-" + k);
+            thread.setName("thread-" + k);
             thread.start();
         });
         threadStartLatch.await();
@@ -62,13 +62,13 @@ public class SingleObjectThreadedHashCode {
         synchronized (hashCodes) {
             Arrays.sort(hashCodes);
             for (int hashCode : hashCodes) {
-                System.out.printf("hashCode: 0x%08X\n", hashCode);
+                System.out.printf("hashCode: 0x%08X%n", hashCode);
             }
             for (int i = 1; i < threads; i++) {
-                System.out.printf("разница между %d и %d : %,d\n",
-                        i,
-                        i - 1,
-                        (hashCodes[i] - hashCodes[i - 1])
+                System.out.printf("diff %d - %d : %,d%n",
+                                  i,
+                                  i - 1,
+                                  (hashCodes[i] - hashCodes[i - 1])
                 );
             }
         }
