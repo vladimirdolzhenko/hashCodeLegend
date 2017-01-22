@@ -41,38 +41,37 @@ text.w {
   <g transform="translate(50 20) scale(2)">
     <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
     <g transform="translate(0 0)">
-      <text class="note" text-anchor="middle" x="25" y="28">shipilёv</text>
+      <text class="note" text-anchor="middle" x="25" y="28">key1</text>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
     <g transform="translate(100 0)">
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">23derevo</text>
+      <text class="note" text-anchor="middle" x="25" y="28">key3</text>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="150" y="0"/>
     <g transform="translate(50 0)">
       <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
-      <text class="note w" text-anchor="middle" x="25" y="28">jbaruch</text>
+      <text class="note w" text-anchor="middle" x="25" y="28">key2</text>
       <path class="link" d="M10,50 -5,65"/>
       <path class="link" d="M30,50 45,65"/>
     </g>
     <g transform="translate(90 70)">
-      <rect class="arrayKeyItemRed selected" height="50" width="50" x="0" y="0"/>
-      <text class="note w" text-anchor="middle" x="25" y="18">anton</text>
-      <text class="note w" text-anchor="middle" x="25" y="38">arhipov</text>
+      <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
+      <text class="note w" text-anchor="middle" x="25" y="28">key21</text>
     </g>
     <g transform="translate(10 70)">
-      <rect class="arrayKeyItemRed selected" height="50" width="50" x="0" y="0"/>
-      <text class="note w" text-anchor="middle" x="25" y="28">gAmUssA</text>
+      <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
+      <text class="note w" text-anchor="middle" x="25" y="28">key22</text>
       <path class="link" d="M10,50 -5,65"/>
       <path class="link" d="M30,50 45,65"/>
     </g>
     <g transform="translate(50 140)">
-      <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
-      <text class="note w" text-anchor="middle" x="25" y="28">a_abashev</text>
+      <rect class="arrayKeyItemRed selected" height="50" width="50" x="0" y="0"/>
+      <text class="note w" text-anchor="middle" x="25" y="28">key23</text>
     </g>
     <g transform="translate(-20 140)">
-      <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
-      <text class="note w" text-anchor="middle" x="25" y="28">tolkv</text>
+      <rect class="arrayKeyItemRed selected" height="50" width="50" x="0" y="0"/>
+      <text class="note w" text-anchor="middle" x="25" y="28">key24</text>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>

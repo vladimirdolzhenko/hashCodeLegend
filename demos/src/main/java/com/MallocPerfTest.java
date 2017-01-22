@@ -1,20 +1,39 @@
 package com;
 
-import org.openjdk.jmh.annotations.*;
+/*
+ Benchmark                       Mode  Cnt    Score    Error  Units
+ MallocPerfTest.casAllocator     avgt    5  208.909 ± 17.694  ns/op
+ MallocPerfTest.javaAllocation   avgt    5   16.540 ±  0.546  ns/op
+ MallocPerfTest.simpleAllocator  avgt    5    2.735 ±  0.065  ns/op
+ MallocPerfTest.syncAllocator    avgt    5  547.557 ± 76.347  ns/op
+ MallocPerfTest.tlabAllocator    avgt    5   16.354 ±  2.396  ns/op
+ MallocPerfTest.tlabAllocator2   avgt    5   15.692 ±  2.331  ns/op
+ */
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 2, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 2, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@Threads(10)
+@Warmup(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 public class MallocPerfTest {
 
@@ -37,7 +56,9 @@ public class MallocPerfTest {
         @Override
         public long malloc(long size) {
             synchronized (this) {
-                return memoryPointer += size;
+                long old = memoryPointer;
+                memoryPointer += size;
+                return old;
             }
         }
     }
@@ -58,18 +79,29 @@ public class MallocPerfTest {
     public static class TLABLikeAllocator implements Allocator {
         private final AtomicLong memoryPointer = new AtomicLong();
         private static final ThreadLocal<AddressHolder> THREAD_LOCAL = ThreadLocal.withInitial(() -> new AddressHolder());
+        private final long tlabSize;
+
+        public TLABLikeAllocator(long tlabSize) {
+            this.tlabSize = tlabSize;
+        }
+
+        public TLABLikeAllocator() {
+            this(1L << 20);
+        }
 
         @Override
         public long malloc(long size) {
             AddressHolder addressHolder = THREAD_LOCAL.get();
 
             while(true) {
-                if (addressHolder.value + size < addressHolder.maxValue) {
-                    return addressHolder.value += size;
+                if (addressHolder.value + size <= addressHolder.maxValue) {
+                    long old = addressHolder.value;
+                    addressHolder.value += size;
+                    return old;
                 }
-                long value = memoryPointer.getAndAdd( 1L << 20 );
+                long value = memoryPointer.getAndAdd( tlabSize );
                 addressHolder.value = value;
-                addressHolder.maxValue = value + ( 1L << 20 );
+                addressHolder.maxValue = value + tlabSize;
             }
         }
     }
@@ -84,24 +116,34 @@ public class MallocPerfTest {
         tlabAllocator = new TLABLikeAllocator();
     }
 
-//    @Benchmark
-//    public long simpleAllocator() {
-//        return simpleAllocator.malloc(16);
-//    }
+    @Benchmark
+    @Threads(1)
+    public long simpleAllocator() {
+        return simpleAllocator.malloc(16);
+    }
 
     @Benchmark
+    @Threads(10)
     public long syncAllocator() {
         return syncAllocator.malloc(16);
     }
 
     @Benchmark
+    @Threads(10)
     public long casAllocator() {
         return casAllocator.malloc(16);
     }
 
     @Benchmark
+    @Threads(10)
     public long tlabAllocator() {
         return tlabAllocator.malloc(16);
+    }
+
+    @Benchmark
+    @Threads(10)
+    public Object javaAllocation() {
+        return new Object();
     }
 
     public static void main(String[] args) throws RunnerException {

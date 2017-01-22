@@ -27,6 +27,10 @@ public class ObjectMemoryDump {
         long freeMemory = Runtime.getRuntime().freeMemory();
         System.out.println(freeMemory);
 
+        System.out.println(vm.sizeOf(new int[3_500_000]));
+        System.out.println(vm.sizeOf(new Object[3_500_000]));
+
+
         printValues(new String[][] {
                 print(null),
                 print(o),

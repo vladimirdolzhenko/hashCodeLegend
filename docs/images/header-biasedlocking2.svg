@@ -12,6 +12,10 @@
   opacity:0.5;
 }
 
+.code1, .code2, .code3, .code4 {
+  opacity:0.5;
+}
+
 .code10, .code20, .code30, .code40 {
   opacity:0.5;
   stroke:black;

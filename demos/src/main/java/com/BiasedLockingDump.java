@@ -5,6 +5,7 @@ import java.util.List;
 
 import static com.ObjectMemoryDump.print;
 import static com.ObjectMemoryDump.printValues;
+import static com.VMTools.getTID;
 
 /**
  * Run with <code>-XX:BiasedLockingStartupDelay=0</code>
@@ -24,6 +25,8 @@ public class BiasedLockingDump {
             list.add(object);
         }
 
+        final long tid = getTID(Thread.currentThread().getName());
+
         String[] dump1 = dump(object);
 
         int hashCode = System.identityHashCode(object);
@@ -34,7 +37,9 @@ public class BiasedLockingDump {
             list.add(object);
         }
 
-        System.out.printf("System hashCode: %08X\n", hashCode);
+        System.out.printf(
+                "Thread id:\t\t\t%016X\n"
+                + "System hashCode:\t%08X\n", tid, hashCode);
         printValues(new String[][]{
                 print(null),
                 dump0,

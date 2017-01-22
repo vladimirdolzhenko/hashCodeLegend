@@ -27,6 +27,11 @@ slides > slide > hgroup + article {
     margin-top: 20px !important;
 }
 
+article.native pre {
+    font-size: 1.2em !important;
+}
+
+
 article.tlabcode {
     margin-top: 0px !important;
 }
@@ -65,9 +70,99 @@ pre {
     font-family: 'PT Mono', 'monospace'  !important;
 }
 
-.unsafe > pre {
-    font-size: 18px !important;
-    font-family: 'PT Mono', 'monospace'  !important;
+.abstract, .hash, .javadoc, .conclusion {
+    font-size: 1.4em !important;
+    line-height: 1.1em;
+}
+
+.javadoc a {
+    font-size: 0.8em !important;
+}
+
+.heap, .hashCodeComplexity {
+    font-size: 1.2em !important;
+    line-height: 1.1em;
+}
+
+.heap > pre {
+    font-size: 30px !important;
+    line-height: 1.2em;
+}
+
+.native > pre {
+    font-size: 1.2em !important;
+    line-height: 1.1em;
+}
+
+.polynomHashCode > pre {
+    font-size: 1em !important;
+    line-height: 1.1em;
+}
+
+.unsafe > pre, .hashCodeComplexity > pre {
+    font-size: 1.1em !important;
+    line-height: 1.1em;
+}
+
+code > span.hashCode {
+    color: black;
+    background-color: black;
+}
+
+code > span.highlight {
+    font-size: 1.1em !important;
+    font-weight: bold;
+    background: #80f080;
+}
+
+.IdentityHashCodeCollision > pre,
+.IdentityHashCodeCollisionResults > pre,
+.unsafeaddress > pre {
+    font-size: 28px !important;
+    line-height: 1.2em;
+}
+
+.hashCode22Bit, .generations, .hashCode19Bit, .AaBB {
+    font-size: 1.4em !important;
+    line-height: 1.2em;
+}
+
+.paradox, .polynomHashCode, .detective31 li {
+    font-size: 1.1em !important;
+    line-height: 1.2em;
+}
+
+.XXhashCode td {
+    font-size: 1.2em !important;
+}
+
+.XXhashCode table.rmdtable td, table th {
+    padding: 0.5em 0.5em !important;
+}
+
+div.center {
+    text-align: center;
+}
+
+.hashCode22Bit > div.center, .hashCode19Bit > div.center {
+    padding: 50px 0;
+}
+
+.AaBB > pre {
+    font-size: 1em !important;
+    line-height: 1.2em;
+}
+
+.simpleAllocation > pre {
+    font-size: 1.1em !important;
+    line-height: 1.2em;
+}
+
+.urbanLegendC > pre, .jol > pre, .javaAllocation > pre, .casAllocationBenchmark > pre, .syncAllocation > pre,
+.syncAllocationBenchmark > pre, .casAllocation > pre, .tlabAllocatorBenchmark > pre,
+.ObjectsHash > pre, .biasedDemo > pre {
+    font-size: 1.2em !important;
+    line-height: 1.2em;
 }
 
 slide > hgroup + article.unsafe {
