@@ -4,8 +4,18 @@ author: 'Владимир Долженко, IHS Markit'
 output:
   ioslides_presentation:
     widescreen: true
-    css: slidesstyles.css
 ---
+
+<link rel="stylesheet" href="highlight-default.css">
+<link rel="stylesheet" href="github-gist.css">
+<link rel="stylesheet" href="slidesstyles.css">
+<script src="jquery.min.js"></script>
+<script src="highlight.pack.js"></script>
+<script>
+$(document).ready(function() {
+  $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+});
+</script>
 <div class="footer"></div>
 ```{r setup, include=FALSE}
 library(gdata)
@@ -13,21 +23,18 @@ library(ggplot2)
 
 Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
 
-#rows = 1000
-rows = 10000000
+rows = 1000
+#rows = 10000000
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
-## План{.abstract}
-```{r} 
-if (rows < 10000000) { sprintf(' XXX ' );} 
-```
+## План {.abstract`r sprintf("%d",rows)`} 
 * Капитанство: немного теории
+* Правила вычисления hashCode
+    + DoS-атака с примененимем hashCode
 * HashCode как адрес объекта - миф или реальность 
     + JVM потроха: Unsafe, GC и аллокации
     + Немного баттлов про hashCode
-* Правила вычисления hashCode
-* DoS-атака с примененимем hashCode
 * Удешевление блокировок
 
 ## Ассоциативный массив
@@ -45,7 +52,7 @@ if (rows < 10000000) { sprintf(' XXX ' );}
 ## javadoc: {.javadoc}
 ### java.lang.Object
 
-`public int hashCode()`
+<pre><code class="java">public int hashCode()</code></pre>
 
 Returns a hash code value for the object. This method is
 supported for the benefit of hash tables such as those
@@ -64,7 +71,7 @@ provided by **HashMap**.
 
 ## Сложность поиска / вставки {.hashCodeComplexity}
 
-```java
+<pre><code class="java">
 String key = "Фёдор";
 
 int index = key.hashCode() % keys.length;
@@ -74,8 +81,8 @@ if ( key.equals( keys[index] ) ) {
 }
 
 return null;
-```
-сложность → **O(1)**
+</code></pre>
+<span class="highlight">сложность → **O(1)**</span>
 
 ## Изменение hashCode
 
@@ -86,8 +93,8 @@ return null;
 - неизменчивость и постоянство
 
 Whenever it is invoked on the same object more than once during
-an execution of a Java application, the hashCode method **must**
-**_consistently_** return the **same integer**, provided no information
+an execution of a Java application, the hashCode method <span class="highlight">must
+_consistently_</span> return the <span class="highlight">same integer</span>, provided no information
 used in equals comparisons on the object is modified.
 
 
@@ -101,708 +108,25 @@ used in equals comparisons on the object is modified.
 
 <embed src="images/hashtable-collisions-chaining.svg" type="image/svg+xml" />
 
-# Object.hashCode<br/> утёкшая абстракция
-
-## Urban Legend: Первоисточник  {.javadoc}
-### java.lang.Object
-
-`public int hashCode()`
-
-This is typically implemented by converting the **internal address of the object** into an integer.
-
-[https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
-
-
-## Urban Legend: {.urbanLegendC}
-
-```java
-package java.lang;
-
-public class Object {
-
-    // ...
-
-    public int hashCode(){
-      return &this;
-    }
-
-}
-```
-
-# Адрес объекта ?
-
-# native method{.native}
-```java
-package java.lang;
-
-public class Object {
-
-    // ............
-
-    public native int hashCode();
-}
-```
-
-## sun.misc.Unsafe{.unsafe}
-
-```java
-public native long allocateMemory(long bytes);
-
-public native void freeMemory(long address);
-
-public native void setMemory(Object o, 
-    long offset, long bytes, byte value);
-                 
-public native long getLong(Object o, long offset);
-
-public native void putLong(Object o, 
-    long offset, long x);
-    
-// etc ...    
-
-```
-
-## Unsafe :: адрес объекта{.unsafeaddress}
-
-```java
-
-public long getAddress(final Object object) {
-  checkVMBooleanOption("UseCompressedOops", false);
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return unsafe.getLong( new Object[]{ object }, 
-      unsafe.arrayBaseOffset( Object[].class ));
-}
-
-private static Unsafe fetchUnsafe() {
-  final Field field = Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null);
-}
-```
-
-## Java Object Layout{.jol}
-
-```java
-
-Object theObject = new Object();
-
-VirtualMachine vm = VM.current();
-
-long address = vm.addressOf( theObject )
-
-long size = vm.sizeOf( theObject )
-
-```
-
-## Адрес и hashCode
-
-<embed src="images/header-address0.svg" type="image/svg+xml" />
-
-```
-```
-
-```
-```
-
-<code>-XX:<span class="hashCode">hashCode=4</span></code>
-
-## Следим за адресом объекта
-
-```java
-final Object theObject = new Object();
-final long initialAddress = getAddress( theObject );
-
-List gcKeeper = new ArrayList();
-gcKeeper.add( theObject );
-
-long currentAddress = initialAddress;
-while (initialAddress == currentAddress) {
-    Object o = new Object();
-
-    gcKeeper.add(o);
-
-    currentAddress = getAddress(theObject);
-}
-```
-```-Xms256m -Xmx256m -XX:+UseSerialGC```
-
-## Следим за адресом объекта вместе с GC
-
-```java
-final Object theObject = new Object();
-final long initialAddress = getAddress( theObject );
-
-List gcKeeper = new ArrayList();
-gcKeeper.add( theObject );
-
-long currentAddress = initialAddress;
-while (initialAddress == currentAddress) {
-    Object o = new Object();
-
-    gcKeeper.add(o);
-
-    currentAddress = getAddress(theObject);
-}
-```
-
-<code><span class="highlight">-XX:+PrintGCDetails</span> -Xms256m -Xmx256m -XX:+UseSerialGC</code>
-
-## GC: поколения {.generations}
-
-<embed src="images/generations.svg" type="image/svg+xml" />
-
-GC: Serial / Parallel / CMS 
-
-## GC - не только сборка мусора
-
-<embed src="images/reallocation2.svg" type="image/svg+xml" />
-
-## Следим за hashcode
-```java
-final Object theObject = new Object();
-final long initialHashCode = theObject.hashCode();
-
-List gcKeeper = new ArrayList();
-gcKeeper.add(theObject);
-
-long currentHashCode = initialHashCode;
-while (initialHashCode == currentHashCode) {
-    Object o = new Object();
-
-    gcKeeper.add(o);
-
-    currentHashCode = theObject.hashCode();
-}
-
-```
-```-Xms256m -Xmx256m -XX:+UseSerialGC```
-
-## Скрытое свойство{.native}
-```java
-package java.lang;
-
-public class Object {
-
-    // ............
-
-    public native int hashCode();
-
-}
-```
-
-## Дамп объекта
-
-<embed src="images/header-address.svg" type="image/svg+xml" />
-
-Intel X86: Little Endian
-
-## Сколько влезет в кучу ? {.heap}
-
-```-Xms256m -Xmx256m```
-
-```java
-long freeMemory = Runtime.getRuntime().freeMemory();
-
-239_942_568
-
-```
-```java
-freeMemory / vm.sizeOf( new Object() )
-
-14_996_410
-```
-
-## Молодое поколение {.heap}
-
-<embed src="images/obj-count.svg" type="image/svg+xml" />
-
-```java
-65536K / vm.sizeOf( new Object() )
-
-4_194_304
-```
-
-
-## Граница коллизий {.IdentityHashCodeCollision}
-
-```java
-final List gcKeeper = new ArrayList();
-final TIntSet uniqueHashCodes = new TIntHashSet();
-final int maxCollisions = 10;
-final int[] collisions = new int[maxCollisions];
-
-for (int collisionNo = 0; collisionNo < maxCollisions; ) {
-	final Object obj = new Object();
-	gcKeeper.add(obj);
-
-	int hashCode = obj.hashCode();
-
-	if (!uniqueHashCodes.add(hashCode))
-		collisions[collisionNo++] = hashCode;
-}
-```
-
-<code>-Xms256m -Xmx256m -XX:+UseSerialGC -XX:<span class="hashCode">hashCode=4</span></code>
-
-## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
-<pre>
-after 2,022,271 allocation:
-hash code collision 0x3055A9<span class="huge">9</span>0
-hash code collision 0x3055A9<span class="huge">A</span>0
-hash code collision 0x3055A9<span class="huge">B</span>0
-hash code collision 0x3055A9<span class="huge">C</span>0
-hash code collision 0x3055A9<span class="huge">D</span>0
-hash code collision 0x3055A9<span class="huge">E</span>0
-hash code collision 0x3055A9<span class="huge">F</span>0
-hash code collision 0x3055AA<span class="huge">0</span>0
-hash code collision 0x3055AA<span class="huge">1</span>0
-hash code collision 0x3055AA<span class="huge">2</span>0
-</pre>
-
-
-## пространство hashCode{.hashCode22Bit}
-
-<!--embed src="images/address2.svg" type="image/svg+xml" /-->
-<div class="center"><span class="huge">32bit → 22bit</span></div>
-`22 bit = 4_194_304` уникальных значений
-
-## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
-<pre>
-after 2,022,271 allocation:
-hash code collision 0x3055A9<span class="huge">9</span>0
-hash code collision 0x3055A9<span class="huge">A</span>0
-hash code collision 0x3055A9<span class="huge">B</span>0
-hash code collision 0x3055A9<span class="huge">C</span>0
-hash code collision 0x3055A9<span class="huge">D</span>0
-hash code collision 0x3055A9<span class="huge">E</span>0
-hash code collision 0x3055A9<span class="huge">F</span>0
-hash code collision 0x3055AA<span class="huge">0</span>0
-hash code collision 0x3055AA<span class="huge">1</span>0
-hash code collision 0x3055AA<span class="huge">2</span>0
-</pre>
-
-## Упрощённый memory allocation  {.simpleAllocation}
- 
-```java
-public interface Allocator {
-    long malloc(long size);
-}
-
-public class SimpleAllocator implements Allocator {
-    private long memoryPointer;
-
-    @Override
-    public long malloc(long size) {
-        long old = memoryPointer;
-        memoryPointer += size;
-        return old;
-    }
-}
-```
-
-## Исправим malloc - SyncAllocator {.syncAllocation}
-
-```java
-public class SyncAllocator implements Allocator {
-    private long memoryPointer;
-
-    @Override
-    public synchronized long malloc(long size) {
-        long old = memoryPointer;
-        memoryPointer += size;
-        return old;
-    }
-}
-```
-
-# JMH
-
-## Java Microbenchmark Harness :: пример
-
-```java
-@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@State(Scope.Benchmark)
-public class MallocPerfTest {
-
-    @Benchmark @Threads(1)
-    public void simpleAllocator( Blackhole bh ) {
-        bh.consume( simpleAllocator.malloc(16) );
-    }
-
-    Allocator simpleAllocator;
-    
-    @Setup
-    public void setup() {
-        simpleAllocator = new SimpleAllocator();
-    }
-    
-}
-```
-
-## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
-```java
-@Benchmark @Threads(10)
-public long syncAllocator() {
-    return syncAllocator.malloc( 16 );
-}
-
-```
-
-```{r, fig.width=10,fig.height=3}
-df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "single-threaded" | alloc == 'sync')
-
-ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
-  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
-  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.05, size=5, fontface = "bold") +
-  coord_flip() +
-  labs(title = "sync @Threads ( 10 ), single-threaded @Threads( 1 )",
-       x = "",
-       y = "ns/op") +
-  theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 50), expand = c(0, 0)) +
-  theme(axis.text.y = element_text(size = 16, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(legend.position="none")
-```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
-
-# Можно ли лучше ?
-
-## CAS Allocator {.casAllocation}
-```java
-public class CASAllocator implements Allocator {
-    private final AtomicLong memoryPointer = 
-        new AtomicLong();
-
-    @Override
-    public long malloc(long size) {
-        return memoryPointer.getAndAdd( size );
-    }
-}
-```
-
-## Allocators Performance Benchmark {.casAllocationBenchmark}
-```java
-@Benchmark @Threads(10)
-public long casAllocator() {
-    return casAllocator.malloc( 16 );
-}
-```
-
-
-```{r, fig.width=10,fig.height=3}
-df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "cas" | alloc == 'sync' | alloc == "single-threaded" )
-
-ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
-  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
-  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
-  coord_flip() +
-  labs(title = "sync/cas @Threads ( 10 ), single-threaded @Threads( 1 )",
-       x = "",
-       y = "ns/op") +
-  theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 50), expand = c(0, 0)) +
-  theme(axis.text.y = element_text(size = 16, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(legend.position="none")
-```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
-
-## Java Allocation {.javaAllocation}
-```java
-@Benchmark @Threads(10)
-public Object javaAllocation() {
-    return new Object();
-}
-```
-
-```{r, fig.width=10,fig.height=3}
-df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "single-threaded")
-
-ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
-  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
-  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
-  coord_flip() +
-  labs(title = "@Threads( 10 )",
-       x = "",
-       y = "ns/op") +
-  theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 50), expand = c(0, 0)) +
-  theme(axis.text.y = element_text(size = 16, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(legend.position="none")
-```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
-
-# Можно ли ещё лучше ?
-
-## Границы коллизий :: многопоточный
-
-```java
-final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-final int[] hashCodesPerThread = new int[threads];
-final Phaser phaser = new Phaser(threads);
-final AtomicBoolean collision = new AtomicBoolean(false);
-
-IntStream.range(0, threads).forEach(threadNo -> { new Thread(() -> {
-  while (!collision.get()) {
-    phaser.arriveAndAwaitAdvance();
-
-    synchronized (uniqueHashCodes) {
-      final Object obj = new Object();
-      gcKeeper.add(obj);
-      hashCodesPerThread[threadNo] = obj.hashCode();
-      collision.compareAndSet(false,  !uniqueHashCodes.add(obj.hashCode()));
-    }
-  }
-}).start();});
-```
-<code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
-
-## Распределение hashCode по нитям
-
-размер: 1_566_762
-
-объектов в нитях: [394_012, 394_012, 394_012, 394_013]
-
-разница thread-0 - thread-3 : <span class="huge">718_720</span>
-
-разница thread-1 - thread-0 : <span class="huge">737_824</span>
-
-разница thread-2 - thread-1 : <span class="huge">786_280</span>
-
-## Плохая новость {.hashCode19Bit}
-
-объектов в нитях: [394012, 394012, 394012, 394013]
-
-$$ log_2{394012} \approx 18.5 $$
-
-<div class="center"><span class="huge">22bit → 19bit</span></div>
-
-## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
-```java
-public class TLABLikeAllocator implements Allocator {
-    private static final long SIZE = 1024L * 1024L;
-    
-    private final AtomicLong memoryPointer = new AtomicLong();
-    private final ThreadLocal<AddressHolder> threadLocal =
-         ThreadLocal.withInitial(() -> new AddressHolder());
-
-    public long malloc(long size) {
-        AddressHolder addressHolder = threadLocal.get();
-        while(true) {
-            if (addressHolder.value + size <= addressHolder.maxValue) {
-                long old = addressHolder.value;
-                addressHolder.value += size;
-                return old;
-            }
-
-            long value = memoryPointer.getAndAdd( SIZE );
-            addressHolder.value = value;
-            addressHolder.maxValue = value + SIZE;
-        }
-    }
-}
-```
-
-## Allocators Performance Benchmark {.tlabAllocatorBenchmark}
-```java
-@Benchmark @Threads(10)
-public long tlabAllocator() {
-    return tlabAllocator.malloc( 16 );
-}
-```
-
-```{r, fig.width=10,fig.height=3}
-
-df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
-
-ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
-  geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
-  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  coord_flip() +
-  labs(title = "@Threads( 10 )",
-       x = "",
-       y = "ns/op") +
-  theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 50), expand = c(0, 0)) +
-  theme(axis.text.y = element_text(size = 16, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(legend.position="none")
-```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
-
-## Thread Local Allocation Buffer
-
-<embed src="images/tlab.svg" type="image/svg+xml" />
-
-## Thread Local Allocation Buffer
-
-<embed src="images/tlab2.svg" type="image/svg+xml" />
-
-## Границы коллизий :: многопоточный :: БЕЗ TLAB
-
-```java
-IntStream.range(0, threads).forEach(threadNo -> { new Thread(() -> {
-    while (!collision.get()) {
-        phaser.arriveAndAwaitAdvance();
-
-        synchronized (uniqueHashCodes) {
-            final Object obj = new Object();
-            gcKeeper.add(obj);
-            hashCodesPerThread[threadNo] = obj.hashCode();
-            collision.compareAndSet(false, 
-                !uniqueHashCodes.add(obj.hashCode()));
-        }
-    }
-}).start();});
-```
-
-<code><span class="highlight">-XX:-UseTLAB</span> -Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX</span></code>
-
-## Распределение hashCode по нитям БЕЗ TLAB
-
-размер: 1,650,138
-
-разница thread-1 - thread-2 : <span class="huge">16</span>
-
-разница thread-3 - thread-1 : <span class="huge">16</span>
-
-разница thread-0 - thread-3 : <span class="huge">16</span>
-
-## Стоимость TLAB {.tlabAllocatorBenchmark}
-
-```java
-@Benchmark @Threads(10)
-public Object allocate() {
-   return new Object();
-}
-```
-
-## Стоимость TLAB {.tlabAllocatorBenchmark}
-
-```java
-@Benchmark @Threads(10)
-public Object allocate() {
-   return new Object();
-}
-```
-
-```{r, fig.width=10,fig.height=3}
-df = read.csv(file = "csv/UseTLAB.csv", header = TRUE)
-ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
-  geom_bar(stat="identity",  colour="black") +
-  scale_fill_manual(values=c("-XX:-UseTLAB"='#f57670', "-XX:+UseTLAB"="#1fbec3")) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
-  coord_flip() +
-  labs(title = "@Threads( 10 )",
-       x = "",
-       y = "ns/op") +
-  scale_y_continuous(limits = c(0, max(df$value) + 200), expand = c(0, 0)) +
-  theme_classic() +
-  theme(axis.text.y = element_text(size = 16, face = "bold")) +
-  theme(axis.title = element_text(size=16, face = "bold"))+
-  theme(legend.position="none")
-```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
-
-# 32bit → 19bit
-
-# Может быть Random ?
-
-## Парадокс дней рождения {.paradox}
-
-$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$ 
-$$ = \frac{d}{d^{n} \cdot (d - n)!}$$
-
-
-$$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
-$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx 77162 $$
-
-## -XX:hashCode {.XXhashCode}
-
--XX:hashCode=k | Тип
----------------|----------
-  0 | <span class="good">[Park-Miller ГПСЧ](https://en.wikipedia.org/wiki/Lehmer_random_number_generator) </span>
-  1 | <span class="bad">fn(адрес объекта, глобальное состояние)</span>
-  2 | <span class="bad">константа 1</span>
-  3 | <span class="good">последовательный счетчик</span>
-  4 | <span class="bad">адрес объекта</span>
-  5 | <span class="good">[Marsagliа xor-shift ГПСЧ](https://en.wikipedia.org/wiki/Xorshift)</span> _**по умолчанию** в java 8_
-
-## Дамп объекта при -XX:hashCode=5
-
-<embed src="images/header.svg" type="image/svg+xml" />
-
-## Распределение 10 млн объектов в 10 нитях
-```{r  fig.width=10, fig.height=5, echo = FALSE}
-
-addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
-defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
-ggplot(alpha=0.75) +
-  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.5, bins = 800) +
-  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.5, bins = 800) +
-  scale_fill_manual(name="тип hashCode:", labels=c("address"="адрес", "MXSRng"="MXS-гпсч"), values=c("address" = "#f57670", "MXSRng"="#1fbec3")) +
-  labs(title =
-         sprintf("количество коллизий по адресу: %s k, по MXS-гпсч: %s k",
-                 round( sum(duplicated(addressHashCode)) / 1000, 1),
-                 round( sum(duplicated(defaultHashCode)) / 1000, 1)),
-       x = "hashCode") +
-  theme_classic() +
-  theme(axis.title.y=element_blank()) +
-  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(axis.text.y = element_text(size = 14, face = "bold")) +
-  theme(axis.text.x = element_text(size = 14, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(axis.title.x=element_text(margin=margin(t=20))) +
-  theme(legend.text = element_text(size = 14, face = "bold")) +
-  theme(title = element_text(size = 16, face = "bold")) +
-
-  theme(aspect.ratio = 9/16)
-```
-
-# Beyond the legend
-
-## hashCode() и данные
-
-```java
-String name1 = new String("java");
-
-String name2 = new String("java");
-
-assert s1.hashCode() == s2.hashCode();
+## hashCode - функция от содержимого объекта {.hashFunctionData}
+<pre><code class="java">String s1 = new String("java");
+String s2 = new String("java");
+
+assert s1.hashCode() == s2.hashCode(); // <span class="hl">true</span>
 
 Integer i1 = new Integer(42);
-
 Integer i2 = new Integer(42);
 
-assert i1.hashCode() == i2.hashCode();
-```
-
+assert i1.hashCode() == i2.hashCode(); // <span class="hl">true</span>
+</code></pre>
 
 ## Простой hashCode
-
-```java
-public class Point {
+<pre><code class="java">public class Point {
     public int x, y;
 
     @Override
     public int hashCode(){
-        return 31 * x + y;
+        return 31 * <span class="hl">x</span> + <span class="hl">y</span>;
     }
 
     @Override
@@ -812,37 +136,55 @@ public class Point {
 
         Point point = (Point) o;
 
-        return x == point.x && y == point.y;
+        return <span class="hl">x</span> == point.<span class="hl">x</span> && <span class="hl">y</span> == point.<span class="hl">y</span>;
     }
 }
-```
+</code></pre>
 
 ## Objects.hash {.ObjectsHash}
 
-```java
-@Override
+<pre><code class="java">@Override
 public int hashCode(){
     return Objects.hash(x, y);
 }
-```
+
+</code></pre>
 
 ## Полиномиальный hashCode {.polynomHashCode}
 
 $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot c_k}  $$
-
-```java
-public final class String {
+<pre><code class="java">public final class String {
     private final char value[];
 
     public int hashCode() {
         int h = 0;
-        for (int i = 0; i < value.length; i++) {
-            h = 31 * h + value[i];
+        <span class="hl">for (int i = 0; i < value.length; i++)</span> {
+            <span class="hl">h = 31 * h + value[i];</span>
         }
         return h;
     }
-}
-```
+}</code></pre>
+
+## java v.1.1.1 - String.hashCode() 
+<pre><code class="java">public int hashCode() {
+	int h = 0;
+	int off = offset;
+	char val[] = value;
+	int len = count;
+
+	if (len < 16) {
+	    for (int i = len ; i > 0; i--) {
+		    h = (h * 37) + val[off++];
+	    }
+	} else {
+	    // only sample some characters
+	    int skip = len / 8;
+	    for (int i = len ; i > 0; i -= skip, off += skip) {
+		    h = (h * 39) + val[off];
+	    }
+	}
+	return h;
+}</code></pre>
 
 ## 31 : Детективная история {.detective31}
 
@@ -855,12 +197,8 @@ public final class String {
 
 ## Но ведь можно подобрать... {.AaBB}
 
-```java
-assert "Aa".hashCode() == "BB".hashCode();
-```
-
-```
-```
+<pre><code class="java">assert "Aa".hashCode() == "BB".hashCode();
+</code></pre>
 
 $$ 31 \cdot c_0 + c_1 = $$
 $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
@@ -869,25 +207,115 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 ```
 <div style="text-align: center;">**`username`** ⟹ 499_331 вариантов</div>
 
-## "username" коллизии :: benchmark
 
-```java
-    @Benchmark
-    public Map fillMap() {
-        for (String key : keys) 
-            map.put(key, key);
-        
-        return map;
+# JMH
+
+## Java Microbenchmark Harness :: пример
+
+<pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
+@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
+@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)
+@State(Scope.Benchmark)
+public class MapPerfTest {
+
+    <span class="hl">@Benchmark</span> @Threads(1)
+    public void fillMap( Blackhole bh ) {
+        <span class="hl">for (String key : keys) bh.consume( map.put(key, key) );</span>
     }
 
-    @Param( {"1", "1000", "10000", "100000", "150000", "200000"})
-    int size;
     String[] keys;
-    
     Map map = new HashMap();
-```
+    
+    @Setup
+    public void setup() {
+        keys = loadKeysFromFile();
+    }
+}
+</code></pre>
+
+## Java Microbenchmark Harness :: пример
+
+<pre><code class="java"><span class="hl">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
+@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
+@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)</span>
+@State(Scope.Benchmark)
+public class MapPerfTest {
+
+    @Benchmark <span class="hl">@Threads(1)</span>
+    public void fillMap( Blackhole bh ) {
+        for (String key : keys) bh.consume( map.put(key, key) );
+    }
+
+    String[] keys;
+    Map map = new HashMap();
+    
+    @Setup
+    public void setup() {
+        keys = loadKeysFromFile();
+    }
+}
+</code></pre>
+
+## Java Microbenchmark Harness :: пример
+
+<pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
+@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
+@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)
+@State(Scope.Benchmark)
+public class MapPerfTest {
+
+    @Benchmark @Threads(1)
+    public void fillMap( Blackhole bh ) {
+        for (String key : keys) bh.consume( map.put(key, key) );
+    }
+
+    String[] keys;
+    Map map = new HashMap();
+    
+    <span class="hl">@Setup</span>
+    public void setup() {
+        keys = <span class="hl">loadKeysFromFile()</span>;
+    }
+}
+</code></pre>
+
+## "username" коллизии :: benchmark
+
+<pre><code class="java">@Benchmark
+public Map fillMap() {
+    for (String key : keys) 
+        map.put(key, key);
+    
+    return map;
+}
+
+@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
+int size;
+String[] keys;
+
+Map map = new HashMap();
+</code></pre>
 
 [CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
+
+## "username" коллизии :: benchmark
+
+<pre><code class="java">@Benchmark
+public Map fillMap() {
+    for (String key : keys) 
+        map.put(key, key);
+    
+    return map;
+}
+
+@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
+int size;
+String[] keys;
+
+Map map = new HashMap();
+</code></pre>
+
+<span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
 ## "username" коллизии
 
@@ -955,7 +383,7 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
 ```
 
 
-## "username" коллизии :: zoom-in 500x 
+## "username" коллизии :: 500x zoom-in
 
 ```{r, fig.width=10,fig.height=5}
 df = read.csv(file = "csv/username.csv", header = TRUE)
@@ -1045,26 +473,843 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
 
 ```
 
-## String join
+# Object.hashCode<br/> утёкшая абстракция
 
-```java
-public static String join(String separator, Collection<String> strings){
-    final StringBuffer buffer = new StringBuffer();
+## Urban Legend: Первоисточник  {.javadoc}
+### java.lang.Object
 
-    for(Iterator<String> it = strings.iterator(); it.hasNext(); ){
-        buffer.append(it.next());
+<pre><code class="java">public int hashCode()</code></pre>
 
-        if (it.hasNext()) buffer.append(separator);
+This is typically implemented by converting the <span class="highlight">internal address of the object</span> into an integer.
+
+[https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
+
+
+## Urban Legend: {.urbanLegendC}
+
+<pre><code class="java">package java.lang;
+
+public class Object {
+
+    // ...
+
+    public int hashCode(){
+      return <span class="hl">&this</span>;
     }
 
-    return buffer.toString();
+}</code></pre>
+
+# Адрес объекта ?
+
+# native method{.native}
+<pre><code class="java">  package java.lang;
+
+  public class Object {
+
+      // ............
+
+      public native int hashCode();
+  }</code></pre>
+
+## sun.misc.Unsafe{.unsafe}
+
+<pre><code class="java">public native long allocateMemory(long bytes);
+
+public native void freeMemory(long address);
+
+public native void setMemory(Object o, 
+    long offset, long bytes, byte value);
+                 
+public native long getLong(Object o, long offset);
+
+public native void putLong(Object o, 
+    long offset, long x);
+    
+// etc ...    
+</code></pre>
+
+## Unsafe :: адрес объекта{.unsafeaddress}
+<pre><code class="java">public long getAddress(final Object object) {
+  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
+
+  Unsafe unsafe = fetchUnsafe();
+
+  return unsafe.getLong( new Object[]{ object }, 
+      unsafe.arrayBaseOffset( Object[].class ));
 }
+
+private static Unsafe fetchUnsafe() {
+  <span class="hl">final Field field = 
+      Unsafe.class.getDeclaredField("theUnsafe");
+  field.setAccessible(true);
+  return (Unsafe) field.get(null)</span>;
+}</code></pre>
+
+## Unsafe :: адрес объекта{.unsafeaddress}
+<pre><code class="java">public long getAddress(final Object object) {
+  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
+
+  Unsafe unsafe = fetchUnsafe();
+
+  return <span class="hl">unsafe.getLong( new Object[]{ object }, 
+      unsafe.arrayBaseOffset( Object[].class ))</span>;
+}
+
+private static Unsafe fetchUnsafe() {
+  final Field field = 
+      Unsafe.class.getDeclaredField("theUnsafe");
+  field.setAccessible(true);
+  return (Unsafe) field.get(null);
+}</code></pre>
+
+## Unsafe :: адрес объекта{.unsafeaddress}
+<pre><code class="java">public long getAddress(final Object object) {
+  <span class="hl"><span class="static">checkVMBooleanOption</span>("UseCompressedOops", false)</span>;
+
+  Unsafe unsafe = fetchUnsafe();
+
+  return unsafe.getLong( new Object[]{ object }, 
+      unsafe.arrayBaseOffset( Object[].class ));
+}
+
+private static Unsafe fetchUnsafe() {
+  final Field field = 
+      Unsafe.class.getDeclaredField("theUnsafe");
+  field.setAccessible(true);
+  return (Unsafe) field.get(null);
+}</code></pre>
+## Java Object Layout{.jol}
+
+<pre><code class="java">Object theObject</span> = new Object();
+
+VirtualMachine vm = VM.current();
+
+long address = vm.<span class="hl">addressOf</span>( theObject );
+
+long size = vm.<span class="hl">sizeOf</span>( theObject );
+
+</code></pre>
+
+## Адрес и hashCode
+
+<embed src="images/header-address0.svg" type="image/svg+xml" />
+
 ```
+```
+
+```
+```
+
+<code>-XX:<span class="hashCode">hashCode=4</span></code>
+
+## Следим за адресом объекта
+
+<pre><code class="java">final Object <span class="hl">theObject</span> = new Object();
+final long <span class="hl">initialAddress = getAddress( theObject )</span>;
+
+List gcKeeper = new ArrayList();
+gcKeeper.add( theObject );
+
+long currentAddress = initialAddress;
+while (initialAddress == currentAddress) {
+    Object o = new Object();
+
+    gcKeeper.add(o);
+
+    currentAddress = getAddress( theObject );
+}</code></pre>
+
+```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+## Следим за адресом объекта
+
+<pre><code class="java">final Object theObject = new Object();
+final long initialAddress = getAddress( theObject );
+
+<span class="hl">List gcKeeper = new ArrayList();</span>
+gcKeeper.add( theObject );
+
+long currentAddress = initialAddress;
+while (initialAddress == currentAddress) {
+    <span class="hl">Object o = new Object();</span>
+
+    <span class="hl">gcKeeper.add(o);</span>
+
+    currentAddress = getAddress( theObject );
+}</code></pre>
+
+```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+## Следим за адресом объекта
+
+<pre><code class="java">final Object theObject = new Object();
+final long initialAddress = getAddress( theObject );
+
+List gcKeeper = new ArrayList();
+gcKeeper.add( theObject );
+
+long currentAddress = initialAddress;
+while (<span class="hl">initialAddress == currentAddress</span>) {
+    Object o = new Object();
+
+    gcKeeper.add(o);
+
+    <span class="hl">currentAddress = getAddress( theObject )</span>;
+}</code></pre>
+
+```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+## Следим за адресом объекта вместе с GC
+
+<pre><code class="java">final Object theObject = new Object();
+final long initialAddress = getAddress( theObject );
+
+List gcKeeper = new ArrayList();
+gcKeeper.add( theObject );
+
+long currentAddress = initialAddress;
+while (initialAddress == currentAddress) {
+    Object o = new Object();
+
+    gcKeeper.add(o);
+
+    currentAddress = getAddress( theObject );
+}</code></pre>
+
+<code><span class="highlight">-XX:+PrintGCDetails</span> -Xms256m -Xmx256m -XX:+UseSerialGC</code>
+
+## GC: поколения {.generations}
+
+<embed src="images/generations.svg" type="image/svg+xml" />
+
+GC: Serial / Parallel / CMS 
+
+## GC - не только сборка мусора
+
+<embed src="images/reallocation2.svg" type="image/svg+xml" />
+
+## Следим за hashcode
+<pre><code class="java">final Object <span class="hl">theObject</span> = new Object();
+final long initialHashCode = <span class="hl">theObject.hashCode()</span>;
+
+List gcKeeper = new ArrayList();
+gcKeeper.add(theObject);
+
+long currentHashCode = initialHashCode;
+while (<span class="hl">initialHashCode == currentHashCode</span>) {
+    Object o = new Object();
+
+    gcKeeper.add(o);
+
+    currentHashCode = <span class="hl">theObject.hashCode()</span>;
+}
+
+</code></pre>
+```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+## Скрытое свойство{.native}
+<pre><code class="java">package java.lang;
+
+public class Object {
+
+    // другие методы
+
+    public native int hashCode();
+
+}
+</code></pre>
+
+## Дамп объекта
+
+<embed src="images/header-address.svg" type="image/svg+xml" />
+
+Intel X86: Little Endian
+
+## Сколько влезет в кучу ? {.heap}
+
+```-Xms256m -Xmx256m```
+
+<pre><code class="java">
+long freeMemory = Runtime.getRuntime().freeMemory();
+
+<span class="hl">239_942_568</span>
+</code></pre>
+<pre><code class="java">
+freeMemory / vm.sizeOf( new Object() )
+
+<span class="hl">14_996_410</span>
+</code></pre>
+
+## Молодое поколение {.heap}
+
+<embed src="images/obj-count.svg" type="image/svg+xml" />
+
+<pre><code class="java">
+65536K / vm.sizeOf( new Object() )
+
+<span class="hl">4_194_304</span>
+</code></pre>
+
+
+## Граница коллизий {.IdentityHashCodeCollision}
+
+<pre><code class="java">final List gcKeeper = new ArrayList();
+final TIntSet uniqueHashCodes = new TIntHashSet();
+final int maxCollisions = 10;
+final int[] collisions = new int[maxCollisions];
+
+for (int collisionNo = 0; collisionNo < maxCollisions; ) {
+	final Object <span class="hl">obj = new Object()</span>;
+	gcKeeper.add(obj);
+
+	int hashCode = <span class="hl">obj.hashCode()</span>;
+
+	if ( <span class="hl">! uniqueHashCodes.add(hashCode)</span> )
+		collisions[collisionNo++] = hashCode;
+}
+</code></pre>
+<code>-Xms256m -Xmx256m -XX:+UseSerialGC -XX:<span class="hashCode">hashCode=4</span></code>
+
+## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
+<pre>
+after 2,022,271 allocation:
+hash code collision 0x3055A9<span class="huge highlight">9</span>0
+hash code collision 0x3055A9<span class="huge highlight">A</span>0
+hash code collision 0x3055A9<span class="huge highlight">B</span>0
+hash code collision 0x3055A9<span class="huge highlight">C</span>0
+hash code collision 0x3055A9<span class="huge highlight">D</span>0
+hash code collision 0x3055A9<span class="huge highlight">E</span>0
+hash code collision 0x3055A9<span class="huge highlight">F</span>0
+hash code collision 0x3055AA<span class="huge highlight">0</span>0
+hash code collision 0x3055AA<span class="huge highlight">1</span>0
+hash code collision 0x3055AA<span class="huge highlight">2</span>0
+</pre>
+
+
+## пространство hashCode{.hashCode22Bit}
+
+<!--embed src="images/address2.svg" type="image/svg+xml" /-->
+<div class="center"><span class="huge">32bit → 22bit</span></div>
+`22 bit = 4_194_304` уникальных значений
+
+## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
+<pre>
+after 2,022,271 allocation:
+hash code collision 0x3055A9<span class="huge highlight">9</span>0
+hash code collision 0x3055A9<span class="huge highlight">A</span>0
+hash code collision 0x3055A9<span class="huge highlight">B</span>0
+hash code collision 0x3055A9<span class="huge highlight">C</span>0
+hash code collision 0x3055A9<span class="huge highlight">D</span>0
+hash code collision 0x3055A9<span class="huge highlight">E</span>0
+hash code collision 0x3055A9<span class="huge highlight">F</span>0
+hash code collision 0x3055AA<span class="huge highlight">0</span>0
+hash code collision 0x3055AA<span class="huge highlight">1</span>0
+hash code collision 0x3055AA<span class="huge highlight">2</span>0
+</pre>
+
+## Memory allocation  {.simpleAllocation}
+ 
+<pre><code class="java">public interface Allocator {
+    long malloc(long size);
+}
+
+public class SimpleAllocator implements Allocator {
+    private long memoryPointer;
+
+    @Override
+    public long malloc(long size) {
+        long old = memoryPointer;
+        memoryPointer += size;
+        return old;
+    }
+}
+</code></pre>
+
+## Исправим malloc - SyncAllocator {.syncAllocation}
+
+<pre><code class="java">public class SyncAllocator implements Allocator {
+    private long memoryPointer;
+
+    @Override
+    public <span class="hl">synchronized</span> long malloc(long size) {
+        long old = memoryPointer;
+        memoryPointer += size;
+        return old;
+    }
+}
+</code></pre>
+
+## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
+<pre><code class="java">@Benchmark @Threads(10)
+public long syncAllocator() {
+    return syncAllocator.malloc( 16 );
+}</code></pre>
+
+## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
+```{r, fig.width=10,fig.height=3}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "single-threaded" | alloc == 'sync')
+
+ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+  geom_text(aes(label=value), hjust=-0.05, size=5, fontface = "bold") +
+  coord_flip() +
+  labs(title = "sync @Threads ( 10 ), single-threaded @Threads( 1 )",
+       x = "",
+       y = "ns/op") +
+  theme_classic() +
+  scale_y_continuous(limits=c(0, max(df$value) + 50), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+# Можно ли лучше ?
+
+# Compare-and-Set
+
+## CAS Allocator {.casAllocation}
+<pre><code class="java">public class CASAllocator implements Allocator {
+    private final AtomicLong memoryPointer = 
+        new <span class="hl">AtomicLong</span>();
+
+    @Override
+    public long malloc(long size) {
+        return memoryPointer.<span class="hl">getAndAdd</span>( size );
+    }
+}
+</code></pre>
+
+## Allocators Performance Benchmark {.casAllocationBenchmark}
+<pre><code class="java">@Benchmark @Threads(10)
+public long casAllocator() {
+    return casAllocator.malloc( 16 );
+}
+</code></pre>
+
+## Allocators Performance Benchmark {.casAllocationBenchmark}
+
+```{r, fig.width=10,fig.height=3}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == 'sync' | alloc == "single-threaded" )
+
+ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  coord_flip() +
+  labs(title = "sync/cas @Threads ( 10 ), single-threaded @Threads( 1 )",
+       x = "",
+       y = "ns/op") +
+  theme_classic() +
+  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+## Java Allocation {.javaAllocation}
+<pre><code class="java">@Benchmark @Threads( 10 )
+public Object javaAllocation() {
+    return new Object();
+}
+</code></pre>
+
+## Java Allocation {.javaAllocation}
+
+```{r, fig.width=10,fig.height=3}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "single-threaded")
+
+ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  coord_flip() +
+  labs(title = "@Threads( 10 )",
+       x = "",
+       y = "ns/op") +
+  theme_classic() +
+  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+# Можно ли ещё лучше ?
+
+## Границы коллизий :: многопоточный
+<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
+final int[] hashCodesPerThread = new int[threads];
+final Phaser phaser = new Phaser(threads);
+final AtomicBoolean collision = new AtomicBoolean(false);
+
+<span class="hl">IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt;</span> {
+  while ( ! collision.get() ) {
+    phaser.arriveAndAwaitAdvance();
+
+    synchronized (uniqueHashCodes) {
+      Object obj = new Object();
+      gcKeeper.add(obj);
+      hashCodesPerThread[threadNo] = obj.hashCode();
+      collision.compareAndSet(false,
+        ! uniqueHashCodes.add(obj.hashCode()) );
+    }
+  }
+}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
+
+## Границы коллизий :: многопоточный
+
+<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
+final int[] hashCodesPerThread = new int[threads];
+final Phaser phaser = new Phaser(threads);
+final AtomicBoolean collision = new AtomicBoolean(false);
+
+IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
+  while ( !collision.get() ) {
+    phaser.arriveAndAwaitAdvance();
+
+    synchronized (uniqueHashCodes) {
+      <span class="hl">Object obj = new Object();
+      gcKeeper.add(obj);
+      hashCodesPerThread[threadNo] = obj.hashCode();
+      collision.compareAndSet(false,
+        ! uniqueHashCodes.add(obj.hashCode()) );</span>
+    }
+  }
+}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
+
+## Границы коллизий :: многопоточный
+<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
+final int[] hashCodesPerThread = new int[threads];
+final Phaser phaser = new Phaser(threads);
+final AtomicBoolean collision = new AtomicBoolean(false);
+
+IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
+  <span class="hl">while ( ! collision.get() ) </span> {
+    phaser.arriveAndAwaitAdvance();
+
+    synchronized (uniqueHashCodes) {
+      Object obj = new Object();
+      gcKeeper.add(obj);
+      hashCodesPerThread[threadNo] = obj.hashCode();
+      <span class="hl">collision.compareAndSet(false,
+        ! uniqueHashCodes.add(obj.hashCode()) )</span>;
+    }
+  }
+}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
+
+## Границы коллизий :: многопоточный
+
+<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
+final int[] hashCodesPerThread = new int[threads];
+<span class="hl">final Phaser phaser = new Phaser(threads);</span>
+final AtomicBoolean collision = new AtomicBoolean(false);
+
+IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
+  while ( ! collision.get() ) {
+    <span class="hl">phaser.arriveAndAwaitAdvance();</span>
+
+    synchronized (uniqueHashCodes) {
+      Object obj = new Object();
+      gcKeeper.add(obj);
+      hashCodesPerThread[threadNo] = obj.hashCode();
+      collision.compareAndSet(false,
+        ! uniqueHashCodes.add(obj.hashCode()) );
+    }
+  }
+}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
+
+## Распределение hashCode по нитям
+
+размер: 1_566_762
+
+объектов в нитях: [394_012, 394_012, 394_012, 394_013]
+
+разница thread-0 - thread-3 : <span class="huge">718_720</span>
+
+разница thread-1 - thread-0 : <span class="huge">737_824</span>
+
+разница thread-2 - thread-1 : <span class="huge">786_280</span>
+
+## Плохая новость {.hashCode19Bit}
+
+объектов в нитях: [394012, 394012, 394012, 394013]
+
+$$ log_2{394012} \approx 18.5 $$
+
+<div class="center"><span class="huge">22bit → 19bit</span></div>
+
+## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
+<pre><code class="java">public class TLABLikeAllocator implements Allocator {
+  private static final long <span class="hl">SIZE = 1024L * 1024L</span>;
+  
+  private final AtomicLong memoryPointer = new AtomicLong();
+  private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
+       ThreadLocal.withInitial(() -&gt; new AddressHolder());
+
+  public long malloc( long size ) {
+    AddressHolder addressHolder = threadLocal.get();
+    while( true ) {
+      if (addressHolder.value + size &lt;= addressHolder.maxValue) {
+          long old = addressHolder.value;
+          addressHolder.value += size;
+          return old;
+      }
+
+      long value = memoryPointer.getAndAdd( SIZE );
+      addressHolder.value = value;
+      addressHolder.maxValue = value + SIZE;
+    }
+  }
+}
+</code></pre>
+
+## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
+<pre><code class="java">public class TLABLikeAllocator implements Allocator {
+  private static final long SIZE = 1024L * 1024L;
+  
+  private final AtomicLong <span class="hl">memoryPointer = new AtomicLong()</span>;
+  private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
+       ThreadLocal.withInitial(() -&gt; new AddressHolder());
+
+  public long malloc( long size ) {
+    AddressHolder addressHolder = threadLocal.get();
+    while( true ) {
+      if (addressHolder.value + size &lt;= addressHolder.maxValue) {
+          long old = addressHolder.value;
+          addressHolder.value += size;
+          return old;
+      }
+
+      long value = <span class="hl">memoryPointer.getAndAdd( SIZE )</span>;
+      addressHolder.value = value;
+      addressHolder.maxValue = value + SIZE;
+    }
+  }
+}
+</code></pre>
+
+## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
+<pre><code class="java">public class TLABLikeAllocator implements Allocator {
+  private static final long SIZE = 1024L * 1024L;
+  
+  private final AtomicLong memoryPointer = new AtomicLong();
+  private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
+       <span class="hl">ThreadLocal.withInitial(() -&gt; new AddressHolder())</span>;
+
+  public long malloc( long size ) {
+    AddressHolder addressHolder = threadLocal.get();
+    while( true ) {
+      <span class="hl">if (addressHolder.value + size &lt;= addressHolder.maxValue) {
+          long old = addressHolder.value;
+          addressHolder.value += size;
+          return old;
+      }</span>
+
+      long value = memoryPointer.getAndAdd( SIZE );
+      addressHolder.value = value;
+      addressHolder.maxValue = value + SIZE;
+    }
+  }
+}
+</code></pre>
+## Allocators Performance Benchmark {.tlabAllocatorBenchmark}
+<pre><code class="java">@Benchmark @Threads( 10 )
+public long tlabAllocator() {
+    return tlabAllocator.malloc( 16 );
+}</code></pre>
+
+## Allocators Performance Benchmark {.tlabAllocatorBenchmark}
+```{r, fig.width=10,fig.height=3}
+
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
+  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+  coord_flip() +
+  labs(title = "@Threads( 10 )",
+       x = "",
+       y = "ns/op") +
+  theme_classic() +
+  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+## Thread Local Allocation Buffer
+
+<embed src="images/tlab.svg" type="image/svg+xml" />
+
+## Thread Local Allocation Buffer
+
+<embed src="images/tlab2.svg" type="image/svg+xml" />
+
+## Границы коллизий :: многопоточный :: БЕЗ TLAB
+
+<pre><code class="java">IntStream.range(0, threads).forEach(threadNo -> { new Thread(() -> {
+    while (!collision.get()) {
+        phaser.arriveAndAwaitAdvance();
+
+        synchronized (uniqueHashCodes) {
+            final Object obj = new Object();
+            gcKeeper.add(obj);
+            hashCodesPerThread[threadNo] = obj.hashCode();
+            collision.compareAndSet(false, 
+                !uniqueHashCodes.add(obj.hashCode()));
+        }
+    }
+}).start();});
+</code></pre>
+
+<code><span class="highlight">-XX:-UseTLAB</span> -Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX</span></code>
+
+## Распределение hashCode по нитям БЕЗ TLAB
+
+размер: 1,650,138
+
+разница thread-1 - thread-2 : <span class="huge">16</span>
+
+разница thread-3 - thread-1 : <span class="huge">16</span>
+
+разница thread-0 - thread-3 : <span class="huge">16</span>
+
+## Стоимость TLAB {.tlabAllocatorBenchmark}
+
+<pre><code class="java">@Benchmark @Threads(10)
+public Object allocate() {
+   return new Object();
+}</code></pre>
+
+## Стоимость TLAB {.tlabAllocatorBenchmark}
+
+```{r, fig.width=10,fig.height=3}
+df = read.csv(file = "csv/UseTLAB.csv", header = TRUE)
+ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
+  geom_bar(stat="identity",  colour="black") +
+  scale_fill_manual(values=c("-XX:-UseTLAB"='#f57670', "-XX:+UseTLAB"="#1fbec3")) +
+  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  coord_flip() +
+  labs(title = "@Threads( 10 )",
+       x = "",
+       y = "ns/op") +
+  scale_y_continuous(limits = c(0, max(df$value) + 200), expand = c(0, 0)) +
+  theme_classic() +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size=16, face = "bold"))+
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+# 32bit → 19bit
+
+# Может быть Random ?
+
+## Парадокс дней рождения {.paradox}
+
+$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$ 
+$$ = \frac{d}{d^{n} \cdot (d - n)!}$$
+
+
+$$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
+$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx 77162 $$
+
+## -XX:hashCode {.XXhashCode}
+
+-XX:hashCode=k | Тип
+---------------|----------
+  0 | <span class="good">[Park-Miller ГПСЧ](https://en.wikipedia.org/wiki/Lehmer_random_number_generator) </span>
+  1 | <span class="bad">fn(адрес объекта, глобальное состояние)</span>
+  2 | <span class="bad">константа 1</span>
+  3 | <span class="good">последовательный счетчик</span>
+  4 | <span class="bad">адрес объекта</span>
+  5 | <span class="highlight">[Marsagliа xor-shift ГПСЧ](https://en.wikipedia.org/wiki/Xorshift)</span> _**по умолчанию** в java 8_
+
+## Дамп объекта при -XX:hashCode=5
+
+<embed src="images/header.svg" type="image/svg+xml" />
+
+## Распределение 10 млн объектов в 10 нитях
+```{r  fig.width=10, fig.height=5, echo = FALSE}
+
+addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
+ggplot() +
+  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.5, bins = 800) +
+  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.5, bins = 800) +
+  scale_fill_manual(name="тип hashCode:", labels=c("address"="адрес", "MXSRng"="MXS-гпсч"), values=c("address" = "#f57670", "MXSRng"="#1fbec3")) +
+  labs(title =
+         sprintf("количество коллизий по адресу: %s k, по MXS-гпсч: %s k",
+                 round( sum(duplicated(addressHashCode)) / 1000, 1),
+                 round( sum(duplicated(defaultHashCode)) / 1000, 1)),
+       x = "hashCode") +
+  theme_classic() +
+  theme(axis.title.y=element_blank()) +
+  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
+
+  theme(aspect.ratio = 9/16)
+```
+
+# Beyond the legend
+
+
+## String join
+
+<pre><code class="java">public static String join(String separator, 
+      Collection&lt;String&gt; strings){
+  final StringBuffer buffer = new StringBuffer();
+
+  for(Iterator&lt;String&gt; it = strings.iterator(); it.hasNext(); ){
+      buffer.append(it.next());
+
+      if (it.hasNext()) buffer.append(separator);
+  }
+
+  return buffer.toString();
+}
+</code></pre>
 
 ## StringBufferPerfTest - Single Thread
 
-```java
-StringBuffer buffer1, buffer2;
+<pre><code class="java">StringBuffer buffer1, buffer2;
+
+@Benchmark
+public String join1() {
+    <span class="hl">buffer1.setLength(0);    return buffer1.append('a').toString()</span>;
+}
+
+@Benchmark
+public String join2() {
+    <span class="hl">buffer2.setLength(0);    return buffer2.append('a').toString()</span>;
+}
+
+@Setup
+public void setup(Blackhole bh) {
+    buffer1 = new StringBuffer(); buffer2 = new StringBuffer();
+    bh.consume( System.identityHashCode( buffer2 ) );
+}
+</code></pre>
+
+## StringBufferPerfTest - Single Thread
+
+<pre><code class="java">StringBuffer buffer1, <span class="hl">buffer2</span>;
 
 @Benchmark
 public String join1() {
@@ -1073,16 +1318,15 @@ public String join1() {
 
 @Benchmark
 public String join2() {
-    buffer2.setLength(0);    return buffer2.append('a').toString();
+    <span class="hl">buffer2</span>.setLength(0);    return <span class="hl">buffer2</span>.append('a').toString();
 }
 
 @Setup
 public void setup(Blackhole bh) {
-    buffer1 = new StringBuffer(); buffer2 = new StringBuffer();
-    bh.consume(System.identityHashCode(buffer2));
+    buffer1 = new StringBuffer(); <span class="hl">buffer2 = new StringBuffer()</span>;
+    bh.consume( <span class="hl">System.identityHashCode( buffer2 )</span> );
 }
-```
-
+</code></pre>
 ## StringBufferPerfTest результаты
 
 
@@ -1112,33 +1356,30 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 
 ## Biased Locking demo:  {.biasedDemo}
 
-```java
-Object object = new Object();
+<pre><code class="java">Object object = new Object();
 
 String dump = dump(object);
-```
+</code></pre>
 
 <embed src="images/header-biasedlocking0.svg" type="image/svg+xml" />
 
 <code><span class="highlight">-XX:BiasedLockingStartupDelay=0</span></code>
 
 ## Biased Locking demo:  {.biasedDemo}
-```java
-final List list = new ArrayList();
+<pre><code class="java">final List list = new ArrayList();
 synchronized (object) {
     list.add(object);
 }
 String dump = dump(object);
-```
+</code></pre>
 <embed src="images/header-biasedlocking1.svg" type="image/svg+xml" />
 
 ## Biased Locking demo:  {.biasedDemo}
 
-```java
-int hashCode = System.identityHashCode(object);
+<pre><code class="java">int hashCode = System.identityHashCode(object);
 
 String dump = dump(object);
-```
+</code></pre>
 
 <embed src="images/header-biasedlocking2.svg" type="image/svg+xml" />
 
