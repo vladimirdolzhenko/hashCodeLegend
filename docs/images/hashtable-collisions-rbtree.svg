@@ -3,7 +3,7 @@
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
-<svg height="420" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="460" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
 
@@ -38,7 +38,7 @@ text.w {
   <marker id="TriangleOutL" orient="auto" refX="0.0" refY="0.0" style="overflow:visible">
     <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
   </marker>
-  <g transform="translate(50 20) scale(2)">
+  <g transform="translate(50 20) scale(2.25)">
     <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
     <g transform="translate(0 0)">
       <text class="note" text-anchor="middle" x="25" y="28">key1</text>
@@ -76,6 +76,6 @@ text.w {
     <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-    <text class="bigcomment" text-anchor="end" x="450" y="180">сложность → O(log(N))</text>
+    <text class="bigcomment" text-anchor="end" x="400" y="180">сложность → O(log(N))</text>
   </g>
 </svg>

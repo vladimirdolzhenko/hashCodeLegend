@@ -5,7 +5,6 @@
     text-align:center;
     width:100%;
 }
-
 i, em {
     font-style: italic !important;
 }
@@ -27,23 +26,26 @@ slides > slide > hgroup + article {
     margin-top: 20px !important;
 }
 
-article.native pre {
-    font-size: 1.2em !important;
-}
-
-
 article.tlabcode {
     margin-top: 0px !important;
 }
 
 slides > slide > hgroup + article p {
+    /*margin-bottom: 1em !important;
+    margin-top: 1em !important;*/
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.AaBB p,
+.javadoc p {
     margin-bottom: 1em !important;
     margin-top: 1em !important;
 }
 
-.segue code {
+/*.segue code {
     color: white !important;
-}
+}*/
 
 .segue a {
     color: #d6d6d6 !important;
@@ -66,13 +68,101 @@ span.huge {
 }
 
 pre {
-    font-size: 24px !important;
+    font-size: 28px !important;
     font-family: 'PT Mono', 'monospace'  !important;
+    line-height: 28px !important;
+    padding: 10px 0 0px 60px !important;
+    /*background-color: #eee;*/
 }
 
-.abstract, .hash, .javadoc, .conclusion {
+pre > code.hljs {
+    font-size: 30px !important;
+    font-family: 'PT Mono', 'monospace'  !important;
+    line-height: 30px !important;
+    overflow: hidden;
+    width: 150% !important;
+    padding: 0px 0px 0px 0em !important;
+    background-color: transparent !important;
+}
+
+
+pre > code.hljs > span.hl,
+pre > span.highlight,
+code > span.highlight,
+pre > code.hljs > span.hl .hljs-comment,
+span.highlight,
+span.highlight a {
+    background-color: #003dae !important;
+    font-weight: bold;
+    color: white !important;
+    padding: 2px !important;
+    /*border: 2px solid #ccc;*/
+}
+
+pre > code.hljs > span.hl .hljs-keyword {
+    color: #aaf !important;
+}
+
+pre > code.hljs > span.hl .hljs-number {
+    color: #faa !important;
+}
+
+pre > code.hljs > span.hl .hljs-meta {
+    color: #ffaaaa !important;
+}
+
+pre > code.hljs > span.hl .hljs-type {
+ color: #ffbbbb !important;
+}
+
+pre > code.hljs > span.hl .hljs-string {
+    color: #60ffbd !important;
+}
+
+.MathJax_Display {
+    margin: 0px !important;
+}
+
+
+.hljs-type {
+    color: #d94d3a !important;
+}
+
+.hljs-string {
+    color: #009f5d !important;
+}
+
+.hljs-meta {
+    color: #7f0000 !important;
+}
+
+.hljs-keyword {
+    color: #0066cc !important;
+}
+
+.hljs .static {
+    font-style: italic !important;
+}
+
+
+code > span.highlight {
+    font-size: 1.1em !important;
+    font-weight: bold;
+}
+
+.abstract1000, .abstract10000000, .hash, .javadoc, .conclusion {
     font-size: 1.4em !important;
     line-height: 1.1em;
+}
+
+.javadoc pre code {
+    padding: 5px !important;
+    font-size: 1.4em !important;
+    line-height: 45px !important;
+}
+
+.abstract1000 {
+    background-color: #FCC;
 }
 
 .javadoc a {
@@ -84,24 +174,26 @@ pre {
     line-height: 1.1em;
 }
 
-.heap > pre {
+.heap > pre code {
     font-size: 30px !important;
     line-height: 1.2em;
 }
 
+.polynomHashCode > pre code {
+    font-size: 34px !important;
+    line-height: 39px !important;
+}
+
 .native > pre {
-    font-size: 1.2em !important;
-    line-height: 1.1em;
+    background-color: white !important;
 }
 
-.polynomHashCode > pre {
-    font-size: 1em !important;
-    line-height: 1.1em;
-}
-
-.unsafe > pre, .hashCodeComplexity > pre {
-    font-size: 1.1em !important;
-    line-height: 1.1em;
+.unsafe > pre code,
+.hashCodeComplexity > pre code,
+.native > pre code,
+.hashFunctionData > pre code {
+    font-size: 1.3em !important;
+    line-height: 1.1em !important;
 }
 
 code > span.hashCode {
@@ -109,17 +201,19 @@ code > span.hashCode {
     background-color: black;
 }
 
-code > span.highlight {
-    font-size: 1.1em !important;
-    font-weight: bold;
-    background: #80f080;
+.IdentityHashCodeCollision > pre code {
+    font-size: 28px !important;
+    line-height: 1.2em !important;
 }
 
-.IdentityHashCodeCollision > pre,
-.IdentityHashCodeCollisionResults > pre,
-.unsafeaddress > pre {
-    font-size: 28px !important;
-    line-height: 1.2em;
+.IdentityHashCodeCollisionResults > pre {
+    font-size: 1.2em !important;
+    line-height: 1.25em !important;
+}
+
+.unsafeaddress > pre code {
+    font-size: 30px !important;
+    line-height: 1.1em !important;
 }
 
 .hashCode22Bit, .generations, .hashCode19Bit, .AaBB {
@@ -148,21 +242,38 @@ div.center {
     padding: 50px 0;
 }
 
-.AaBB > pre {
-    font-size: 1em !important;
-    line-height: 1.2em;
+.AaBB > pre code {
+    font-size: 1.4em !important;
+    line-height: 1.2em !important;
 }
 
-.simpleAllocation > pre {
-    font-size: 1.1em !important;
-    line-height: 1.2em;
+.simpleAllocation > pre code {
+    font-size: 1.25em !important;
+    line-height: 1.1em !important;
 }
 
-.urbanLegendC > pre, .jol > pre, .javaAllocation > pre, .casAllocationBenchmark > pre, .syncAllocation > pre,
-.syncAllocationBenchmark > pre, .casAllocation > pre, .tlabAllocatorBenchmark > pre,
-.ObjectsHash > pre, .biasedDemo > pre {
-    font-size: 1.2em !important;
-    line-height: 1.2em;
+.syncAllocation > pre code,
+.casAllocation > pre code,
+.biasedDemo > pre code  {
+    font-size: 1.3em !important;
+    line-height: 1.2em !important;
+ }
+
+.jol > pre code {
+    font-size: 1.5em !important;
+    line-height: 1.3em !important;
+}
+
+.javaAllocation > pre code, .casAllocationBenchmark > pre code,
+.syncAllocationBenchmark > pre code, .tlabAllocatorBenchmark > pre code,
+.ObjectsHash > pre code {
+    font-size: 1.6em !important;
+    line-height: 1.6em !important;
+}
+
+.urbanLegendC > pre code {
+    font-size: 1.4em !important;
+    line-height: 1.2em !important;
 }
 
 slide > hgroup + article.unsafe {
