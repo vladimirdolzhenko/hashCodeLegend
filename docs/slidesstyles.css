@@ -191,9 +191,21 @@ code > span.highlight {
 .unsafe > pre code,
 .hashCodeComplexity > pre code,
 .native > pre code,
-.hashFunctionData > pre code {
+.hashFunctionData > pre code,
+.stringJoin > pre code {
     font-size: 1.3em !important;
     line-height: 1.1em !important;
+}
+
+.objectDumpRightAfterCreation > pre code {
+    font-size: 1.4em !important;
+    line-height: 1.1em !important;
+}
+
+.tlabcode > pre code,
+.multiThreadedCollisions > pre code {
+    font-size: 27px !important;
+    line-height: 28px !important;
 }
 
 code > span.hashCode {

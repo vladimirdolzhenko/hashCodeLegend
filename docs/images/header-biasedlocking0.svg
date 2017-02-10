@@ -3,7 +3,7 @@
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
-<svg height="190" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="200" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
 
@@ -45,7 +45,7 @@
 }
     ]]></style>
   </defs>
-  <g transform="translate(-20 20) scale(2)">
+  <g transform="translate(-20 40) scale(3)">
     <g transform="translate(0 0)">
       <g transform="translate(10 15)">
         <text class="comment" x="0" y="0">dump</text>

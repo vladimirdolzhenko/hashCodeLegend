@@ -23,13 +23,13 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
  * <code>
  * -XX:BiasedLockingStartupDelay=0 -XX:+UseBiasedLocking
  * Benchmark                                Mode  Cnt   Score   Error  Units
- * StringBufferPerfTest.join1          avgt    5   22.162 ± 13.870  ns/op
- * StringBufferPerfTest.join2  avgt    5  56.597 ±  8.332  ns/op
+ * StringBufferPerfTest.join1  avgt    5   6.848 ± 1.343  ns/op
+ * StringBufferPerfTest.join2  avgt    5  20.565 ± 0.896  ns/op
  * <p>
  * -XX:BiasedLockingStartupDelay=0 -XX:-UseBiasedLocking
- * Benchmark                                Mode  Cnt   Score   Error  Units
- * StringBufferPerfTest.join1          avgt    5  57.584 ± 8.817  ns/op
- * StringBufferPerfTest.join2  avgt    5  57.528 ± 8.925  ns/op
+ * Benchmark                   Mode  Cnt   Score   Error  Units
+ * StringBufferPerfTest.join1  avgt    5  19.547 ± 0.655  ns/op
+ * StringBufferPerfTest.join2  avgt    5  19.474 ± 0.396  ns/op
  * </code>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -52,14 +52,12 @@ public class StringBufferPerfTest {
 
     @Benchmark
     public String join1() {
-        buffer1.setLength(0);
-        return buffer1.append('a').toString();
+        return buffer1.toString();
     }
 
     @Benchmark
     public String join2() {
-        buffer2.setLength(0);
-        return buffer2.append('a').toString();
+        return buffer2.toString();
     }
 
     public static void main(String[] args) throws RunnerException {
