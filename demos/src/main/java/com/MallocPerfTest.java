@@ -123,27 +123,35 @@ public class MallocPerfTest {
     }
 
     @Benchmark
-    @Threads(10)
+    @Threads(4)
     public long syncAllocator() {
         return syncAllocator.malloc(16);
     }
 
     @Benchmark
-    @Threads(10)
+    @Threads(4)
     public long casAllocator() {
         return casAllocator.malloc(16);
     }
 
     @Benchmark
-    @Threads(10)
+    @Threads(4)
     public long tlabAllocator() {
         return tlabAllocator.malloc(16);
     }
 
     @Benchmark
-    @Threads(10)
+    @Threads(4)
     public Object javaAllocation() {
         return new Object();
+    }
+
+    @Benchmark
+    @Threads(4)
+    public Object javaObjectAndHashCode() {
+        Object object = new Object();
+        object.hashCode();
+        return object;
     }
 
     public static void main(String[] args) throws RunnerException {
