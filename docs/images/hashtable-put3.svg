@@ -18,15 +18,15 @@
   <marker id="TriangleOutL" orient="auto" refX="0.0" refY="0.0" style="overflow:visible">
     <path d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z " id="path4051" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.8)"/>
   </marker>
-  <g transform="translate(20 20) scale(2)">
+  <g transform="translate(20 20) scale(2.5)">
     <g transform="translate(10 25)">
       <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
       <g transform="translate(80 -30)">
         <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">23derevo</text>
+        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
       </g>
       <text class="comment" x="140" y="0">) = 23</text>
-      <text class="comment" x="250" y="0">index = 23 % array.length = 2</text>
+      <text class="comment" x="200" y="0">index = 23 % array.length = 2</text>
     </g>
     <g transform="translate(0 70)">
       <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
@@ -35,24 +35,24 @@
       <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-      <g transform="translate(50 0)">
+      <g transform="translate(250 0)">
         <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">jbaruch</text>
+        <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
         <path class="link" d="M25,50 25,63"/>
       </g>
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">shipilёv</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
       <path class="link" d="M25,50 25,63"/>
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
       <g transform="translate(100 0)">
         <rect class="arrayKeyItem selected focused" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">23derevo</text>
+        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
         <path class="link" d="M25,50 25,63"/>
       </g>
       <g transform="translate(0 70)">
         <g transform="translate(0 0)">
           <rect class="arrayValueItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">+420..</text>
+          <text class="note" text-anchor="middle" x="25" y="28">+79...</text>
         </g>
         <rect class="arrayValueItem" height="50" width="50" x="50" y="0"/>
         <rect class="arrayValueItem" height="50" width="50" x="100" y="0"/>
@@ -60,13 +60,13 @@
         <rect class="arrayValueItem" height="50" width="50" x="200" y="0"/>
         <rect class="arrayValueItem" height="50" width="50" x="250" y="0"/>
         <rect class="arrayValueItem" height="50" width="50" x="300" y="0"/>
-        <g transform="translate(50 0)">
+        <g transform="translate(250 0)">
           <rect class="arrayValueItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">+1..</text>
+          <text class="note" text-anchor="middle" x="25" y="28">+79...</text>
         </g>
         <g transform="translate(100 0)">
           <rect class="arrayValueItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">+7916..</text>
+          <text class="note" text-anchor="middle" x="25" y="28">+79...</text>
         </g>
       </g>
     </g>

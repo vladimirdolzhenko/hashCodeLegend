@@ -22,14 +22,14 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 /**
  * <code>
  * -XX:BiasedLockingStartupDelay=0 -XX:+UseBiasedLocking
- * Benchmark                                Mode  Cnt   Score   Error  Units
- * StringBufferPerfTest.join1  avgt    5   6.848 ± 1.343  ns/op
- * StringBufferPerfTest.join2  avgt    5  20.565 ± 0.896  ns/op
+ * Benchmark                                  Mode  Cnt   Score   Error  Units
+ * StringBufferPerfTest.buffer                avgt    5   8.884 ± 1.585  ns/op
+ * StringBufferPerfTest.bufferWithIdHashCode  avgt    5  24.509 ± 0.549  ns/op
  * <p>
  * -XX:BiasedLockingStartupDelay=0 -XX:-UseBiasedLocking
- * Benchmark                   Mode  Cnt   Score   Error  Units
- * StringBufferPerfTest.join1  avgt    5  19.547 ± 0.655  ns/op
- * StringBufferPerfTest.join2  avgt    5  19.474 ± 0.396  ns/op
+ * Benchmark                                  Mode  Cnt   Score   Error  Units
+ * StringBufferPerfTest.buffer                avgt    5  24.409 ± 4.486  ns/op
+ * StringBufferPerfTest.bufferWithIdHashCode  avgt    5  23.753 ± 1.696  ns/op
  * </code>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -41,23 +41,23 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @State(Scope.Benchmark)
 public class StringBufferPerfTest {
 
-    StringBuffer buffer1, buffer2;
+    StringBuffer buffer, bufferWithIdHashCode;
 
     @Setup
     public void setup(Blackhole bh) {
-        buffer1 = new StringBuffer();
-        buffer2 = new StringBuffer();
-        bh.consume(System.identityHashCode(buffer2));
+        buffer = new StringBuffer();
+        bufferWithIdHashCode = new StringBuffer();
+        bh.consume(System.identityHashCode(bufferWithIdHashCode));
     }
 
     @Benchmark
-    public String join1() {
-        return buffer1.toString();
+    public String buffer() {
+        return buffer.toString();
     }
 
     @Benchmark
-    public String join2() {
-        return buffer2.toString();
+    public String bufferWithIdHashCode() {
+        return bufferWithIdHashCode.toString();
     }
 
     public static void main(String[] args) throws RunnerException {

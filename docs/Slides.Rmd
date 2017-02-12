@@ -24,30 +24,18 @@ library(ggplot2)
 Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
 
 rows = 1000
-#rows = 10000000
+rows = 10000000
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
 ## План {.abstract`r sprintf("%d",rows)`} 
-* Капитанство: немного теории
+* Немного теории
 * Правила вычисления hashCode
     + DoS-атака с примененимем hashCode
 * HashCode как адрес объекта - миф или реальность 
     + JVM потроха: Unsafe, GC и аллокации
     + Немного баттлов про hashCode
 * Удешевление блокировок
-
-## Ассоциативный массив
-
-<embed src="images/hashtable.svg" type="image/svg+xml" />
-
-## Hash! {.hash}
-
-<embed src="images/hash.svg" type="image/svg+xml" />
-
-`f = hashCode` , тогда
-
-`index = key.hashCode() % keys.length`
 
 ## javadoc: {.javadoc}
 ### java.lang.Object
@@ -60,33 +48,29 @@ provided by **HashMap**.
 
 [https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
 
-## Записать ( Алексей, +791... )
+## Ассоциативный массив {.hash}
 
-<embed src="images/hashtable-put.svg" type="image/svg+xml" />
+<embed src="images/hashtable.svg" type="image/svg+xml" />
 
+<pre><code class="java">int hash = key.hashCode();
+int index = Math.abs( hash ) % keys.length;
+</code></pre>
 
-## Найти Фёдора
+## Записать ( Алексей, +79... )
 
-<embed src="images/hashtable-get.svg" type="image/svg+xml" />
+<embed src="images/hashtable-put3.svg" type="image/svg+xml" />
 
 ## Сложность поиска / вставки {.hashCodeComplexity}
+<pre><code class="java">String key = "Алексей";
 
-<pre><code class="java">
-String key = "Фёдор";
-
-int index = key.hashCode() % keys.length;
+int hash = key.hashCode();
+int index = Math.abs( hash ) % keys.length;
 
 if ( key.equals( keys[index] ) ) {
     return values[index];
 }
-
-return null;
-</code></pre>
+return null;</code></pre>
 <span class="highlight">сложность → **O(1)**</span>
-
-## Изменение hashCode
-
-<embed src="images/hashtable-broken.svg" type="image/svg+xml" />
 
 ## Контракт hashCode {.javadoc}
 
@@ -99,6 +83,11 @@ used in equals comparisons on the object is modified.
 
 
 [https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
+
+
+## Нарушение контракта hashCode
+
+<embed src="images/hashtable-broken.svg" type="image/svg+xml" />
 
 ## Коллизии
 
@@ -120,46 +109,28 @@ Integer i2 = new Integer(42);
 assert i1.hashCode() == i2.hashCode(); // <span class="hl">true</span>
 </code></pre>
 
-## Простой hashCode
-<pre><code class="java">public class Point {
-    public int x, y;
-
-    @Override
-    public int hashCode(){
-        return 31 * <span class="hl">x</span> + <span class="hl">y</span>;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Point)) return false;
-
-        Point point = (Point) o;
-
-        return <span class="hl">x</span> == point.<span class="hl">x</span> && <span class="hl">y</span> == point.<span class="hl">y</span>;
-    }
-}
-</code></pre>
-
-## Objects.hash {.ObjectsHash}
-
-<pre><code class="java">@Override
-public int hashCode(){
-    return Objects.hash(x, y);
-}
-
-</code></pre>
-
 ## Полиномиальный hashCode {.polynomHashCode}
 
-$$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot c_k}  $$
+```
+```
+
+$$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
+
+## String.hashCode() {.stringHashCode}
+
 <pre><code class="java">public final class String {
     private final char value[];
-
+    private int hash; 
+    
     public int hashCode() {
-        int h = 0;
-        <span class="hl">for (int i = 0; i < value.length; i++)</span> {
-            <span class="hl">h = 31 * h + value[i];</span>
+        int h = hash;
+        if (h == 0 &amp;&amp; value.length &gt; 0) {
+            char val[] = value;
+
+            <span class="hl">for (int i = 0; i < value.length; i++) 
+                h = 31 * h + val[i]</span>;
+            
+            hash = h;
         }
         return h;
     }
@@ -188,7 +159,7 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot c_k}  $$
 
 ## 31 : Детективная история {.detective31}
 
-* Josh Bloch, [java bug #4045622](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4045622) - <span class="huge">1997 год (!!!)</span>
+* <span class="huge">1997 год (!!!)</span>: [java bug #4045622](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4045622)
     + Все слова и словоформы в словаре Merriam-Webster 2 ред. (311_141 строк, ср. длина 10 символов).
     + Все строки в `/bin/*`, `/usr/bin/*`, `/usr/lib/*`, `/usr/ucb/*` и `/usr/openwin/bin/*`  (66_304 строк, ср. длина 21 символов).
     + Список URL, собранных web-пауком за несколько часов (28_372 строк, ср. длина 49 символов).
@@ -218,18 +189,18 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-    <span class="hl">@Benchmark</span> @Threads(1)
-    public void fillMap( Blackhole bh ) {
-        <span class="hl">for (String key : keys) bh.consume( map.put(key, key) );</span>
-    }
+  <span class="hl">@Benchmark</span> @Threads(1)
+  public void fillMap( Blackhole bh ) {
+    <span class="hl">for (String key : keys) map.put(key, key);
+    bh.consume( map );</span>
+  }
 
-    String[] keys;
-    Map map = new HashMap();
-    
-    @Setup
-    public void setup() {
-        keys = loadKeysFromFile();
-    }
+  Map map = new HashMap(); String[] keys; 
+  
+  @Setup
+  public void setup() {
+    keys = loadKeysFromFile();
+  }
 }
 </code></pre>
 
@@ -241,18 +212,18 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-    @Benchmark <span class="hl">@Threads(1)</span>
-    public void fillMap( Blackhole bh ) {
-        for (String key : keys) bh.consume( map.put(key, key) );
-    }
+  @Benchmark <span class="hl">@Threads(1)</span>
+  public void fillMap( Blackhole bh ) {
+    for (String key : keys) map.put(key, key);
+    bh.consume( map );
+  }
 
-    String[] keys;
-    Map map = new HashMap();
-    
-    @Setup
-    public void setup() {
-        keys = loadKeysFromFile();
-    }
+  Map map = new HashMap(); String[] keys;
+  
+  @Setup
+  public void setup() {
+    keys = loadKeysFromFile();
+  }
 }
 </code></pre>
 
@@ -264,18 +235,18 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-    @Benchmark @Threads(1)
-    public void fillMap( Blackhole bh ) {
-        for (String key : keys) bh.consume( map.put(key, key) );
-    }
+  @Benchmark @Threads(1)
+  public void fillMap( Blackhole bh ) {
+    for (String key : keys) map.put(key, key);
+    bh.consume( map );
+  }
 
-    String[] keys;
-    Map map = new HashMap();
-    
-    <span class="hl">@Setup</span>
-    public void setup() {
-        keys = <span class="hl">loadKeysFromFile()</span>;
-    }
+  Map map = new HashMap(); String[] keys;
+  
+  <span class="hl">@Setup</span>
+  public void setup() {
+    keys = <span class="hl">loadKeysFromFile()</span>;
+  }
 }
 </code></pre>
 
@@ -807,6 +778,8 @@ hash code collision 0x3055AA<span class="huge highlight">1</span>0
 hash code collision 0x3055AA<span class="huge highlight">2</span>0
 </pre>
 
+# address -> memory allocation
+
 ## Memory allocation  {.simpleAllocation}
  
 <pre><code class="java">public interface Allocator {
@@ -1294,12 +1267,12 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 <pre><code class="java">@Benchmark @Threads( 10 )
 public Object javaHashCode() {
       Object object = new Object();
-      object.hashCode();
+      object.<span class="hl">hashCode()</span>;
       return object;
   }
 </code></pre>
 
-## Вычислялся ли hashCode ?
+## Object.hashCode() benchmark
 
 ```{r, fig.width=10,fig.height=3}
 
@@ -1322,7 +1295,6 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 ```
 <embed src="images/less-is-more.svg" type="image/svg+xml" />
 
-
 ## Дамп объекта, сразу после создания {.objectDumpRightAfterCreation}  
 
 <pre><code class="java">Object object = new Object();
@@ -1332,113 +1304,160 @@ String dump = dump(object);
 
 <embed src="images/header-biasedlocking0.svg" type="image/svg+xml" />
 
-## String join {.stringJoin}
+# monitor {.nativeMonitor}
+<pre><code class="java">public class Object {
+  //// другие методы
+  public final native void notify();
 
-<pre><code class="java">public static String join(String separator, 
-      Collection&lt;String&gt; strings){
-  final StringBuffer buffer = new StringBuffer();
-
-  for(Iterator&lt;String&gt; it = strings.iterator(); 
-          it.hasNext(); ){
-      buffer.append(it.next());
-
-      if (it.hasNext()) buffer.append(separator);
-  }
-
-  return buffer.toString();
+  public final native void wait(long timeout)
+      throws InterruptedException;
 }
+
 </code></pre>
 
-## StringBufferPerfTest - Single Thread
 
-<pre><code class="java">StringBuffer buffer1, buffer2;
+## Biased Locking
 
-@Benchmark
-public String join1() {    <span class="hl">return buffer1.toString()</span>; }
+<embed src="images/biasedlocking.svg" type="image/svg+xml" />
 
-@Benchmark
-public String join2() { <span class="hl">return buffer2.toString()</span>; }
-
-@Setup
-public void setup(Blackhole bh) {
-    buffer1 = new StringBuffer(); 
-    buffer2 = new StringBuffer();
-    bh.consume( System.identityHashCode( buffer2 ) );
+## Biased Locking demo:  {.biasedDemo}
+<pre><code class="java">synchronized (object) {
+    object.notifyAll();
 }
+String dump = dump(object);
 </code></pre>
+<embed src="images/header-biasedlocking1.svg" type="image/svg+xml" />
 
-## StringBufferPerfTest - Single Thread
+## StringBufferPerfTest {.StringBufferPerfTestSingle}
 
-<pre><code class="java">StringBuffer buffer1, <span class="hl">buffer2</span>;
+<pre><code class="java">StringBuffer buffer = new StringBuffer();
 
-@Benchmark
-public String join1() { return buffer1.toString(); }
+@Benchmark @Thread(1)
+public String bufferToString() {    
+  return buffer.toString(); 
+}</code></pre>
 
-@Benchmark
-public String join2() { return buffer2.toString(); }
+<code><span class="highlight">-XX:+UseBiasedLocking</span></code> VS <code><span class="highlight">-XX:-UseBiasedLocking</span></code>
 
-@Setup
-public void setup(Blackhole bh) {
-    buffer1 = new StringBuffer(); 
-    <span class="hl">buffer2 = new StringBuffer()</span>;
-    bh.consume( <span class="hl">System.identityHashCode( buffer2 )</span> );
-}
-</code></pre>
+```
+```
+
+<code>-XX:BiasedLockingStartupDelay=0</code>
+
+## StringBufferPerfTest {.StringBufferPerfTestSingle}
+
+<pre><code class="java">StringBuffer buffer = new StringBuffer();
+
+@Benchmark @Thread(1)
+public String bufferToString() {    
+  return buffer.toString(); 
+}</code></pre>
+
+<code>-XX:+UseBiasedLocking</code> VS <code>-XX:-UseBiasedLocking</code>
+
+```
+```
+
+<code><span class="highlight">-XX:BiasedLockingStartupDelay=0</span></code>
+
+
 ## StringBufferPerfTest результаты
-
 
 ```{r, fig.width=10,fig.height=3}
 df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
 
+df <- subset(df, type == "-XX:+UseBiasedLocking" | type == "-XX:-UseBiasedLocking" )
+
 ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
-  scale_fill_manual(values=c('join1'='#1fbec3', 'join2'='#f57670')) +
+  scale_fill_manual(values=c('-XX:+UseBiasedLocking'='#1fbec3', '-XX:-UseBiasedLocking'='#f57670')) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   coord_flip() +
   theme_classic() +
   labs(title = "@Threads( 1 )",
        x = "",
        y = "ns/op") +
-  scale_y_continuous(limits=c(0,max(df$value)+10), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0,max(df$value)+5), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size=16, face = "bold"))+
   theme(legend.position="none")
 ```
 <embed src="images/less-is-more.svg" type="image/svg+xml" />
 
-## Biased Locking
+## identityHashCode
 
-<embed src="images/biasedlocking.svg" type="image/svg+xml" />
+<pre><code class="java">StringBuffer buffer = new StringBuffer();
+StringBuffer <span class="hl">bufferWithIdHashCode</span> = new StringBuffer();
 
-
-## Biased Locking demo:  {.biasedDemo}
-
-<pre><code class="java">Object object = new Object();
-
-String dump = dump(object);
-</code></pre>
-
-<embed src="images/header-biasedlocking0.svg" type="image/svg+xml" />
-
-<code><span class="highlight">-XX:BiasedLockingStartupDelay=0</span></code>
-
-## Biased Locking demo:  {.biasedDemo}
-<pre><code class="java">final List list = new ArrayList();
-synchronized (object) {
-    list.add(object);
+@Benchmark @Thread(1)
+public String buffer() {    
+  return buffer.toString(); 
 }
-String dump = dump(object);
-</code></pre>
-<embed src="images/header-biasedlocking1.svg" type="image/svg+xml" />
 
-## Biased Locking demo:  {.biasedDemo}
+@Benchmark  @Thread(1)
+public String bufferWithIdHashCode() { 
+  return <span class="hl">bufferWithIdHashCode</span>.toString(); 
+}
 
-<pre><code class="java">int hashCode = System.identityHashCode(object);
+@Setup
+public void setup(Blackhole bh) {
+    bh.consume( System.identityHashCode( 
+        bufferWithIdHashCode ) );
+}</code></pre>
 
-String dump = dump(object);
-</code></pre>
+## identityHashCode
+
+<pre><code class="java">StringBuffer buffer = new StringBuffer();
+StringBuffer bufferWithIdHashCode = new StringBuffer();
+
+@Benchmark  @Thread(1)
+public String buffer() {    
+  return buffer.toString(); 
+}
+
+@Benchmark  @Thread(1)
+public String bufferWithIdHashCode() { 
+  return bufferWithIdHashCode.toString(); 
+}
+
+@Setup
+public void setup(Blackhole bh) {
+    bh.consume( <span class="hl">System.identityHashCode( 
+        bufferWithIdHashCode )</span> );
+}</code></pre>
+
+## identityHashCode результаты
+
+```{r, fig.width=10,fig.height=3}
+df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
+
+df <- subset(df, type == "buffer -XX:-UseBiasedLocking" | type == 'buffer' | type == 'bufferWithIdHashCode')
+
+ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +  
+  geom_bar(stat="identity",  colour="black") +
+  scale_fill_manual(values=c('buffer -XX:-UseBiasedLocking'='#fa8074', 'buffer'='#21bd83', 'bufferWithIdHashCode'='#e67bf3')) +
+  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  coord_flip() +
+  theme_classic() +
+  labs(title = "@Threads( 1 )",
+       x = "",
+       y = "ns/op") +
+  scale_y_continuous(limits=c(0,max(df$value)+5), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size=16, face = "bold"))+
+  theme(legend.position="none")
+```
+<embed src="images/less-is-more.svg" type="image/svg+xml" />
+
+## Revoke Biased Locking:  {.biasedDemo}
+
+<pre><code class="java">int idHashCode 
+    = System.identityHashCode( object );
+
+String dump = dump(object);</code></pre>
 
 <embed src="images/header-biasedlocking2.svg" type="image/svg+xml" />
+
 
 ## Заключение {.conclusion}
 

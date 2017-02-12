@@ -3,7 +3,7 @@
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
-<svg height="195" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="300" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
 
@@ -52,10 +52,10 @@
 }
     ]]></style>
   </defs>
-  <g transform="translate(-20 0) scale(2)">
+  <g transform="translate(-20 0) scale(3)">
     <g transform="translate(0 0)">
       <g transform="translate(10 20)">
-        <text class="comment" x="0" y="0">hashCode</text>
+        <text class="comment" x="0" y="0">idHashCode</text>
       </g>
       <g transform="translate(90 -80)">
         <g transform="translate(0 0)">

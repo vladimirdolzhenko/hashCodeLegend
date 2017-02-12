@@ -1,3 +1,7 @@
-type,value
-join1,6.848
-join2,20.565
+pos,type,value
+10,buffer,8.884
+20,-XX:+UseBiasedLocking,8.884
+30,-XX:-UseBiasedLocking,24.409
+20,buffer -XX:+UseBiasedLocking,8.884
+30,buffer -XX:-UseBiasedLocking,24.409
+40,bufferWithIdHashCode,24.509
