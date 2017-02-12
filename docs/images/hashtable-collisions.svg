@@ -25,43 +25,42 @@
       <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-      <g transform="translate(50 0)">
+      <g transform="translate(250 0)">
         <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
+        <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
       </g>
       <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
+      <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
       <g transform="translate(100 0)">
         <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-        <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
+        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
       </g>
-      <g transform="translate(-30 90)">
-        <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
-        <g transform="translate(80 -30)">
-          <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
+      <g transform="translate(50 0)">
+        <g transform="translate(-30 90)">
+          <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
+          <g transform="translate(80 -30)">
+            <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+            <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
+          </g>
+          <text class="comment" x="140" y="0">) = 16</text>
         </g>
-        <text class="comment" x="140" y="0">) = 15</text>
-      </g>
-
-      <g transform="translate(-30 150)">
-        <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
-        <g transform="translate(80 -30)">
-          <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-
-          <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
+        <g transform="translate(-30 150)">
+          <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
+          <g transform="translate(80 -30)">
+            <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+            <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
+          </g>
+          <text class="comment" x="140" y="0">) = 16</text>
         </g>
-        <text class="comment" x="140" y="0">) = 15</text>
-      </g>
-
-      <g transform="translate(-30 210)">
-        <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
-        <g transform="translate(80 -30)">
-          <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-          <text class="note" text-anchor="middle" x="25" y="28">Jan</text>
+        <g transform="translate(-30 210)">
+          <text class="comment" text-anchor="end" x="70" y="0">hashCode(</text>
+          <g transform="translate(80 -30)">
+            <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+            <text class="note" text-anchor="middle" x="25" y="28">Jan</text>
+          </g>
+          <text class="comment" x="140" y="0">) = 16</text>
         </g>
-        <text class="comment" x="140" y="0">) = 15</text>
       </g>
     </g>
   </g>

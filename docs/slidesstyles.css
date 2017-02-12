@@ -89,7 +89,7 @@ pre > code.hljs {
 pre > code.hljs > span.hl,
 pre > span.highlight,
 code > span.highlight,
-pre > code.hljs > span.hl .hljs-comment,
+pre > code.hljs span.hl .hljs-comment,
 span.highlight,
 span.highlight a {
     background-color: #003dae !important;
@@ -99,23 +99,27 @@ span.highlight a {
     /*border: 2px solid #ccc;*/
 }
 
-pre > code.hljs > span.hl .hljs-keyword {
+pre > code.hljs span.big {
+    font-size: 1.1em;
+}
+
+pre > code.hljs span.hl .hljs-keyword {
     color: #aaf !important;
 }
 
-pre > code.hljs > span.hl .hljs-number {
+pre > code.hljs span.hl .hljs-number {
     color: #faa !important;
 }
 
-pre > code.hljs > span.hl .hljs-meta {
+pre > code.hljs span.hl .hljs-meta {
     color: #ffaaaa !important;
 }
 
-pre > code.hljs > span.hl .hljs-type {
+pre > code.hljs span.hl .hljs-type {
  color: #ffbbbb !important;
 }
 
-pre > code.hljs > span.hl .hljs-string {
+pre > code.hljs span.hl .hljs-string {
     color: #60ffbd !important;
 }
 
@@ -179,24 +183,31 @@ code > span.highlight {
     line-height: 1.2em;
 }
 
-.polynomHashCode > pre code {
-    font-size: 34px !important;
-    line-height: 39px !important;
+.stringHashCode > pre code {
+    font-size: 32px !important;
+    line-height: 33px !important;
 }
 
-.native > pre {
+.native > pre,
+.nativeMonitor > pre {
     background-color: white !important;
+}
+
+.nativeMonitor > pre {
+    width: 120% !important;
 }
 
 .unsafe > pre code,
 .hashCodeComplexity > pre code,
 .native > pre code,
+.nativeMonitor > pre code,
 .hashFunctionData > pre code,
 .stringJoin > pre code {
     font-size: 1.3em !important;
     line-height: 1.1em !important;
 }
 
+.hash > pre code,
 .objectDumpRightAfterCreation > pre code {
     font-size: 1.4em !important;
     line-height: 1.1em !important;
@@ -228,12 +239,14 @@ code > span.hashCode {
     line-height: 1.1em !important;
 }
 
-.hashCode22Bit, .generations, .hashCode19Bit, .AaBB {
+.polynomHashCode,
+.hashCode22Bit,
+.generations, .hashCode19Bit, .AaBB, .fourBytesOf16  {
     font-size: 1.4em !important;
     line-height: 1.2em;
 }
 
-.paradox, .polynomHashCode, .detective31 li {
+.paradox, .detective31 li {
     font-size: 1.1em !important;
     line-height: 1.2em;
 }
@@ -266,7 +279,8 @@ div.center {
 
 .syncAllocation > pre code,
 .casAllocation > pre code,
-.biasedDemo > pre code  {
+.biasedDemo > pre code,
+.StringBufferPerfTestSingle > pre code  {
     font-size: 1.3em !important;
     line-height: 1.2em !important;
  }

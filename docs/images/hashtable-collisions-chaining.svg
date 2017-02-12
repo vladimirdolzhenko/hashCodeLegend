@@ -18,41 +18,42 @@
     <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
   </marker>
   <g transform="translate(20 20) scale(2.25)">
-    <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
-    <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
-    <rect class="arrayKeyItem" height="50" width="50" x="150" y="0"/>
-    <g transform="translate(0 0)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
+    <g transform="translate(30 0)">
+      <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="150" y="0"/>
+      <g transform="translate(0 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
+      </g>
+      <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
+      <g transform="translate(250 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
+      </g>
+      <g transform="translate(100 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
+        <path class="link" d="M30,50 45,57"/>
+      </g>
+      <g transform="translate(150 60)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
+        <path class="link" d="M30,50 45,57"/>
+      </g>
+      <g transform="translate(200 120)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
+        <path class="link" d="M30,50 45,57"/>
+      </g>
+      <g transform="translate(250 180)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Jan</text>
+      </g>
+      <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
+      <text class="bigcomment" text-anchor="start" x="0" y="150">сложность → O(N)</text>
     </g>
-    <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
-    <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
-    <g transform="translate(100 0)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
-    </g>
-    <g transform="translate(50 0)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
-      <path class="link" d="M30,50 45,57"/>
-    </g>
-    <g transform="translate(100 60)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
-      <path class="link" d="M30,50 45,57"/>
-    </g>
-    <g transform="translate(150 120)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
-      <path class="link" d="M30,50 45,57"/>
-    </g>
-    <g transform="translate(200 180)">
-      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
-      <text class="note" text-anchor="middle" x="25" y="28">Jan</text>
-    </g>
-    <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
-    <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
-    <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-    <text class="bigcomment" text-anchor="end" x="400" y="120">сложность → O(N)</text>
   </g>
 </svg>

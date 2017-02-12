@@ -54,7 +54,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import static com.UsernameCollisionPerfTest.load;
+import static com.UsernameCollisionPerfTest.loadKeysFromFile;
 
 /**
  * @author vladimir.dolzhenko
@@ -63,7 +63,7 @@ import static com.UsernameCollisionPerfTest.load;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 0, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
+@Warmup(iterations = 1, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
 @Measurement(iterations = 1, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
 @Threads(1)
 @State(Scope.Benchmark)
@@ -79,7 +79,7 @@ public class UsernameCollisionStrLoadTest {
 
     @Setup
     public void setup() throws Exception {
-        final String[] strings = load(size);
+        final String[] strings = loadKeysFromFile(size);
         keys = new Str[strings.length];
         cmpKeys = new StrCmp[strings.length];
         for (int i = 0; i < strings.length; i++) {
@@ -105,7 +105,7 @@ public class UsernameCollisionStrLoadTest {
             cmpMap.put(key, key);
         }
 
-        return map;
+        return cmpMap;
     }
 
     public static void main(String[] args) throws RunnerException {
