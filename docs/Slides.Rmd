@@ -189,7 +189,7 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-  <span class="hl">@Benchmark</span> @Threads(1)
+  <span class="hl">@Benchmark</span> @Threads( 1 )
   public void fillMap( Blackhole bh ) {
     <span class="hl">for (String key : keys) map.put(key, key);
     bh.consume( map );</span>
@@ -212,7 +212,7 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-  @Benchmark <span class="hl">@Threads(1)</span>
+  @Benchmark <span class="hl">@Threads( 1 )</span>
   public void fillMap( Blackhole bh ) {
     for (String key : keys) map.put(key, key);
     bh.consume( map );
@@ -235,7 +235,7 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-  @Benchmark @Threads(1)
+  @Benchmark @Threads( 1 )
   public void fillMap( Blackhole bh ) {
     for (String key : keys) map.put(key, key);
     bh.consume( map );
@@ -813,7 +813,7 @@ public class SimpleAllocator implements Allocator {
 </code></pre>
 
 ## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
-<pre><code class="java">@Benchmark @Threads(10)
+<pre><code class="java">@Benchmark @Threads( 4 )
 public long syncAllocator() {
     return syncAllocator.malloc( 16 );
 }</code></pre>
@@ -856,7 +856,7 @@ ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 </code></pre>
 
 ## Allocators Performance Benchmark {.casAllocationBenchmark}
-<pre><code class="java">@Benchmark @Threads(10)
+<pre><code class="java">@Benchmark @Threads( 4 )
 public long casAllocator() {
     return casAllocator.malloc( 16 );
 }
@@ -885,7 +885,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 <embed src="images/less-is-more.svg" type="image/svg+xml" />
 
 ## Java Allocation {.javaAllocation}
-<pre><code class="java">@Benchmark @Threads( 10 )
+<pre><code class="java">@Benchmark @Threads( 4 )
 public Object javaAllocation() {
     return new Object();
 }
@@ -902,7 +902,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   coord_flip() +
-  labs(title = "@Threads( 10 )",
+  labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
@@ -1092,7 +1092,7 @@ $$ log_2{394012} \approx 18.5 $$
 }
 </code></pre>
 ## Allocators Performance Benchmark {.tlabAllocatorBenchmark}
-<pre><code class="java">@Benchmark @Threads( 10 )
+<pre><code class="java">@Benchmark @Threads( 4 )
 public long tlabAllocator() {
     return tlabAllocator.malloc( 16 );
 }</code></pre>
@@ -1108,7 +1108,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
   coord_flip() +
-  labs(title = "@Threads( 10 )",
+  labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
@@ -1158,7 +1158,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 ## Стоимость TLAB {.tlabAllocatorBenchmark}
 
-<pre><code class="java">@Benchmark @Threads(10)
+<pre><code class="java">@Benchmark @Threads( 4 )
 public Object allocate() {
    return new Object();
 }</code></pre>
@@ -1172,7 +1172,7 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   scale_fill_manual(values=c("-XX:-UseTLAB"='#f57670', "-XX:+UseTLAB"="#1fbec3")) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   coord_flip() +
-  labs(title = "@Threads( 10 )",
+  labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   scale_y_continuous(limits = c(0, max(df$value) + 200), expand = c(0, 0)) +
@@ -1252,7 +1252,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
   coord_flip() +
-  labs(title = "@Threads( 10 )",
+  labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
@@ -1264,7 +1264,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 <embed src="images/less-is-more.svg" type="image/svg+xml" />
 
 ## Object.hashCode() benchmark {.javaAllocation}
-<pre><code class="java">@Benchmark @Threads( 10 )
+<pre><code class="java">@Benchmark @Threads( 4 )
 public Object javaHashCode() {
       Object object = new Object();
       object.<span class="hl">hashCode()</span>;
@@ -1284,7 +1284,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3', 'javaHashCode'='#888888')) +
   coord_flip() +
-  labs(title = "@Threads( 10 )",
+  labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +

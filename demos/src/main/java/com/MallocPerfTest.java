@@ -1,13 +1,13 @@
 package com;
 
 /*
- Benchmark                       Mode  Cnt    Score    Error  Units
- MallocPerfTest.casAllocator     avgt    5  208.909 ± 17.694  ns/op
- MallocPerfTest.javaAllocation   avgt    5   16.540 ±  0.546  ns/op
- MallocPerfTest.simpleAllocator  avgt    5    2.735 ±  0.065  ns/op
- MallocPerfTest.syncAllocator    avgt    5  547.557 ± 76.347  ns/op
- MallocPerfTest.tlabAllocator    avgt    5   16.354 ±  2.396  ns/op
- MallocPerfTest.tlabAllocator2   avgt    5   15.692 ±  2.331  ns/op
+Benchmark                             Mode  Cnt    Score    Error  Units
+MallocPerfTest.casAllocator           avgt    5   73.921 ±  0.763  ns/op
+MallocPerfTest.javaAllocation         avgt    5    7.287 ±  3.553  ns/op
+MallocPerfTest.javaObjectAndHashCode  avgt    5   57.614 ± 12.114  ns/op
+MallocPerfTest.simpleAllocator        avgt    5    2.743 ±  0.358  ns/op
+MallocPerfTest.syncAllocator          avgt    5  164.525 ±  6.211  ns/op
+MallocPerfTest.tlabAllocator          avgt    5    7.836 ±  0.622  ns/op
  */
 
 import java.util.concurrent.TimeUnit;
