@@ -54,7 +54,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import static com.UsernameCollisionPerfTest.loadKeysFromFile;
+import static com.UsernameCollisionPerfTest.loadUsernameCollisionsFromFile;
 
 /**
  * @author vladimir.dolzhenko
@@ -79,7 +79,7 @@ public class UsernameCollisionStrLoadTest {
 
     @Setup
     public void setup() throws Exception {
-        final String[] strings = loadKeysFromFile(size);
+        final String[] strings = loadUsernameCollisionsFromFile(size);
         keys = new Str[strings.length];
         cmpKeys = new StrCmp[strings.length];
         for (int i = 0; i < strings.length; i++) {

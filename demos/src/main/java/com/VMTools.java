@@ -29,6 +29,12 @@ public class VMTools {
         }
     }
 
+    static String getVMBooleanFlag(String optionName) {
+        final String actualValue = getVMOption(optionName);
+        boolean parseBoolean = Boolean.parseBoolean(actualValue);
+        return "-XX:" + (parseBoolean ? "+" : "-") + optionName;
+    }
+
     static String getVMOption(String key) {
         try {
             MBeanServer server = ManagementFactory.getPlatformMBeanServer();

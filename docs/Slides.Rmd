@@ -199,7 +199,7 @@ public class MapPerfTest {
   
   @Setup
   public void setup() {
-    keys = loadKeysFromFile();
+    keys = loadUsernameCollisionsFromFile();
   }
 }
 </code></pre>
@@ -222,7 +222,7 @@ public class MapPerfTest {
   
   @Setup
   public void setup() {
-    keys = loadKeysFromFile();
+    keys = loadUsernameCollisionsFromFile();
   }
 }
 </code></pre>
@@ -245,7 +245,7 @@ public class MapPerfTest {
   
   <span class="hl">@Setup</span>
   public void setup() {
-    keys = <span class="hl">loadKeysFromFile()</span>;
+    keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
   }
 }
 </code></pre>
@@ -446,6 +446,12 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
 
 # Object.hashCode<br/> утёкшая абстракция
 
+# Urban Legend {.urbanLegendC}
+
+<pre><code class="java">public int hashCode(){
+  return <span class="hl">&this</span>;
+}</code></pre>
+
 ## Urban Legend: Первоисточник  {.javadoc}
 ### java.lang.Object
 
@@ -454,21 +460,6 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
 This is typically implemented by converting the <span class="highlight">internal address of the object</span> into an integer.
 
 [https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
-
-
-## Urban Legend: {.urbanLegendC}
-
-<pre><code class="java">package java.lang;
-
-public class Object {
-
-    // ...
-
-    public int hashCode(){
-      return <span class="hl">&this</span>;
-    }
-
-}</code></pre>
 
 # Адрес объекта ?
 
@@ -561,15 +552,59 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 </code></pre>
 
+## JOL : пример {.jol2}
+
+<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  <span class="hl">int hashCode</span>;
+}</code></pre></div><div style="clear:both"></div>
+
+## JOL : -XX:+UseCompressedOops и heap &lt; 4Gb {.jol2}
+
+<div class="line"><code>-XX:+UseCompressedOops</code></div>
+<div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
+<div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
+<div class="clear"></div>
+
+<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div><div class="clear"></div>
+
+## JOL : -XX:-UseCompressedOops или heap &gt; 4Gb{.jol2}
+
+<div class="line"><code>-XX:+UseCompressedOops</code></div>
+<div class="floating-box2">24 b</div>
+<div class="floating-box2">24 b</div><div class="clear"></div>
+
+<div class="line"><code><span class="highlight">-XX:-UseCompressedOops</span></code></div>
+<div class="floating-box2"><code><span class="highlight">32 b</span></code></div>
+<div class="floating-box2"><code><span class="highlight">40 b</span></code></div>
+<div class="clear"></div>
+
+<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div><div class="clear"></div>
+
 ## Адрес и hashCode
 
 <embed src="images/header-address0.svg" type="image/svg+xml" />
-
-```
-```
-
-```
-```
 
 <code>-XX:<span class="hashCode">hashCode=4</span></code>
 
@@ -620,15 +655,17 @@ List gcKeeper = new ArrayList();
 gcKeeper.add( theObject );
 
 long currentAddress = initialAddress;
-while (<span class="hl">initialAddress == currentAddress</span>) {
+<div class="hblock">while (<span class="hl">initialAddress == currentAddress</span>) {
     Object o = new Object();
 
     gcKeeper.add(o);
 
     <span class="hl">currentAddress = getAddress( theObject )</span>;
-}</code></pre>
+}</div></code></pre>
 
 ```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+# demo
 
 ## Следим за адресом объекта вместе с GC
 
@@ -677,6 +714,8 @@ while (<span class="hl">initialHashCode == currentHashCode</span>) {
 
 </code></pre>
 ```-Xms256m -Xmx256m -XX:+UseSerialGC```
+
+# demo
 
 ## Скрытое свойство{.native}
 <pre><code class="java">package java.lang;
@@ -741,6 +780,8 @@ for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 </code></pre>
 <code>-Xms256m -Xmx256m -XX:+UseSerialGC -XX:<span class="hashCode">hashCode=4</span></code>
 
+#demo
+
 ## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
 <pre>
 after 2,022,271 allocation:
@@ -751,9 +792,6 @@ hash code collision 0x3055A9<span class="huge highlight">C</span>0
 hash code collision 0x3055A9<span class="huge highlight">D</span>0
 hash code collision 0x3055A9<span class="huge highlight">E</span>0
 hash code collision 0x3055A9<span class="huge highlight">F</span>0
-hash code collision 0x3055AA<span class="huge highlight">0</span>0
-hash code collision 0x3055AA<span class="huge highlight">1</span>0
-hash code collision 0x3055AA<span class="huge highlight">2</span>0
 </pre>
 
 
@@ -761,7 +799,8 @@ hash code collision 0x3055AA<span class="huge highlight">2</span>0
 
 <!--embed src="images/address2.svg" type="image/svg+xml" /-->
 <div class="center"><span class="huge">32bit → 22bit</span></div>
-`22 bit = 4_194_304` уникальных значений
+
+`= 4_194_304` уникальных значений
 
 ## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
 <pre>
@@ -773,12 +812,9 @@ hash code collision 0x3055A9<span class="huge highlight">C</span>0
 hash code collision 0x3055A9<span class="huge highlight">D</span>0
 hash code collision 0x3055A9<span class="huge highlight">E</span>0
 hash code collision 0x3055A9<span class="huge highlight">F</span>0
-hash code collision 0x3055AA<span class="huge highlight">0</span>0
-hash code collision 0x3055AA<span class="huge highlight">1</span>0
-hash code collision 0x3055AA<span class="huge highlight">2</span>0
 </pre>
 
-# address -> memory allocation
+# hashCode → address → <br/> → memory allocation
 
 ## Memory allocation  {.simpleAllocation}
  
@@ -825,14 +861,15 @@ df <- subset(df, alloc == "single-threaded" | alloc == 'sync')
 
 ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.05, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.3, vjust=-0.4, size=5, fontface = "bold") +
   coord_flip() +
-  labs(title = "sync @Threads ( 10 ), single-threaded @Threads( 1 )",
+  labs(title = "sync @Threads ( 4 ), single-threaded @Threads( 1 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 30), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -870,14 +907,15 @@ df <- subset(df, alloc == "cas" | alloc == 'sync' | alloc == "single-threaded" )
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.3, vjust=-0.4, size=5, fontface = "bold") +
   coord_flip() +
-  labs(title = "sync/cas @Threads ( 10 ), single-threaded @Threads( 1 )",
+  labs(title = "sync/cas @Threads ( 4 ), single-threaded @Threads( 1 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 30), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -899,14 +937,15 @@ df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat="identity",  colour="#444444", alpha=0.95) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.3, vjust=-0.4, size=5, fontface = "bold") +
   coord_flip() +
   labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 30), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -997,7 +1036,7 @@ IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
   }
 }).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
 
-## Распределение hashCode по нитям
+## Распределение hashCode по нитям {.hashCodeDistribution}
 
 размер: 1_566_762
 
@@ -1011,7 +1050,13 @@ IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
 
 ## Плохая новость {.hashCode19Bit}
 
+```
+```
+
 объектов в нитях: [394012, 394012, 394012, 394013]
+
+```
+```
 
 $$ log_2{394012} \approx 18.5 $$
 
@@ -1105,14 +1150,15 @@ df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.3, vjust=-0.4, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
   coord_flip() +
   labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 70), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 25), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -1127,7 +1173,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 <embed src="images/tlab2.svg" type="image/svg+xml" />
 
-## Границы коллизий :: многопоточный :: БЕЗ TLAB
+## Границы коллизий :: многопоточный :: БЕЗ TLAB{.multiThreadedCollisions}
 
 <pre><code class="java">IntStream.range(0, threads).forEach(threadNo -> { new Thread(() -> {
     while (!collision.get()) {
@@ -1146,7 +1192,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 <code><span class="highlight">-XX:-UseTLAB</span> -Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX</span></code>
 
-## Распределение hashCode по нитям БЕЗ TLAB
+## Распределение hashCode по нитям БЕЗ TLAB {.hashCodeDistribution}
 
 размер: 1,650,138
 
@@ -1170,12 +1216,13 @@ df = read.csv(file = "csv/UseTLAB.csv", header = TRUE)
 ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
   scale_fill_manual(values=c("-XX:-UseTLAB"='#f57670', "-XX:+UseTLAB"="#1fbec3")) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
+  geom_text(aes(label=value), hjust=-0.6, size=5, fontface = "bold") +
   coord_flip() +
   labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
-  scale_y_continuous(limits = c(0, max(df$value) + 200), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, max(df$value) + 70), expand = c(0, 0)) +
   theme_classic() +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size=16, face = "bold"))+
@@ -1194,7 +1241,7 @@ $$ = \frac{d}{d^{n} \cdot (d - n)!}$$
 
 
 $$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
-$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx 77162 $$
+$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
 
 ## -XX:hashCode {.XXhashCode}
 
@@ -1249,14 +1296,15 @@ df <- subset(df, alloc == "java" | alloc == "tlab" )
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.2, vjust=-0.7, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
   coord_flip() +
   labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 5), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 4), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -1281,14 +1329,15 @@ df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "tlab" )
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_text(aes(label=value), hjust=-0.2, vjust=-0.7, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
   scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3', 'javaHashCode'='#888888')) +
   coord_flip() +
   labs(title = "@Threads( 4 )",
        x = "",
        y = "ns/op") +
   theme_classic() +
-  scale_y_continuous(limits=c(0, max(df$value) + 30), expand = c(0, 0)) +
+  scale_y_continuous(limits=c(0, max(df$value) + 15), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
@@ -1371,7 +1420,8 @@ df <- subset(df, type == "-XX:+UseBiasedLocking" | type == "-XX:-UseBiasedLockin
 ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
   scale_fill_manual(values=c('-XX:+UseBiasedLocking'='#1fbec3', '-XX:-UseBiasedLocking'='#f57670')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
+  geom_text(aes(label=value), hjust=-0.2, vjust=-0.7, size=5, fontface = "bold") +
   coord_flip() +
   theme_classic() +
   labs(title = "@Threads( 1 )",
@@ -1436,7 +1486,8 @@ df <- subset(df, type == "buffer -XX:-UseBiasedLocking" | type == 'buffer' | typ
 ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +  
   geom_bar(stat="identity",  colour="black") +
   scale_fill_manual(values=c('buffer -XX:-UseBiasedLocking'='#fa8074', 'buffer'='#21bd83', 'bufferWithIdHashCode'='#e67bf3')) +
-  geom_text(aes(label=value), hjust=-0.2, size=5, fontface = "bold") +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
+  geom_text(aes(label=value), hjust=-0.2, vjust=-0.7, size=5, fontface = "bold") +
   coord_flip() +
   theme_classic() +
   labs(title = "@Threads( 1 )",
@@ -1466,8 +1517,8 @@ String dump = dump(object);</code></pre>
     + и ещё лучше <span class="good">определяйте `compareTo`</span>
     + исследуйте свои hash-функции
 * hashCode - не <span class="bad">адрес</span>
-    + <span class="good">GC</span>, <span class="good">TLAB</span>
-    + Не злоупотребляйте <span class="bad">`System.identityHashCode`</span>
+    + <span class="good">GC</span>, <span class="good">TLAB</span>, не злоупотребляйте <span class="bad">`identityHashCode`</span>
+* **Meten is weten** (голл.) &laquo;Измерение - знание&raquo;
 
 # Контакты
 
@@ -1477,5 +1528,5 @@ String dump = dump(object);</code></pre>
 ### &nbsp;
 ### &nbsp;
 
-### спасибо: [\@VladimirSitnikv](https://twitter.com/VladimirSitnikv) [\@gvsmirnov](https://twitter.com/gvsmirnov)  [\@dj_begemot](https://twitter.com/dj_begemot) [\@shipilev](https://twitter.com/shipilev) [\@i_sopov](https://twitter.com/i_sopov)
+### спасибо: [\@VladimirSitnikv](https://twitter.com/VladimirSitnikv)  [\@dj_begemot](https://twitter.com/dj_begemot)  [\@AndreiPangin](https://twitter.com/AndreiPangin) [\@gvsmirnov](https://twitter.com/gvsmirnov) [\@shipilev](https://twitter.com/shipilev)  [\@i_sopov](https://twitter.com/i_sopov) 
 

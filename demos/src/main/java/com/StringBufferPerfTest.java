@@ -35,7 +35,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Warmup(iterations = 1, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 10, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
 @Threads(1)
 @Fork(value = 1, jvmArgsAppend = {"-XX:BiasedLockingStartupDelay=0"})
 @State(Scope.Benchmark)
