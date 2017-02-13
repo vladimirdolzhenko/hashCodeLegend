@@ -1,8 +1,7 @@
 pos,alloc,value
-10,single-threaded,2.735
-20,java,16.540
-25,javaHashCode,162.932
-30,sync,547.557
-40,cas,208.909
-50,tlab,16.354
-
+10,single-threaded,2.743
+20,java,7.287
+25,javaHashCode,57.614
+30,sync,164.525
+40,cas,73.921
+50,tlab,7.836
