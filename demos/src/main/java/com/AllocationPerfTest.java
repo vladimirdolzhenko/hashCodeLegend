@@ -1,21 +1,28 @@
 package com;
 
-import org.openjdk.jmh.annotations.*;
+import java.util.concurrent.TimeUnit;
+
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * -XX:+UseTLAB
  * Benchmark                    Mode  Cnt  Score   Error  Units
- * AllocationPerfTest.allocate  avgt    5  3.211 ± 0.045  ns/op
+ * AllocationPerfTest.allocate  avgt    5  6.361 ± 0.058  ns/op
  * <p>
  * -XX:-UseTLAB
  * Benchmark                    Mode  Cnt  Score   Error  Units
- * AllocationPerfTest.allocate  avgt    5  9.766 ± 0.160  ns/op
+ * AllocationPerfTest.allocate  avgt    5  306.099 ± 17.275  ns/op
  *
  * @author vladimir.dolzhenko
  * @since 2016-11-30
@@ -23,9 +30,9 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 2, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 2, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@Threads(10)
+@Warmup(iterations = 5, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
+@Threads(4)
 public class AllocationPerfTest {
 
     @Benchmark

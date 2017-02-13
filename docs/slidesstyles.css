@@ -1,3 +1,15 @@
+body {
+    zoom: 1.2 !important;
+}
+
+slides > slide {
+    height: 100% !important;
+    width: 90% !important;
+    margin: 0px !important;
+    left: 5%;
+    top: 0px;
+}
+
 .footer {
     color: black;
     position: fixed;
@@ -5,6 +17,7 @@
     text-align:center;
     width:100%;
 }
+
 i, em {
     font-style: italic !important;
 }
@@ -47,6 +60,19 @@ slides > slide > hgroup + article p {
     color: white !important;
 }*/
 
+.segue hgroup {
+    /*bottom: 150px !important;*/
+}
+
+.title-slide hgroup h1 {
+    font-size: 2.6em;
+}
+
+.segue h2 {
+    font-size: 2.5em;
+    line-height: 1em;
+}
+
 .segue a {
     color: #d6d6d6 !important;
     border-bottom: 1px solid white !important;
@@ -56,8 +82,9 @@ slides > slide > hgroup + article p {
     color: #ffffff !important;
 }
 
-.segue pre.prettyprint {
+.segue pre {
     left: -120px !important;
+    top: -40px !important;
 }
 
 span.huge {
@@ -71,7 +98,7 @@ pre {
     font-size: 28px !important;
     font-family: 'PT Mono', 'monospace'  !important;
     line-height: 28px !important;
-    padding: 10px 0 0px 60px !important;
+    /*padding: 10px 0 0px 60px !important;*/
     /*background-color: #eee;*/
 }
 
@@ -81,12 +108,11 @@ pre > code.hljs {
     line-height: 30px !important;
     overflow: hidden;
     width: 150% !important;
-    padding: 0px 0px 0px 0em !important;
     background-color: transparent !important;
 }
 
 
-pre > code.hljs > span.hl,
+pre > code.hljs span.hl,
 pre > span.highlight,
 code > span.highlight,
 pre > code.hljs span.hl .hljs-comment,
@@ -95,8 +121,14 @@ span.highlight a {
     background-color: #003dae !important;
     font-weight: bold;
     color: white !important;
-    padding: 2px !important;
-    /*border: 2px solid #ccc;*/
+    padding: 4px;
+    line-height: 1.2em;
+    /**/
+}
+
+pre > code.hljs div.hblock {
+    border: 1px dashed #000;
+    width: 900px;
 }
 
 pre > code.hljs span.big {
@@ -154,9 +186,14 @@ code > span.highlight {
     font-weight: bold;
 }
 
-.abstract1000, .abstract10000000, .hash, .javadoc, .conclusion {
+.abstract1000, .abstract10000000, .hash, .javadoc {
     font-size: 1.4em !important;
     line-height: 1.1em;
+}
+
+.conclusion {
+    font-size: 1.4em !important;
+    line-height: 1em;
 }
 
 .javadoc pre code {
@@ -178,8 +215,17 @@ code > span.highlight {
     line-height: 1.1em;
 }
 
+.hashCodeDistribution {
+    font-size: 1.3em !important;
+    line-height: 1.2em;
+}
+
+.hashCodeDistribution p, .paradox p div {
+    margin-bottom: 1em !important;
+}
+
 .heap > pre code {
-    font-size: 30px !important;
+    font-size: 35px !important;
     line-height: 1.2em;
 }
 
@@ -188,6 +234,7 @@ code > span.highlight {
     line-height: 33px !important;
 }
 
+.urbanLegendC > pre,
 .native > pre,
 .nativeMonitor > pre {
     background-color: white !important;
@@ -239,8 +286,12 @@ code > span.hashCode {
     line-height: 1.1em !important;
 }
 
-.polynomHashCode,
 .hashCode22Bit,
+.polynomHashCode {
+    font-size: 2em !important;
+    line-height: 1.2em;
+}
+
 .generations, .hashCode19Bit, .AaBB, .fourBytesOf16  {
     font-size: 1.4em !important;
     line-height: 1.2em;
@@ -285,9 +336,40 @@ div.center {
     line-height: 1.2em !important;
  }
 
-.jol > pre code {
+.jol > pre code,
+.jol2 pre code  {
     font-size: 1.5em !important;
     line-height: 1.3em !important;
+}
+
+.floating-box {
+    display: inline-block;
+    width: 48%;
+    height: 300px;
+    margin: 1px;
+    border:1px solid black;
+    vertical-align: top;
+}
+
+.line {
+    text-align: center;
+    font-size: 1.1em !important;
+    font-weight: bold;
+}
+
+.floating-box2 {
+    height: 80px;
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+    text-align: center;
+    font-size: 1.5em !important;
+    font-weight: bold;
+    color: black;
+}
+
+.clear {
+    clear:both;
 }
 
 .javaAllocation > pre code, .casAllocationBenchmark > pre code,
@@ -298,16 +380,12 @@ div.center {
 }
 
 .urbanLegendC > pre code {
-    font-size: 1.4em !important;
-    line-height: 1.2em !important;
+    font-size: 1.8em !important;
+    line-height: 1.5em !important;
 }
 
 slide > hgroup + article.unsafe {
     /*margin-top: -50px !important;*/
-}
-
-.segue hgroup {
-    /*bottom: 150px !important;*/
 }
 
 span.bad {

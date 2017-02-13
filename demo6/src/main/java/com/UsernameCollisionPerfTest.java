@@ -76,18 +76,18 @@ public class UsernameCollisionPerfTest {
 
     @Setup
     public void setup() throws Exception {
-        final String[] keys = loadKeysFromFile(size);
+        final String[] keys = loadUsernameCollisionsFromFile(size);
         map = new LinkedHashMap<String, String>(size);
         for (String key : keys) {
             map.put(key, key);
         }
     }
 
-    static String[] loadKeysFromFile() throws IOException {
-        return loadKeysFromFile(null);
+    static String[] loadUsernameCollisionsFromFile() throws IOException {
+        return loadUsernameCollisionsFromFile(null);
     }
 
-    static String[] loadKeysFromFile(Integer size) throws IOException {
+    static String[] loadUsernameCollisionsFromFile(Integer size) throws IOException {
         List<String> list = size != null ? new ArrayList<String>(size) : new ArrayList<String>();
         final BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream("username.txt"), "UTF-8"));

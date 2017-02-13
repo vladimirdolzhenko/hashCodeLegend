@@ -15,6 +15,12 @@ task ObjectReallocationGC(type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task ObjectReallocationEpsilon(type:JavaExec) {
+    main = "com.ObjectReallocation"
+    jvmArgs = ['-XX:+UnlockExperimentalVMOptions', '-Xms256m', '-Xmx256m', '-XX:+UseEpsilonGC', '-Xlog:gc=info']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task ObjectHashReallocation(type:JavaExec) {
     main = "com.ObjectHashReallocation"
     jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC']
@@ -35,6 +41,12 @@ task ObjectMemoryDumpAddress(type:JavaExec) {
 task IdentityHashCodeCollision(type:JavaExec) {
     main = "com.IdentityHashCodeCollision"
     jvmArgs = ['-Xms256m', '-Xmx256m', '-XX:+UseSerialGC', '-XX:hashCode=4']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task IdentityHashCodeCollisionEpsilon(type:JavaExec) {
+    main = "com.IdentityHashCodeCollision"
+    jvmArgs = ['-XX:+UnlockExperimentalVMOptions', '-Xms256m', '-Xmx256m', '-XX:+UseEpsilonGC', '-Xlog:gc=info', '-XX:hashCode=4']
     classpath = sourceSets.main.runtimeClasspath
 }
 

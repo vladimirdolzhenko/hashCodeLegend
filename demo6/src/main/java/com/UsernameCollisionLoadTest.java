@@ -65,7 +65,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import static com.UsernameCollisionPerfTest.loadKeysFromFile;
+import static com.UsernameCollisionPerfTest.loadUsernameCollisionsFromFile;
 
 /**
  * @author vladimir.dolzhenko
@@ -88,7 +88,7 @@ public class UsernameCollisionLoadTest {
 
     @Setup
     public void setup() throws Exception {
-        keys = loadKeysFromFile(size);
+        keys = loadUsernameCollisionsFromFile(size);
         map = new HashMap<String, String>(size);
     }
 

@@ -2,13 +2,13 @@ package com;
 
 /*
 Benchmark                             Mode  Cnt    Score    Error  Units
-MallocPerfTest.casAllocator           avgt    5   73.921 ±  0.763  ns/op
-MallocPerfTest.javaAllocation         avgt    5    7.287 ±  3.553  ns/op
-MallocPerfTest.javaObjectAndHashCode  avgt    5   57.614 ± 12.114  ns/op
-MallocPerfTest.simpleAllocator        avgt    5    2.743 ±  0.358  ns/op
-MallocPerfTest.syncAllocator          avgt    5  164.525 ±  6.211  ns/op
-MallocPerfTest.tlabAllocator          avgt    5    7.836 ±  0.622  ns/op
- */
+MallocPerfTest.casAllocator           avgt   10   74.721 ±  0.192  ns/op
+MallocPerfTest.javaAllocation         avgt   10    9.878 ±  2.676  ns/op
+MallocPerfTest.javaObjectAndHashCode  avgt   10   60.270 ± 12.318  ns/op
+MallocPerfTest.simpleAllocator        avgt   10    2.836 ±  0.285  ns/op
+MallocPerfTest.syncAllocator          avgt   10  186.672 ± 21.195  ns/op
+MallocPerfTest.tlabAllocator          avgt   10    8.506 ±  1.849  ns/op
+*/
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -33,7 +33,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
 @Warmup(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 10, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 public class MallocPerfTest {
 
