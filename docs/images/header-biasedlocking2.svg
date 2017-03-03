@@ -2,10 +2,135 @@
 <!DOCTYPE svg
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
 <svg height="300" version="1.1" width="1010" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
+
+rect.arrayKeyItem, rect.arrayValueItem {
+  fill:white;
+  stroke:black;
+  stroke-width:1;
+  opacity:1;
+}
+
+rect.arrayKeyItem.selected {
+    fill:#00B7EB;
+}
+
+rect.arrayValueItem.selected {
+    fill:#6BF76B;
+}
+
+rect.focused {
+  stroke-width:3;
+}
+
+.code, .codeX {
+    font-size:16px;
+    fill:#000000;
+    font-family:PT Mono;
+}
+
+.note {
+    font-size:10px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.comment {
+    font-size:14px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.bigcomment {
+    font-size:18px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.link {
+  fill:none;
+  stroke:black;
+  stroke-width:1.2;
+  marker-end:url(#TriangleOutL);
+}
+
+.code1, .code2, .code3, .code4 {
+   opacity:0.8;
+}
+
+.code1 {
+  fill:red;
+}
+
+.code2 {
+  fill:green;
+}
+
+.code3 {
+  fill:blue;
+}
+
+.code4 {
+  fill:orange;
+}
+
+.header.code1 {
+  /*fill:red;*/
+  fill: #0F0;
+}
+
+.header.code2 {
+  /*fill:green;*/
+  fill: #0C0;
+}
+
+.header.code3 {
+  /*fill:blue;*/
+  fill: #0A0;
+}
+
+.header.code4 {
+  /*fill:orange;*/
+  fill: #080;
+}
+
+
+rect.unused, rect.used {
+  stroke:black;
+  stroke-width:1;
+  opacity:1;
+  fill:#ddd;
+}
+
+rect.log {
+  stroke:none;
+  stroke-width:0;
+  opacity:0.5;
+  fill:#ddf;
+}
+
+path.log {
+  fill: none;
+  stroke: #88F;
+  stroke-width:2;
+}
+
+rect.t1 {
+    fill:#30FB30;
+}
+
+rect.t2 {
+    fill:#3030FB;
+}
+
+rect.t3 {
+    fill:#FB3030;
+}
+
+/* */
 
 .code0 {
   fill:#888;

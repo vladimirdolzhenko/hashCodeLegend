@@ -1,13 +1,40 @@
-body {
-    zoom: 1.2 !important;
+
+@media screen {
+    body {
+        zoom: 1.2 !important;
+        background-color: transparent !important;
+    }
+
+    slides > slide {
+        height: 100% !important;
+        width: 90% !important;
+        margin: 0px !important;
+        left: 5%;
+        top: 0px;
+        background: white  !important;
+    }
+
 }
 
-slides > slide {
-    height: 100% !important;
-    width: 90% !important;
-    margin: 0px !important;
-    left: 5%;
-    top: 0px;
+@media print {
+    body {
+        zoom: 1 !important;
+    }
+    slides > slide {
+        height: 100% !important;
+        width: 100% !important;
+        margin: 0px !important;
+        left: 5%;
+        top: 0px;
+        background: white  !important;
+    }
+
+}
+
+
+
+slides > slide.dark {
+    background: #515151 !important;
 }
 
 .footer {
@@ -54,6 +81,16 @@ slides > slide > hgroup + article p {
 .javadoc p {
     margin-bottom: 1em !important;
     margin-top: 1em !important;
+}
+
+.jmhExample pre code div.hblock {
+    margin-left: 1em;
+    width:800px !important;
+}
+
+.usernameCollisionsChart1 img {
+    position: absolute;
+    left: -0px;
 }
 
 /*.segue code {
@@ -127,8 +164,8 @@ span.highlight a {
 }
 
 pre > code.hljs div.hblock {
-    border: 1px dashed #000;
-    width: 900px;
+    border: 3px dashed #000;
+    width: 1000px;
 }
 
 pre > code.hljs span.big {
@@ -210,7 +247,21 @@ code > span.highlight {
     font-size: 0.8em !important;
 }
 
-.heap, .hashCodeComplexity {
+.heap > pre code,
+.heapSize  > pre code.java  {
+    font-size: 1.5em !important;
+    line-height: 1.2em !important;
+}
+.heapSize  > pre code {
+    font-size: 1.3em !important;
+    line-height: 1.3em !important;
+}
+.heapSize > pre code.java {
+    width: 90% !important;
+    text-align: right;
+}
+
+.hashCodeComplexity {
     font-size: 1.2em !important;
     line-height: 1.1em;
 }
@@ -222,11 +273,6 @@ code > span.highlight {
 
 .hashCodeDistribution p, .paradox p div {
     margin-bottom: 1em !important;
-}
-
-.heap > pre code {
-    font-size: 35px !important;
-    line-height: 1.2em;
 }
 
 .stringHashCode > pre code {
@@ -254,10 +300,15 @@ code > span.highlight {
     line-height: 1.1em !important;
 }
 
-.hash > pre code,
-.objectDumpRightAfterCreation > pre code {
+.hash > pre code {
     font-size: 1.4em !important;
     line-height: 1.1em !important;
+}
+.objectDumpRightAfterCreation > pre code,
+.biasedDemo > pre code,
+.StringBufferPerfTestSingle > pre code {
+    font-size: 1.6em !important;
+    line-height: 1.3em !important;
 }
 
 .tlabcode > pre code,
@@ -329,9 +380,7 @@ div.center {
 }
 
 .syncAllocation > pre code,
-.casAllocation > pre code,
-.biasedDemo > pre code,
-.StringBufferPerfTestSingle > pre code  {
+.casAllocation > pre code {
     font-size: 1.3em !important;
     line-height: 1.2em !important;
  }
@@ -406,4 +455,10 @@ span.good {
 
 td > span.good {
     padding: 10px !important;
+}
+
+.contacts div.thanks {
+    color: #e6e6e6;
+    position: absolute;
+    bottom: 10%;
 }
