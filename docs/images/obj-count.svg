@@ -2,7 +2,7 @@
 <!DOCTYPE svg
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
+<?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
 <svg height="200" version="1.1" width="1200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
@@ -15,31 +15,40 @@
 }
 
 .code{
-  font-size:14px;
+    font-size:14px;
     fill:#000000;
     font-family:PT Mono;
 }
 
-.code2 {
-fill:#080
+rect.code2 {
+  fill:#003dae;
 }
+
+text.code2 {
+  fill:#F88;
+  font-size:14px;
+  font-family:PT Mono;
+}
+
 
 .code1, .code3, .code4 {
   opacity:0.1;
 }
     ]]></style>
   </defs>
-  <g transform="translate(-120 20) scale(2)">
-    <g transform="translate(10 20)">
+  <g transform="translate(-120 20) scale(2.5)">
+    <g transform="translate(-20 20)">
       <rect class="log" height="90" width="1250" x="-50" y="-20"/>
       <path class="log" d="M 55,-15 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5 l5,5 l-5,5"/>
       <rect class="code2" height="20" width="55" x="160" y="-15"/>
-      <text class="code" x="70" y="0">eden space 65536K, 2% used</text>
-      <rect class="code1" height="20" width="152" x="78" y="15"/>
-      <rect class="code1" height="20" width="152" x="397" y="15"/>
+      <text class="code2" x="162" y="0">65536K</text>
+      <text class="code" x="70" y="0">eden space</text>
+      <text class="code" x="220" y="0">, 2% used</text>
+      <!--rect class="code1" height="20" width="152" x="78" y="15"/>
+      <rect class="code1" height="20" width="152" x="397" y="15"/-->
       <text class="code" x="70" y="30">[0x000000012a700000,0x000000012a8db400,0x000000012e700000)</text>
-      <rect class="code3" height="20" width="100" x="235" y="45"/>
-      <rect class="code4" height="20" width="100" x="363" y="45"/>
+      <!--rect class="code3" height="20" width="100" x="235" y="45"/>
+      <rect class="code4" height="20" width="100" x="363" y="45"/-->
       <text class="code" x="70" y="60">Объект перемещён: с 0x12A8109F0 -&gt; 0x12E7200F8</text>
     </g>
   </g>

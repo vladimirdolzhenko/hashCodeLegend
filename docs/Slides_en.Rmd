@@ -4,11 +4,13 @@ author: 'Vladimir Dolzhenko, IHS Markit'
 output:
   ioslides_presentation:
     widescreen: true
+    self_contained: true
 ---
 
 <link rel="stylesheet" href="highlight-default.css">
 <link rel="stylesheet" href="github-gist.css">
 <link rel="stylesheet" href="slidesstyles.css">
+
 <script src="jquery.min.js"></script>
 <script src="highlight.pack.js"></script>
 <script>
@@ -37,6 +39,14 @@ knitr::opts_chunk$set(echo = FALSE)
     + Some battles on hashCode
 * Make locks cheap again
 
+## Associative array {.hash}
+
+![](images/hashtable_en.svg)
+
+<pre><code class="java">int hash =  hash( key );
+int index = Math.abs( hash ) % keys.length;
+</code></pre>
+
 ## javadoc: {.javadoc}
 ### java.lang.Object
 
@@ -48,17 +58,9 @@ provided by **HashMap**.
 
 [https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--)
 
-## Associative array {.hash}
-
-<embed src="images/hashtable.svg" type="image/svg+xml" />
-
-<pre><code class="java">int hash = key.hashCode();
-int index = Math.abs( hash ) % keys.length;
-</code></pre>
-
 ## Write down ( Alex, +79... )
 
-<embed src="images/hashtable-put3_en.svg" type="image/svg+xml" />
+![](images/hashtable-put3_en.svg)
 
 ## Search / insert complexity{.hashCodeComplexity}
 <pre><code class="java">String key = "Alex";
@@ -87,15 +89,15 @@ used in equals comparisons on the object is modified.
 
 ## hashCode contract violation
 
-<embed src="images/hashtable-broken_en.svg" type="image/svg+xml" />
+![](images/hashtable-broken_en.svg)
 
 ## Collisions
 
-<embed src="images/hashtable-collisions_en.svg" type="image/svg+xml" />
+![](images/hashtable-collisions_en.svg)
 
 ## Chaining
 
-<embed src="images/hashtable-collisions-chaining_en.svg" type="image/svg+xml" />
+![](images/hashtable-collisions-chaining_en.svg)
 
 ## hashCode - function of object content {.hashFunctionData}
 <pre><code class="java">String s1 = new String("java");
@@ -161,7 +163,7 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
 
 * <span class="huge">1997-04-17 (!!!)</span>: [java bug #4045622](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4045622)
     + All of the words and phrasesin Merriam-Webster's 2nd Int'l Dictionary (311_141 strings, avg length: 10 chars).
-    + All of the strings in `/bin/*`, `/usr/bin/*`, `/usr/lib/*`, `/usr/ucb/*` и `/usr/openwin/bin/*`  (66_304 strings, avg length: 21 chars).
+    + All of the strings in `/bin/*`, `/usr/bin/*`, `/usr/lib/*`, `/usr/ucb/*` &amp; `/usr/openwin/bin/*`  (66_304 strings, avg length: 21 chars).
     +  A list of URLs gathered by a web-crawler that ran for several hours last night (28_372 strings, avg length 49 characters).
 
 
@@ -180,28 +182,25 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 
 # JMH
 
-## Java Microbenchmark Harness :: example
+## Java Microbenchmark Harness :: example{.jmhExample}
 
-<pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
-@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
-@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)
-@State(Scope.Benchmark)
+<pre><code class="java">@State(Scope.Benchmark)
 public class MapPerfTest {
 
-  <span class="hl">@Benchmark</span> @Threads( 1 )
-  public void fillMap( Blackhole bh ) {
-    <span class="hl">for (String key : keys) map.put(key, key);
-    bh.consume( map );</span>
-  }
+  Map map;
+  String[] keys;
 
-  Map map = new HashMap(); String[] keys; 
-  
   @Setup
-  public void setup() {
-    keys = loadUsernameCollisionsFromFile();
-  }
-}
-</code></pre>
+  public void setup() { ..... }
+
+<div class="hblock"><span class="hl">@Benchmark</span> @Threads( 1 )
+public void fillMap( Blackhole blackhole ) {
+  for (String key : keys)
+    map.put(key, key);
+
+  blackhole.consume( map );
+}</div>
+}</code></pre>
 
 ## Java Microbenchmark Harness :: example
 
@@ -211,22 +210,19 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
+  Map map;
+  String[] keys;
+
+  @Setup
+  public void setup() { ... }
+
   @Benchmark <span class="hl">@Threads( 1 )</span>
   public void fillMap( Blackhole bh ) {
-    for (String key : keys) map.put(key, key);
-    bh.consume( map );
+    // ...
   }
+}</code></pre>
 
-  Map map = new HashMap(); String[] keys;
-  
-  @Setup
-  public void setup() {
-    keys = loadUsernameCollisionsFromFile();
-  }
-}
-</code></pre>
-
-## Java Microbenchmark Harness :: example
+## Java Microbenchmark Harness :: example{.jmhExample}
 
 <pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
 @Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
@@ -234,37 +230,32 @@ public class MapPerfTest {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
+  Map map;
+  String[] keys;
+
+<div class="hblock"><span class="hl">@Setup</span>
+public void setup() {
+  map = new HashMap();
+  keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
+}</div>
+
   @Benchmark @Threads( 1 )
-  public void fillMap( Blackhole bh ) {
-    for (String key : keys) map.put(key, key);
-    bh.consume( map );
-  }
+  public void fillMap( Blackhole bh ) { ... }
 
-  Map map = new HashMap(); String[] keys;
-  
-  <span class="hl">@Setup</span>
-  public void setup() {
-    keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
-  }
-}
-</code></pre>
+}</code></pre>
 
-## "username" коллизии :: benchmark
+## "username" collisions :: benchmark
 
-<pre><code class="java">@Benchmark
-public Map fillMap() {
-    for (String key : keys) 
-        map.put(key, key);
-    
-    return map;
-}
-
-@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
+<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
 int size;
 String[] keys;
 
-Map map = new HashMap();
-</code></pre>
+@Benchmark
+public Map fillMap() {
+    for (String key : keys) map.put(key, key);
+
+    return map;
+}</code></pre>
 
 [CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
 
@@ -289,7 +280,8 @@ Map map = new HashMap();
 
 ## "username" collisions
 
-```{r, fig.width=10,fig.height=5}
+```{r, out.height="600px", out.width="1000px"}
+
 df = read.csv(file = "csv/username.csv", header = TRUE)
 df7 <- subset(df, java == "java 7")
 
@@ -311,7 +303,7 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.title.x=element_text(margin=margin(t=20))) +
   theme(title = element_text(size = 18, face = "bold")) +
-  theme(legend.position="none", aspect.ratio = 1/1)
+  theme(legend.position="none", aspect.ratio = 0.5)
 ```
 
 
@@ -322,11 +314,11 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
 
 ## Binary search tree
 
-<embed src="images/hashtable-collisions-rbtree_en.svg" type="image/svg+xml" />
+![](images/hashtable-collisions-rbtree_en.svg)
 
 ## "username" collisions
 
-```{r, fig.width=10,fig.height=5}
+```{r, out.height="650px", out.width="1000px"}
 df = read.csv(file = "csv/username.csv", header = TRUE)
 df78 <- subset(df, java == "java 7" | java == "java 8")
 d <- transform(df78, time_per_op = time / size, time_sec = time / (10^9))
@@ -349,13 +341,13 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
   theme(axis.title.x=element_text(margin=margin(t=20))) +
   theme(legend.text = element_text(size = 14, face = "bold")) +
   theme(title = element_text(size = 18, face = "bold")) +
-  theme(aspect.ratio = 1/1)
+  theme(aspect.ratio = 0.5)
 ```
 
 
 ## "username" collisions :: 500x zoom-in
 
-```{r, fig.width=10,fig.height=5}
+```{r, out.height="650px", out.width="1000px"}
 df = read.csv(file = "csv/username.csv", header = TRUE)
 df78 <- subset(df, java == "java 8" | java == 'java 7')
 d <- transform(df78, time_per_op = time / size, time_msec = time / (10^6))
@@ -378,12 +370,12 @@ ggplot(data=d, aes(x=size, y=time_msec, group=java, colour=java)) +
   theme(axis.title.x=element_text(margin=margin(t=20))) +
   theme(legend.text = element_text(size = 14, face = "bold")) +
   theme(title = element_text(size = 18, face = "bold")) +
-  theme(aspect.ratio = 1/1)
+  theme(aspect.ratio = 0.5)
 ```
 
 ## "username" collisions :: java 8 :: map.put(key, *)
 
-```{r, fig.width=10,fig.height=5}
+```{r, out.height="650px", out.width="1000px"}
 df <- read.csv(file = "csv/username.csv", header = TRUE)
 
 df8 <- subset(df, java == "java 8")
@@ -408,14 +400,14 @@ ggplot(data=d, aes(x=size, y=time_per_op, group=java, colour=java)) +
   theme(axis.title.y=element_text(margin=margin(r=20))) +
   theme(axis.title.x=element_text(margin=margin(t=20))) +
   theme(title = element_text(size = 18, face = "bold")) +
-  theme(aspect.ratio = 1/1)
+  theme(aspect.ratio = 0.5)
 
 
 ```
 
 ## "username" collisions :: Comparable
 
-```{r, fig.width=10,fig.height=5}
+```{r, out.height="650px", out.width="1000px"}
 df <- read.csv(file = "csv/cmp.csv", header = TRUE)
 
 d <- transform(df, time_per_op = time / size, time_ms = time / (10^6), time_sec = time / (10^9))
@@ -438,7 +430,7 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
   theme(axis.title.y=element_text(margin=margin(r=20))) +
   theme(axis.title.x=element_text(margin=margin(t=20))) +
   theme(title = element_text(size = 18, face = "bold")) +
-  theme(aspect.ratio = 1/1)
+  theme(aspect.ratio = 0.6)
 
 
 ```
@@ -551,7 +543,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 </code></pre>
 
-## JOL : example {.jol2}
+## JOL : sizeOf( new Pair() ) {.jol2}
 
 <div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
   F first;
@@ -603,7 +595,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 ## Address &amp; hashCode
 
-<embed src="images/header-address0.svg" type="image/svg+xml" />
+![](images/header-address0.svg)
 
 <code>-XX:<span class="hashCode">hashCode=4</span></code>
 
@@ -664,7 +656,32 @@ long currentAddress = initialAddress;
 
 ```-Xms256m -Xmx256m -XX:+UseSerialGC```
 
+## Follow the address of the object
+
+<pre><code class="java">final Object theObject = new Object();
+final long initialAddress = getAddress( theObject );
+
+List gcKeeper = new ArrayList();
+gcKeeper.add( theObject );
+
+long currentAddress = initialAddress;
+while (initialAddress == currentAddress) {
+    Object o = new Object();
+
+    gcKeeper.add(o);
+
+    currentAddress = getAddress( theObject );
+}</code></pre>
+
+<code><span class="highlight">-Xms256m -Xmx256m -XX:+UseSerialGC</span></code>
+
 # demo
+
+## GC: generations {.generations}
+
+![](images/generations.svg)
+
+GC: Serial / Parallel / CMS
 
 ## Follow the address of the object together with GC
 
@@ -685,15 +702,9 @@ while (initialAddress == currentAddress) {
 
 <code><span class="highlight">-XX:+PrintGCDetails</span> -Xms256m -Xmx256m -XX:+UseSerialGC</code>
 
-## GC: generations {.generations}
-
-<embed src="images/generations.svg" type="image/svg+xml" />
-
-GC: Serial / Parallel / CMS 
-
 ## GC is more than just a garbage collection
 
-<embed src="images/reallocation2_en.svg" type="image/svg+xml" />
+![](images/reallocation2_en.svg)
 
 ## Follow the hashcode
 <pre><code class="java">final Object <span class="hl">theObject</span> = new Object();
@@ -730,7 +741,7 @@ public class Object {
 
 ## Object memory dump
 
-<embed src="images/header-address.svg" type="image/svg+xml" />
+![](images/header-address.svg)
 
 Intel X86: Little Endian
 
@@ -739,7 +750,8 @@ Intel X86: Little Endian
 ```-Xms256m -Xmx256m```
 
 <pre><code class="java">
-long freeMemory = Runtime.getRuntime().freeMemory();
+long freeMemory =
+  Runtime.getRuntime().freeMemory();
 
 <span class="hl">239_942_568</span>
 </code></pre>
@@ -749,14 +761,17 @@ freeMemory / vm.sizeOf( new Object() )
 <span class="hl">14_996_410</span>
 </code></pre>
 
-## Young generation {.heap}
+## Young generation {.heapSize}
 
-<embed src="images/obj-count_en.svg" type="image/svg+xml" />
+<pre><code>eden space <span class="highlight">65536K</span>, 2% used
+[0x000000012a700000, 0x000000012a8db400, 0x000000012e700000)
+Object reallocated: 0x12A8109F0 -> 0x12E7200F8
+</code></pre>
 
 <pre><code class="java">
 65536K / vm.sizeOf( new Object() )
 
-<span class="hl">4_194_304</span>
+= <span class="hl">4_194_304</span>
 </code></pre>
 
 
@@ -767,7 +782,7 @@ final TIntSet uniqueHashCodes = new TIntHashSet();
 final int maxCollisions = 10;
 final int[] collisions = new int[maxCollisions];
 
-for (int collisionNo = 0; collisionNo < maxCollisions; ) {
+<div class="hblock">for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 	final Object <span class="hl">obj = new Object()</span>;
 	gcKeeper.add(obj);
 
@@ -775,7 +790,7 @@ for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 
 	if ( <span class="hl">! uniqueHashCodes.add(hashCode)</span> )
 		collisions[collisionNo++] = hashCode;
-}
+}</div>
 </code></pre>
 <code>-Xms256m -Xmx256m -XX:+UseSerialGC -XX:<span class="hashCode">hashCode=4</span></code>
 
@@ -796,7 +811,6 @@ hash code collision 0x3055A9<span class="huge highlight">F</span>0
 
 ## hashCode space{.hashCode22Bit}
 
-<!--embed src="images/address2.svg" type="image/svg+xml" /-->
 <div class="center"><span class="huge">32bit → 22bit</span></div>
 
 `= 4_194_304` unique values
@@ -821,7 +835,7 @@ hash code collision 0x3055A9<span class="huge highlight">F</span>0
     long malloc(long size);
 }
 
-public class SimpleAllocator implements Allocator {
+class SimpleAllocator implements Allocator {
     private long memoryPointer;
 
     @Override
@@ -835,7 +849,7 @@ public class SimpleAllocator implements Allocator {
 
 ## Fixed malloc - SyncAllocator {.syncAllocation}
 
-<pre><code class="java">public class SyncAllocator implements Allocator {
+<pre><code class="java">class SyncAllocator implements Allocator {
     private long memoryPointer;
 
     @Override
@@ -854,7 +868,7 @@ public long syncAllocator() {
 }</code></pre>
 
 ## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "single-threaded" | alloc == 'sync')
 
@@ -873,14 +887,14 @@ ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 # Can make it better ?
 
 # Compare-and-Set
 
 ## CAS Allocator {.casAllocation}
-<pre><code class="java">public class CASAllocator implements Allocator {
+<pre><code class="java">class CASAllocator implements Allocator {
     private final AtomicLong memoryPointer = 
         new <span class="hl">AtomicLong</span>();
 
@@ -900,7 +914,7 @@ public long casAllocator() {
 
 ## Allocators Performance Benchmark {.casAllocationBenchmark}
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "cas" | alloc == 'sync' | alloc == "single-threaded" )
 
@@ -919,7 +933,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## Java Allocation {.javaAllocation}
 <pre><code class="java">@Benchmark @Threads( 4 )
@@ -930,7 +944,7 @@ public Object javaAllocation() {
 
 ## Java Allocation {.javaAllocation}
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "single-threaded")
 
@@ -949,7 +963,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 # Can make it even better ?
 
@@ -980,18 +994,17 @@ final int[] hashCodesPerThread = new int[threads];
 final Phaser phaser = new Phaser(threads);
 final AtomicBoolean collision = new AtomicBoolean(false);
 
-IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
-  while ( !collision.get() ) {
+IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {<div class="hblock">while ( !collision.get() ) {
     phaser.arriveAndAwaitAdvance();
 
     synchronized (uniqueHashCodes) {
-      <span class="hl">Object obj = new Object();
-      gcKeeper.add(obj);
-      hashCodesPerThread[threadNo] = obj.hashCode();
+      <span class="hl">Object obj = new Object();</span>
+      <span class="hl">gcKeeper.add(obj);</span>
+      <span class="hl">hashCodesPerThread[threadNo] = obj.hashCode();</span>
       collision.compareAndSet(false,
         ! uniqueHashCodes.add(obj.hashCode()) );</span>
     }
-  }
+  }</div>
 }).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
 
 ## Multithreaded collisions boundary {.multiThreadedCollisions}
@@ -1142,7 +1155,7 @@ public long tlabAllocator() {
 }</code></pre>
 
 ## Allocators Performance Benchmark {.tlabAllocatorBenchmark}
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
@@ -1162,15 +1175,15 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## Thread Local Allocation Buffer
 
-<embed src="images/tlab.svg" type="image/svg+xml" />
+![](images/tlab.svg)
 
 ## Thread Local Allocation Buffer
 
-<embed src="images/tlab2.svg" type="image/svg+xml" />
+![](images/tlab2.svg)
 
 ## Multithreaded collisions boundary :: NO TLAB {.multiThreadedCollisions}
 
@@ -1210,7 +1223,7 @@ public Object allocate() {
 
 ## Cost of TLAB {.tlabAllocatorBenchmark}
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/UseTLAB.csv", header = TRUE)
 ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
@@ -1227,7 +1240,7 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   theme(axis.title = element_text(size=16, face = "bold"))+
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 # 32bit → 19bit
 
@@ -1240,7 +1253,7 @@ $$ = \frac{d}{d^{n} \cdot (d - n)!}$$
 
 
 $$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
-$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
+$$ using \ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
 
 ## -XX:hashCode {.XXhashCode}
 
@@ -1288,7 +1301,7 @@ ggplot() +
 
 ## has been hashCode calcualted ?
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "java" | alloc == "tlab" )
@@ -1308,7 +1321,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## Object.hashCode() benchmark {.javaAllocation}
 <pre><code class="java">@Benchmark @Threads( 4 )
@@ -1321,7 +1334,7 @@ public Object javaHashCode() {
 
 ## Object.hashCode() benchmark
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
 df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "tlab" )
@@ -1341,7 +1354,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## Memory dump of object right after creation {.objectDumpRightAfterCreation}  
 
@@ -1350,7 +1363,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 String dump = dump(object);
 </code></pre>
 
-<embed src="images/header-biasedlocking0.svg" type="image/svg+xml" />
+![](images/header-biasedlocking0.svg)
 
 # monitor {.nativeMonitor}
 <pre><code class="java">public class Object {
@@ -1366,7 +1379,7 @@ String dump = dump(object);
 
 ## Biased Locking
 
-<embed src="images/biasedlocking.svg" type="image/svg+xml" />
+![](images/biasedlocking.svg)
 
 ## Biased Locking demo:  {.biasedDemo}
 <pre><code class="java">synchronized (object) {
@@ -1374,7 +1387,7 @@ String dump = dump(object);
 }
 String dump = dump(object);
 </code></pre>
-<embed src="images/header-biasedlocking1.svg" type="image/svg+xml" />
+![](images/header-biasedlocking1.svg)
 
 ## StringBufferPerfTest {.StringBufferPerfTestSingle}
 
@@ -1411,7 +1424,7 @@ public String bufferToString() {
 
 ## StringBufferPerfTest results
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
 
 df <- subset(df, type == "-XX:+UseBiasedLocking" | type == "-XX:-UseBiasedLocking" )
@@ -1431,27 +1444,27 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
   theme(axis.title = element_text(size=16, face = "bold"))+
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## identityHashCode
 
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 StringBuffer <span class="hl">bufferWithIdHashCode</span> = new StringBuffer();
 
-@Benchmark @Thread(1)
-public String buffer() {    
-  return buffer.toString(); 
-}
-
-@Benchmark  @Thread(1)
-public String bufferWithIdHashCode() { 
-  return <span class="hl">bufferWithIdHashCode</span>.toString(); 
-}
-
 @Setup
 public void setup(Blackhole bh) {
     bh.consume( System.identityHashCode( 
         bufferWithIdHashCode ) );
+}
+
+@Benchmark  @Thread(1)
+public String bufferWithIdHashCode() {
+  return <span class="hl">bufferWithIdHashCode</span>.toString();
+}
+
+@Benchmark @Thread(1)
+public String buffer() {
+  return buffer.toString();
 }</code></pre>
 
 ## identityHashCode
@@ -1459,25 +1472,25 @@ public void setup(Blackhole bh) {
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 StringBuffer bufferWithIdHashCode = new StringBuffer();
 
-@Benchmark  @Thread(1)
-public String buffer() {    
-  return buffer.toString(); 
-}
-
-@Benchmark  @Thread(1)
-public String bufferWithIdHashCode() { 
-  return bufferWithIdHashCode.toString(); 
-}
-
 @Setup
 public void setup(Blackhole bh) {
     bh.consume( <span class="hl">System.identityHashCode( 
         bufferWithIdHashCode )</span> );
+}
+
+@Benchmark  @Thread(1)
+public String bufferWithIdHashCode() {
+  return bufferWithIdHashCode.toString();
+}
+
+@Benchmark  @Thread(1)
+public String buffer() {
+  return buffer.toString();
 }</code></pre>
 
 ## identityHashCode results
 
-```{r, fig.width=10,fig.height=3}
+```{r, fig.width=10, fig.height=5}
 df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
 
 df <- subset(df, type == "buffer -XX:-UseBiasedLocking" | type == 'buffer' | type == 'bufferWithIdHashCode')
@@ -1497,7 +1510,7 @@ ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
   theme(axis.title = element_text(size=16, face = "bold"))+
   theme(legend.position="none")
 ```
-<embed src="images/less-is-more_en.svg" type="image/svg+xml" />
+![](images/less-is-more_en.svg)
 
 ## Revoke Biased Locking:  {.biasedDemo}
 
@@ -1506,7 +1519,7 @@ ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
 
 String dump = dump(object);</code></pre>
 
-<embed src="images/header-biasedlocking2.svg" type="image/svg+xml" />
+![](images/header-biasedlocking2.svg)
 
 
 ## Conclusion {.conclusion}
@@ -1519,7 +1532,7 @@ String dump = dump(object);</code></pre>
     + <span class="good">GC</span>, <span class="good">TLAB</span>, don't saturate <span class="bad">`identityHashCode`</span>
 * **Meten is weten** (Dutch) &laquo;Measurement is knowledge&raquo;
 
-# Contacts
+# Contacts{.contacts}
 
 ### slides and examples: [github.com/vladimirdolzhenko/hashCodeLegend](https://github.com/vladimirdolzhenko/hashCodeLegend)
 ### email: [vladimir.dolzhenko@ihsmarkit.com](mailto:vladimir.dolzhenko@ihsmarkit.com)

@@ -2,15 +2,19 @@
 <!DOCTYPE svg
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-<?xml-stylesheet type="text/css" href="../svg-stylesheet.css" ?>
-<svg height="42" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
+<svg height="65" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
 .link {
   fill:none;
   stroke:black;
-  stroke-width:1.2;
+  stroke-width:3;
   marker-end:url(#TriangleOutL);
+}
+.note {
+  font-size:1em;
+  font-weight:bold;
 }
     ]]></style>
   </defs>
@@ -18,10 +22,10 @@
     <path d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z " id="path4051" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.8)"/>
   </marker>
   <g transform="translate(20 4) scale(2)">
-    <g transform="translate(50 0)">
+    <g transform="translate(70 10)">
       <text class="note" text-anchor="end" x="30" y="8">быстрее</text>
-      <path class="link" d="M340,5 40,5"/>
-      <text class="note" text-anchor="start" x="350" y="8">медленее</text>
+      <path class="link" d="M330,5 50,5"/>
+      <text class="note" text-anchor="start" x="340" y="8">медленее</text>
     </g>
   </g>
 </svg>
