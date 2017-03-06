@@ -1,15 +1,17 @@
 package com;
 
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Phaser;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
-
-import gnu.trove.set.TIntSet;
-import gnu.trove.set.hash.TIntHashSet;
 
 import static com.VMTools.checkVMHashCodeAsAddress;
 
@@ -23,35 +25,33 @@ import static com.VMTools.checkVMHashCodeAsAddress;
  */
 public class ThreadedIdentityHashCodeCollision {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         checkVMHashCodeAsAddress();
 
         final int threads = Integer.parseInt(args[0]);
+        final int count = Integer.parseInt(args[1]);
         final String prefix = "thread-";
 
         final CountDownLatch shutDownLatch = new CountDownLatch(threads);
 
-        final List gcKeeper = new ArrayList(2_000_000);
-        final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-        final int[] objectsPerThread = new int[threads];
-        final int[] hashCodesPerThread = new int[threads];
+        final List gcKeeper = new ArrayList(threads * 1_500_000);
+        final int[][] hashCodesPerThread = new int[threads][count];
+
+        System.gc();
+        System.gc();
+        System.gc();
+        System.gc();
 
         final Phaser phaser = new Phaser(threads);
-        final AtomicBoolean collision = new AtomicBoolean(false);
 
         IntStream.range(0, threads).forEach(threadNo -> { Thread thread = new Thread(() -> {
                 try {
-                    while (!collision.get()) {
+                    for(int index = 0; index < count; index++) {
                         phaser.arriveAndAwaitAdvance();
 
-                        synchronized (uniqueHashCodes) {
-                            final Object obj = new Object();
-                            gcKeeper.add(obj);
-                            hashCodesPerThread[threadNo] = obj.hashCode();
-                            objectsPerThread[threadNo]++;
-                            collision.compareAndSet(false,
-                                    !uniqueHashCodes.add(obj.hashCode()));
-                        }
+                        final Object obj = new Object();
+                        gcKeeper.add(obj);
+                        hashCodesPerThread[threadNo][index] = obj.hashCode();
                     }
                 } finally {
                     phaser.arriveAndDeregister();
@@ -63,21 +63,60 @@ public class ThreadedIdentityHashCodeCollision {
         });
 
         shutDownLatch.await();
-        synchronized (uniqueHashCodes) {
-            System.out.printf("size: %,d\n", gcKeeper.size());
-            Arrays.sort(objectsPerThread);
-            System.out.printf("objects in thread: %s\n", Arrays.toString(objectsPerThread));
 
             StringIntPair[] stringIntPairs = new StringIntPair[hashCodesPerThread.length];
             for (int i = 0; i < stringIntPairs.length; i++) {
-                stringIntPairs[i] = new StringIntPair(prefix + i, hashCodesPerThread[i]);
+                stringIntPairs[i] = new StringIntPair(prefix + i, hashCodesPerThread[i][count - 1]);
             }
             Arrays.sort(stringIntPairs);
 
-            for (int i = 1; i < threads; i++) {
-                System.out.printf("diff %s - %s : %,d\n",
-                        stringIntPairs[i].string, stringIntPairs[i - 1].string,
-                        stringIntPairs[i].value - stringIntPairs[i - 1].value);
+            for (int i = 0; i < threads; i++) {
+                System.out.printf("%s\t", prefix + i);
+            }
+
+        System.out.println();
+        TIntSet uniqueCodes = new TIntHashSet(threads * count);
+        boolean found = false;
+        Integer collisionIndex = null;
+        Integer collisionValue = null;
+        boolean out = false;
+        for (int j = 0; j < count; j++) {
+            for (int i = 0; i < threads; i++) {
+                if (!found && !uniqueCodes.add(hashCodesPerThread[i][j])){
+                    found = true;
+                    collisionIndex = j;
+                    collisionValue = hashCodesPerThread[i][j];
+                }
+                if (out)
+                System.out.printf("%04X\t", hashCodesPerThread[i][j]);
+            }
+            if (out)
+            System.out.println();
+        }
+
+        for (int i = 1; i < threads; i++) {
+            System.out.printf("diff %s - %s : %,d\n",
+                    stringIntPairs[i].string, stringIntPairs[i - 1].string,
+                    stringIntPairs[i].value - stringIntPairs[i - 1].value);
+        }
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Collision " + collisionValue + " @ " + collisionIndex);
+
+
+        try(FileWriter fileWriter = new FileWriter(new File("hashCodes.csv"))) {
+            fileWriter.append("index,thread,address\n");
+            for (int j = 0; j < count; j++) {
+                for (int i = 0; i < threads; i++) {
+                    fileWriter.append((j + 1) + "," + (prefix + i) + ","
+                            + (hashCodesPerThread[i][j] != 0 ? hashCodesPerThread[i][j] : "")
+                            + "\n");
+                }
+                if (j >= 500){
+                    j += 99;
+                }
             }
         }
     }

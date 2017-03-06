@@ -21,10 +21,11 @@ public class IdentityHashCodeCollision {
     public static void main(String[] args) {
         checkVMHashCodeAsAddress();
 
+        final int maxCollisions = Integer.parseInt(args[0]);
+        final int[] collisions = new int[maxCollisions];
+
         final List gcKeeper = new ArrayList();
         final TIntSet uniqueHashCodes = new TIntHashSet();
-        final int maxCollisions = 10;
-        final int[] collisions = new int[maxCollisions];
 
         for (int collisionNo = 0; collisionNo < maxCollisions; ) {
             final Object obj = new Object();
@@ -39,7 +40,7 @@ public class IdentityHashCodeCollision {
 
         System.out.printf("after %,d allocation:\n", gcKeeper.size());
         for (int i = 0; i < collisions.length; i++) {
-            System.out.printf("hash code collision 0x%04X\n", collisions[i]);
+            System.out.printf("hash code collision at 0x%04X\n", collisions[i]);
         }
 
     }

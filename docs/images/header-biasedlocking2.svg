@@ -58,23 +58,23 @@ rect.focused {
 }
 
 .code1, .code2, .code3, .code4 {
-   opacity:0.8;
+   opacity:1;
 }
 
 .code1 {
-  fill:red;
+  fill:#d73027;
 }
 
 .code2 {
-  fill:green;
+  fill:#fee090;
 }
 
 .code3 {
-  fill:blue;
+  fill:#abd9e9;
 }
 
 .code4 {
-  fill:orange;
+  fill:#4575b4;
 }
 
 .header.code1 {
