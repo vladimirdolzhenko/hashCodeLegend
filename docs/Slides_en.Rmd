@@ -167,7 +167,7 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
     +  A list of URLs gathered by a web-crawler that ran for several hours last night (28_372 strings, avg length 49 characters).
 
 
-## But it could be found... {.AaBB}
+## it might be found... {.AaBB}
 
 <pre><code class="java">assert "Aa".hashCode() == "BB".hashCode();
 </code></pre>
@@ -261,24 +261,20 @@ public Map fillMap() {
 
 ## "username" collisions :: benchmark
 
-<pre><code class="java">@Benchmark
-public Map fillMap() {
-    for (String key : keys) 
-        map.put(key, key);
-    
-    return map;
-}
-
-@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
+<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
 int size;
 String[] keys;
 
-Map map = new HashMap();
-</code></pre>
+@Benchmark
+public Map fillMap() {
+    for (String key : keys) map.put(key, key);
+
+    return map;
+}</code></pre>
 
 <span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
-## "username" collisions
+## "username" collisions {.usernameCollisionsChart1}
 
 ```{r, out.height="600px", out.width="1000px"}
 
@@ -761,26 +757,13 @@ freeMemory / vm.sizeOf( new Object() )
 <span class="hl">14_996_410</span>
 </code></pre>
 
-## Young generation {.heapSize}
-
-<pre><code>eden space <span class="highlight">65536K</span>, 2% used
-[0x000000012a700000, 0x000000012a8db400, 0x000000012e700000)
-Object reallocated: 0x12A8109F0 -> 0x12E7200F8
-</code></pre>
-
-<pre><code class="java">
-65536K / vm.sizeOf( new Object() )
-
-= <span class="hl">4_194_304</span>
-</code></pre>
-
-
 ## Collisions boundary {.IdentityHashCodeCollision}
 
-<pre><code class="java">final List gcKeeper = new ArrayList();
-final TIntSet uniqueHashCodes = new TIntHashSet();
-final int maxCollisions = 10;
+<pre><code class="java">final int maxCollisions = 1;
 final int[] collisions = new int[maxCollisions];
+
+final List gcKeeper = new ArrayList();
+final TIntSet uniqueHashCodes = new TIntHashSet();
 
 <div class="hblock">for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 	final Object <span class="hl">obj = new Object()</span>;
@@ -796,18 +779,18 @@ final int[] collisions = new int[maxCollisions];
 
 #demo
 
-## Collisions boundary - results {.IdentityHashCodeCollisionResults} 
-<pre>
-after 2,022,271 allocation:
-hash code collision 0x3055A9<span class="huge highlight">9</span>0
-hash code collision 0x3055A9<span class="huge highlight">A</span>0
-hash code collision 0x3055A9<span class="huge highlight">B</span>0
-hash code collision 0x3055A9<span class="huge highlight">C</span>0
-hash code collision 0x3055A9<span class="huge highlight">D</span>0
-hash code collision 0x3055A9<span class="huge highlight">E</span>0
-hash code collision 0x3055A9<span class="huge highlight">F</span>0
-</pre>
+## Young generation {.heapSize}
 
+<pre><code>eden space <span class="highlight">65536K</span>, 2% used
+[0x000000012a700000, 0x000000012a8db400, 0x000000012e700000)
+Object reallocated: 0x12A8109F0 -> 0x12E7200F8
+</code></pre>
+
+<pre><code class="java">
+65536K / vm.sizeOf( new Object() )
+
+= <span class="hl">4_194_304</span>
+</code></pre>
 
 ## hashCode space{.hashCode22Bit}
 
@@ -817,14 +800,14 @@ hash code collision 0x3055A9<span class="huge highlight">F</span>0
 
 ## Collisions boundary - results {.IdentityHashCodeCollisionResults} 
 <pre>
-after 2,022,271 allocation:
-hash code collision 0x3055A9<span class="huge highlight">9</span>0
-hash code collision 0x3055A9<span class="huge highlight">A</span>0
-hash code collision 0x3055A9<span class="huge highlight">B</span>0
-hash code collision 0x3055A9<span class="huge highlight">C</span>0
-hash code collision 0x3055A9<span class="huge highlight">D</span>0
-hash code collision 0x3055A9<span class="huge highlight">E</span>0
-hash code collision 0x3055A9<span class="huge highlight">F</span>0
+after 1,331,460 allocation:
+hash code collision at 0x3055A9<span class="huge highlight">9</span>0
+hash code collision at 0x3055A9<span class="huge highlight">A</span>0
+hash code collision at 0x3055A9<span class="huge highlight">B</span>0
+hash code collision at 0x3055A9<span class="huge highlight">C</span>0
+hash code collision at 0x3055A9<span class="huge highlight">D</span>0
+hash code collision at 0x3055A9<span class="huge highlight">E</span>0
+hash code collision at 0x3055A9<span class="huge highlight">F</span>0
 </pre>
 
 # hashCode → address → <br/> → memory allocation
@@ -847,7 +830,7 @@ class SimpleAllocator implements Allocator {
 }
 </code></pre>
 
-## Fixed malloc - SyncAllocator {.syncAllocation}
+## Let's fix malloc: SyncAllocator {.syncAllocation}
 
 <pre><code class="java">class SyncAllocator implements Allocator {
     private long memoryPointer;
@@ -967,112 +950,94 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 # Can make it even better ?
 
-## Collisions boundary :: multithreaded {.multiThreadedCollisions}
-<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-final int[] hashCodesPerThread = new int[threads];
-final Phaser phaser = new Phaser(threads);
-final AtomicBoolean collision = new AtomicBoolean(false);
+# hashCode distribution over threads
 
-<span class="hl">IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt;</span> {
-  while ( ! collision.get() ) {
-    phaser.arriveAndAwaitAdvance();
+## hashCode distribution : Expectations
 
-    synchronized (uniqueHashCodes) {
-      Object obj = new Object();
-      gcKeeper.add(obj);
-      hashCodesPerThread[threadNo] = obj.hashCode();
-      collision.compareAndSet(false,
-        ! uniqueHashCodes.add(obj.hashCode()) );
-    }
-  }
-}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 36, header = TRUE)
 
-## Collisions boundary :: multithreaded {.multiThreadedCollisions}
+ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=4) +
+  theme_classic() +
+  labs(
+    title="number of objects",
+    x = "addresses of objects",
+    y = "") +
+  scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
+  scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(breaks=c(807437768, 807437928, 807438088, 807438248), labels = function(n){ifelse(n == 807437768,  base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 807437768)))}, expand = c(0, 0)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
 
-<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-final int[] hashCodesPerThread = new int[threads];
-final Phaser phaser = new Phaser(threads);
-final AtomicBoolean collision = new AtomicBoolean(false);
-
-IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {<div class="hblock">while ( !collision.get() ) {
-    phaser.arriveAndAwaitAdvance();
-
-    synchronized (uniqueHashCodes) {
-      <span class="hl">Object obj = new Object();</span>
-      <span class="hl">gcKeeper.add(obj);</span>
-      <span class="hl">hashCodesPerThread[threadNo] = obj.hashCode();</span>
-      collision.compareAndSet(false,
-        ! uniqueHashCodes.add(obj.hashCode()) );</span>
-    }
-  }</div>
-}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
-
-## Multithreaded collisions boundary {.multiThreadedCollisions}
-<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-final int[] hashCodesPerThread = new int[threads];
-final Phaser phaser = new Phaser(threads);
-final AtomicBoolean collision = new AtomicBoolean(false);
-
-IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
-  <span class="hl">while ( ! collision.get() ) </span> {
-    phaser.arriveAndAwaitAdvance();
-
-    synchronized (uniqueHashCodes) {
-      Object obj = new Object();
-      gcKeeper.add(obj);
-      hashCodesPerThread[threadNo] = obj.hashCode();
-      <span class="hl">collision.compareAndSet(false,
-        ! uniqueHashCodes.add(obj.hashCode()) )</span>;
-    }
-  }
-}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
-
-## Multithreaded collisions boundary {.multiThreadedCollisions}
-
-<pre><code class="java">final TIntSet uniqueHashCodes = new TIntHashSet(2_000_000);
-final int[] hashCodesPerThread = new int[threads];
-<span class="hl">final Phaser phaser = new Phaser(threads);</span>
-final AtomicBoolean collision = new AtomicBoolean(false);
-
-IntStream.range(0, threads).forEach(threadNo -&gt; { new Thread(() -&gt; {
-  while ( ! collision.get() ) {
-    <span class="hl">phaser.arriveAndAwaitAdvance();</span>
-
-    synchronized (uniqueHashCodes) {
-      Object obj = new Object();
-      gcKeeper.add(obj);
-      hashCodesPerThread[threadNo] = obj.hashCode();
-      collision.compareAndSet(false,
-        ! uniqueHashCodes.add(obj.hashCode()) );
-    }
-  }
-}).start();});</code></pre><code>-Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX:hashCode=4</span></code>
-
-## hashCode distributions over threads {.hashCodeDistribution}
-
-size: 1_566_762
-
-objects in threads: [394_012, 394_012, 394_012, 394_013]
-
-diff thread-0 - thread-3 : <span class="huge">718_720</span>
-
-diff thread-1 - thread-0 : <span class="huge">737_824</span>
-
-diff thread-2 - thread-1 : <span class="huge">786_280</span>
-
-## The bad news {.hashCode19Bit}
-
-```
+  theme(aspect.ratio = 0.7)
 ```
 
-objects in threads: [394012, 394012, 394012, 394013]
+## hashCode distribution over 4 threads {.hashCode20Bit}
 
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv", header = TRUE)
+
+ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=1) +
+  theme_classic() +
+  labs(
+    title="number of objects",
+    x = "addresses of objects",
+    y = "") +
+  geom_vline(xintercept = 809203744) +
+  geom_hline(yintercept = 890552) +
+  scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
+  scale_y_continuous(breaks=c(200000,400000,600000,800000,1000000), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d Mb", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
+  theme(aspect.ratio = 0.7)
 ```
+
+## The bad news: 1 mln of unique values{.hashCode20Bit}
+
+$$ uniqueValues = {{EdenSize} \over {sizeOf(Object) \cdot threads}} = $$
+$$ = 1048576$$
+$$ bits = log_2{1048576} = 20 $$
+
+<div class="center"><span class="huge">22bit → 20bit</span></div>
+
+## The good news {.hashCodeDistribution}
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv", nrows = 40, header = TRUE)
+
+ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=5) +
+  theme_classic() +
+  labs(
+    title="number of objects",
+    x = "addresses of objects",
+    y = "") +
+  scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
+  scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 808757360)))}, expand = c(0.2, 1000)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
+
+  theme(aspect.ratio = 0.7)
 ```
-
-$$ log_2{394012} \approx 18.5 $$
-
-<div class="center"><span class="huge">22bit → 19bit</span></div>
 
 ## Let's grab **HUGE** pieces of memory ! {.tlabcode}
 <pre><code class="java">public class TLABLikeAllocator implements Allocator {
@@ -1185,34 +1150,31 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 ![](images/tlab2.svg)
 
-## Multithreaded collisions boundary :: NO TLAB {.multiThreadedCollisions}
+## hashCode distribution NO TLAB {.hashCodeDistribution}
 
-<pre><code class="java">IntStream.range(0, threads).forEach(threadNo -> { new Thread(() -> {
-    while (!collision.get()) {
-        phaser.arriveAndAwaitAdvance();
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 36, header = TRUE)
 
-        synchronized (uniqueHashCodes) {
-            final Object obj = new Object();
-            gcKeeper.add(obj);
-            hashCodesPerThread[threadNo] = obj.hashCode();
-            collision.compareAndSet(false, 
-                !uniqueHashCodes.add(obj.hashCode()));
-        }
-    }
-}).start();});
-</code></pre>
+ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=5) +
+  theme_classic() +
+  labs(
+    title="number of objects",
+    x = "addresses of objects",
+    y = "") +
+  scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
+  scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(breaks=c(807437768, 807437928, 807438088, 807438248), labels = function(n){ifelse(n == 807437768,  base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 807437768)))}, expand = c(0, 0)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
 
-<code><span class="highlight">-XX:-UseTLAB</span> -Xms256m -Xmx256m -XX:+UseSerialGC <span class="hashCode">-XX</span></code>
-
-## hashCode distribution over threads: NO TLAB {.hashCodeDistribution}
-
-size: 1,650,138
-
-diff thread-1 - thread-2 : <span class="huge">16</span>
-
-diff thread-3 - thread-1 : <span class="huge">16</span>
-
-diff thread-0 - thread-3 : <span class="huge">16</span>
+  theme(aspect.ratio = 0.7)
+```
 
 ## Cost of TLAB {.tlabAllocatorBenchmark}
 
@@ -1242,9 +1204,9 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 ```
 ![](images/less-is-more_en.svg)
 
-# 32bit → 19bit
+# 32bit → 20bit
 
-# May be Random ?
+# What if it is a Random number ?
 
 ## Birthday problem {.paradox}
 
@@ -1268,7 +1230,7 @@ $$ using \ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
 
 ## Memory dump of object -XX:hashCode=5
 
-<embed src="images/header.svg" type="image/svg+xml" />
+![](images/header.svg)
 
 ## Distribution of 10 millions objects in 10 threads
 ```{r  fig.width=10, fig.height=5, echo = FALSE}
@@ -1278,7 +1240,7 @@ defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, heade
 ggplot() +
   geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 800) +
   geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 800) +
-  scale_fill_manual(name="type hashCode:", labels=c("address"="address", "MXSRng"="MXS-rng"), values=c("address" = "#ae003d", "MXSRng"="#003dae")) +
+  scale_fill_manual(name="type hashCode:", labels=c("address"="address", "MXSRng"="MXS-rng"), values=c("address" = "#003dae", "MXSRng" = "#ae003d")) +
   labs(title =
          sprintf("collisions by address: %s k, by MXS-rng: %s k",
                  round( sum(duplicated(addressHashCode)) / 1000, 1),
@@ -1299,7 +1261,7 @@ ggplot() +
   theme(aspect.ratio = 9/16)
 ```
 
-## has been hashCode calcualted ?
+## has hashCode been calculated ?
 
 ```{r, fig.width=10, fig.height=5}
 
@@ -1538,3 +1500,7 @@ String dump = dump(object);</code></pre>
 ### email: [vladimir.dolzhenko@ihsmarkit.com](mailto:vladimir.dolzhenko@ihsmarkit.com)
 ### email: [vladimir.dolzhenko@gmail.com](mailto:vladimir.dolzhenko@gmail.com)
 ### twitter: [\@dolzhenko](https://twitter.com/dolzhenko)
+
+
+<div class="thanks">спасибо: [\@VladimirSitnikv](https://twitter.com/VladimirSitnikv)  [\@dj_begemot](https://twitter.com/dj_begemot)  [\@AndreiPangin](https://twitter.com/AndreiPangin) [\@gvsmirnov](https://twitter.com/gvsmirnov) [\@shipilev](https://twitter.com/shipilev)  [\@i_sopov](https://twitter.com/i_sopov)</div>
+

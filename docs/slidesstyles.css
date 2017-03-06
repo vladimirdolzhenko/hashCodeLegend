@@ -196,7 +196,6 @@ pre > code.hljs span.hl .hljs-string {
     margin: 0px !important;
 }
 
-
 .hljs-type {
     color: #d94d3a !important;
 }
@@ -271,6 +270,10 @@ code > span.highlight {
     line-height: 1.2em;
 }
 
+.hashCode20Bit .MathJax_Display {
+    margin-bottom: 1em !important;
+}
+
 .hashCodeDistribution p, .paradox p div {
     margin-bottom: 1em !important;
 }
@@ -343,7 +346,7 @@ code > span.hashCode {
     line-height: 1.2em;
 }
 
-.generations, .hashCode19Bit, .AaBB, .fourBytesOf16  {
+.generations, .hashCode20Bit, .AaBB, .fourBytesOf16  {
     font-size: 1.4em !important;
     line-height: 1.2em;
 }
@@ -365,7 +368,7 @@ div.center {
     text-align: center;
 }
 
-.hashCode22Bit > div.center, .hashCode19Bit > div.center {
+.hashCode22Bit > div.center, .hashCode20Bit > div.center {
     padding: 50px 0;
 }
 
