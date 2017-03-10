@@ -30,6 +30,9 @@ rows = 10000000
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+# no warranty
+
 ## ToC {.abstract`r sprintf("%d",rows)`} 
 * A few theory
 * hashCode calculation rules
@@ -72,7 +75,7 @@ if ( key.equals( keys[index] ) ) {
     return values[index];
 }
 return null;</code></pre>
-<span class="highlight">complexity → **O(1)**</span>
+<span class="huuuge highlight">complexity → **O(1)**</span>
 
 ## Contract of hashCode {.javadoc}
 
@@ -95,9 +98,10 @@ used in equals comparisons on the object is modified.
 
 ![](images/hashtable-collisions_en.svg)
 
-## Chaining
+## Chaining  {.chaining}
 
 ![](images/hashtable-collisions-chaining_en.svg)
+<span class="huuuge highlight">complexity → **O(N)**</span>
 
 ## hashCode - function of object content {.hashFunctionData}
 <pre><code class="java">String s1 = new String("java");
@@ -138,6 +142,26 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
     }
 }</code></pre>
 
+## String.hashCode is the part of public API {.stringHashCode}
+<pre><code class="java">public final class String {
+  /**
+   * Returns a hash code for this string. The hash code
+   * for a <span class="code">String</span> object is computed as
+   *
+   * <span class="hl">s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]</span>
+   *
+   * using <span class="code">int</span> arithmetic, where <span class="code">s[i]</span>
+   * is the <i>i</i>th character of the string,
+   * <span class="code">n</span> is the length of the string,
+   * and <span class="code">^</span> indicates exponentiation.
+   * (The hash value of the empty string is zero.)
+   *
+   * @return  a hash code value for this object.
+   */
+    public int hashCode() {        ...      }
+}
+</code></pre>
+
 ## java v.1.1.1 - String.hashCode() 
 <pre><code class="java">public int hashCode() {
 	int h = 0;
@@ -166,6 +190,8 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
     + All of the strings in `/bin/*`, `/usr/bin/*`, `/usr/lib/*`, `/usr/ucb/*` &amp; `/usr/openwin/bin/*`  (66_304 strings, avg length: 21 chars).
     +  A list of URLs gathered by a web-crawler that ran for several hours last night (28_372 strings, avg length 49 characters).
 
+<div class="center">polynomial of <span class="highlight huuuge">31</span>, <span class="highlight huuuge">33</span>, <span class="highlight huuuge">37</span> → min. avg collision length
+</div>
 
 ## it might be found... {.AaBB}
 
@@ -177,7 +203,7 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 
 ```
 ```
-<div style="text-align: center;">**`username`** ⟹ 499_331 variants</div>
+<div style="text-align: center;"><span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> variants of collision</div>
 
 
 # JMH
@@ -250,12 +276,19 @@ public void setup() {
 int size;
 String[] keys;
 
-@Benchmark
-public Map fillMap() {
-    for (String key : keys) map.put(key, key);
+@Setup
+public void setup() {
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = loadUsernameCollisionsFromFile( size );
+}
 
-    return map;
-}</code></pre>
+<div class="hblock">@Benchmark
+public void fillMap( Blackhole bh ) {
+    for (String key : keys)
+      map.put(key, key);
+
+    bh.consume( map );
+}</div></code></pre>
 
 [CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
 
@@ -265,12 +298,20 @@ public Map fillMap() {
 int size;
 String[] keys;
 
-@Benchmark
-public Map fillMap() {
-    for (String key : keys) map.put(key, key);
+@Setup
+public void setup() {
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = loadUsernameCollisionsFromFile( size );
+}
 
-    return map;
-}</code></pre>
+@Benchmark
+public void fillMap( Blackhole bh ) {
+  for (String key : keys)
+    map.put(key, key);
+
+  bh.consume( map );
+}
+</code></pre>
 
 <span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
@@ -308,9 +349,11 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
 <img src="images/23derevo.png" height="100%"/>
 </div>
 
-## Binary search tree
+## Binary search tree  {.rbTree}
 
 ![](images/hashtable-collisions-rbtree_en.svg)
+
+<span class="huuuge highlight">complexity → **O( log(N) )**</span>
 
 ## "username" collisions
 
@@ -431,7 +474,7 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
 
 ```
 
-# Object.hashCode<br/> is a leaked abstraction
+# Object.hashCode<br/> <span style="margin-left:200px;">is a leaked abstraction</span>
 
 # Urban Legend {.urbanLegendC}
 
@@ -478,56 +521,60 @@ public native void putLong(Object o,
 </code></pre>
 
 ## Unsafe :: address of an object{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      <span class="hl">Unsafe.class.getDeclaredField( "theUnsafe" )</span>;
+  field.setAccessible( true );
+  return <span class="hl">(Unsafe) field.get( null )</span>;
+}
+
+public long getAddress(final Object object) {
   <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
 
   Unsafe unsafe = fetchUnsafe();
 
-  return unsafe.getLong( new Object[]{ object }, 
+  return unsafe.getLong( new Object[]{ object },
       unsafe.arrayBaseOffset( Object[].class ));
 }
-
-private static Unsafe fetchUnsafe() {
-  <span class="hl">final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null)</span>;
-}</code></pre>
+</code></pre>
 
 ## Unsafe :: address of an object{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      Unsafe.class.getDeclaredField( "theUnsafe" );
+  field.setAccessible( true );
+  return (Unsafe) field.get( null );
+}
+
+public long getAddress(final Object object) {
   <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
 
   Unsafe unsafe = fetchUnsafe();
 
-  return <span class="hl">unsafe.getLong( new Object[]{ object }, 
+  return <span class="hl">unsafe.getLong( new Object[]{ object },
       unsafe.arrayBaseOffset( Object[].class ))</span>;
 }
-
-private static Unsafe fetchUnsafe() {
-  final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null);
-}</code></pre>
+</code></pre>
 
 ## Unsafe :: address of an object{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      Unsafe.class.getDeclaredField( "theUnsafe" );
+  field.setAccessible( true );
+  return (Unsafe) field.get( null );
+}
+
+public long getAddress(final Object object) {
   <span class="hl"><span class="static">checkVMBooleanOption</span>("UseCompressedOops", false)</span>;
 
   Unsafe unsafe = fetchUnsafe();
 
-  return unsafe.getLong( new Object[]{ object }, 
+  return unsafe.getLong( new Object[]{ object },
       unsafe.arrayBaseOffset( Object[].class ));
 }
-
-private static Unsafe fetchUnsafe() {
-  final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null);
-}</code></pre>
-## Java Object Layout{.jol}
+</code></pre>
+<div style="text-align: center;"><span class="huuge">⟹<span class="highlight">-XX:-UseCompressedOops</span></span></div>
+## Java Object Layout {.jol}
 
 <pre><code class="java">Object theObject</span> = new Object();
 
@@ -593,7 +640,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 ![](images/header-address0.svg)
 
-<code>-XX:<span class="hashCode">hashCode=4</span></code>
+<code><span class="huuge">-XX:<span class="hashCode">hashCode=4</span></span></code>
 
 ## Follow the address of the object
 
@@ -607,7 +654,7 @@ long currentAddress = initialAddress;
 while (initialAddress == currentAddress) {
     Object o = new Object();
 
-    gcKeeper.add(o);
+    gcKeeper.add( o );
 
     currentAddress = getAddress( theObject );
 }</code></pre>
@@ -626,7 +673,7 @@ long currentAddress = initialAddress;
 while (initialAddress == currentAddress) {
     <span class="hl">Object o = new Object();</span>
 
-    <span class="hl">gcKeeper.add(o);</span>
+    <span class="hl">gcKeeper.add( o );</span>
 
     currentAddress = getAddress( theObject );
 }</code></pre>
@@ -645,7 +692,7 @@ long currentAddress = initialAddress;
 <div class="hblock">while (<span class="hl">initialAddress == currentAddress</span>) {
     Object o = new Object();
 
-    gcKeeper.add(o);
+    gcKeeper.add( o );
 
     <span class="hl">currentAddress = getAddress( theObject )</span>;
 }</div></code></pre>
@@ -696,7 +743,7 @@ while (initialAddress == currentAddress) {
     currentAddress = getAddress( theObject );
 }</code></pre>
 
-<code><span class="highlight">-XX:+PrintGCDetails</span> -Xms256m -Xmx256m -XX:+UseSerialGC</code>
+<code><span class="highlight">-XX:+PrintGCDetails</span> -Xmx256m -XX:+UseSerialGC</code>
 
 ## GC is more than just a garbage collection
 
@@ -743,18 +790,16 @@ Intel X86: Little Endian
 
 ## How much could fit in heap ? {.heap}
 
-```-Xms256m -Xmx256m```
-
+<code><span class="huuge">-Xmx256m</span></code>
 <pre><code class="java">
 long freeMemory =
   Runtime.getRuntime().freeMemory();
 
-<span class="hl">239_942_568</span>
-</code></pre>
-<pre><code class="java">
+<span class="right">= <span class="hl">239_942_568</span></span>
+
 freeMemory / vm.sizeOf( new Object() )
 
-<span class="hl">14_996_410</span>
+<span class="right">= <span class="huuge hl">14_996_410</span></span>
 </code></pre>
 
 ## Collisions boundary {.IdentityHashCodeCollision}
@@ -781,7 +826,7 @@ final TIntSet uniqueHashCodes = new TIntHashSet();
 
 ## Young generation {.heapSize}
 
-<pre><code>eden space <span class="highlight">65536K</span>, 2% used
+<pre><code>eden space <span class="highlight huuge">65536K</span>, 2% used
 [0x000000012a700000, 0x000000012a8db400, 0x000000012e700000)
 Object reallocated: 0x12A8109F0 -> 0x12E7200F8
 </code></pre>
@@ -789,28 +834,31 @@ Object reallocated: 0x12A8109F0 -> 0x12E7200F8
 <pre><code class="java">
 65536K / vm.sizeOf( new Object() )
 
-= <span class="hl">4_194_304</span>
+= <span class="huuge hl">4_194_304</span>
 </code></pre>
 
 ## hashCode space{.hashCode22Bit}
 
-<div class="center"><span class="huge">32bit → 22bit</span></div>
+<div class="center">
+<br/>
+<span class="huuuge">32bit → 22bit</span><br/><br/>
+<br/>
+<code>= <span class="huge">4_194_304</span></code> <br/>
+unique values</div>
 
-`= 4_194_304` unique values
-
-## Collisions boundary - results {.IdentityHashCodeCollisionResults} 
+## Collisions boundary - results {.IdentityHashCodeCollisionResults}
 <pre>
 after 1,331,460 allocation:
-hash code collision at 0x3055A9<span class="huge highlight">9</span>0
-hash code collision at 0x3055A9<span class="huge highlight">A</span>0
-hash code collision at 0x3055A9<span class="huge highlight">B</span>0
-hash code collision at 0x3055A9<span class="huge highlight">C</span>0
-hash code collision at 0x3055A9<span class="huge highlight">D</span>0
-hash code collision at 0x3055A9<span class="huge highlight">E</span>0
-hash code collision at 0x3055A9<span class="huge highlight">F</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">9</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">A</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">B</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">C</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">D</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">E</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">F</span>0
 </pre>
 
-# hashCode → address → <br/> → memory allocation
+# hashCode → address → <br/> <span style="margin-left:200px;">→ memory allocation</span>
 
 ## Memory allocation  {.simpleAllocation}
  
@@ -994,7 +1042,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
   geom_hline(yintercept = 890552) +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(200000,400000,600000,800000,1000000), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d Mb", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d MB", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -1011,12 +1059,12 @@ $$ uniqueValues = {{EdenSize} \over {sizeOf(Object) \cdot threads}} = $$
 $$ = 1048576$$
 $$ bits = log_2{1048576} = 20 $$
 
-<div class="center"><span class="huge">22bit → 20bit</span></div>
+<div class="center"><span class="huuuge">22bit → 20bit</span></div>
 
 ## The good news {.hashCodeDistribution}
 
 ```{r, out.height="600px", out.width="1000px", echo = FALSE}
-df = read.csv(file = "csv/hashCodes.csv", nrows = 40, header = TRUE)
+df = read.csv(file = "csv/hashCodes.csv", nrows = 36, header = TRUE)
 
 ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
   geom_point(size=5) +
@@ -1027,7 +1075,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     y = "") +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 808757360)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d KiB", as.integer((n - 808757360)/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -1183,6 +1231,7 @@ public Object allocate() {
    return new Object();
 }</code></pre>
 
+<div class="center"><span class="huuuge">-XX:<span class="highlight">+</span>UseTLAB</span> vs <span class="huuuge">-XX:<span class="highlight">-</span>UseTLAB</span></div>
 ## Cost of TLAB {.tlabAllocatorBenchmark}
 
 ```{r, fig.width=10, fig.height=5}
@@ -1204,18 +1253,18 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 ```
 ![](images/less-is-more_en.svg)
 
-# 32bit → 20bit
+# <span class="huuge">32bit → 20bit</span>
 
-# What if it is a Random number ?
+# What if it is a <span class="huuge">Random</span> number ?
 
 ## Birthday problem {.paradox}
 
-$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$ 
+$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$
 $$ = \frac{d}{d^{n} \cdot (d - n)!}$$
 
 
 $$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
-$$ using \ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
+<div class="center">using <span class="huge">$$ \ d = 2^{32}, \ p = 0.5 \Rightarrow $$</span> <span class="huuuge">$$ n \approx  77162 $$</span></div>
 
 ## -XX:hashCode {.XXhashCode}
 
@@ -1225,7 +1274,7 @@ $$ using \ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
   1 | <span class="bad">fn(address of object, global state)</span>
   2 | <span class="bad">const 1</span>
   3 | <span class="good">incremental counter</span>
-  4 | <span class="highlight">address of object</span>
+  4 | <span class="huuge highlight">address of object</span>
   5 | <span class="good">[Marsagliа xor-shift RNG](https://en.wikipedia.org/wiki/Xorshift)</span> _**by default** in java 8_
 
 ## Memory dump of object -XX:hashCode=5
@@ -1233,7 +1282,7 @@ $$ using \ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
 ![](images/header.svg)
 
 ## Distribution of 10 millions objects in 10 threads
-```{r  fig.width=10, fig.height=5, echo = FALSE}
+```{r  fig.width=10.5, fig.height=6, echo = FALSE}
 
 addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
 defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)

@@ -93,6 +93,12 @@ slides > slide > hgroup + article p {
     left: -0px;
 }
 
+.rbTree span.highlight {
+    position: absolute;
+    bottom: 150px;
+    right:50px;
+}
+
 /*.segue code {
     color: white !important;
 }*/
@@ -124,9 +130,28 @@ slides > slide > hgroup + article p {
     top: -40px !important;
 }
 
+span.right {
+    position: absolute;
+    right:100px;
+}
+
 span.huge {
     text-align: center;
     font-size: 1.3em !important;
+    font-weight: bold;
+    display: inline-block;
+}
+
+span.huuge, code > span.highlight.huuge {
+    text-align: center;
+    font-size: 1.6em !important;
+    font-weight: bold;
+    display: inline-block;
+}
+
+span.huuuge, code > span.highlight.huuuge {
+    text-align: center;
+    font-size: 2em !important;
     font-weight: bold;
     display: inline-block;
 }
@@ -161,6 +186,10 @@ span.highlight a {
     padding: 4px;
     line-height: 1.2em;
     /**/
+}
+
+pre > code > span.code {
+    font-weight: bold;
 }
 
 pre > code.hljs div.hblock {
@@ -293,6 +322,15 @@ code > span.highlight {
     width: 120% !important;
 }
 
+.chaining span.highlight {
+    position: absolute;
+    bottom: 200px;
+}
+
+.shipilev img {
+    height: 600px;
+}
+
 .unsafe > pre code,
 .hashCodeComplexity > pre code,
 .native > pre code,
@@ -320,9 +358,9 @@ code > span.highlight {
     line-height: 28px !important;
 }
 
-code > span.hashCode {
+code span.hashCode {
     color: black;
-    background-color: black;
+    background-color: #111;
 }
 
 .IdentityHashCodeCollision > pre code {
