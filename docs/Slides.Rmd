@@ -30,11 +30,14 @@ rows = 10000000
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
-## План {.abstract`r sprintf("%d",rows)`} 
+
+# no warranty
+
+## План {.abstract`r sprintf("%d",rows)`}
 * Немного теории
 * Правила вычисления hashCode
     + DoS-атака с примененимем hashCode
-* HashCode как адрес объекта - миф или реальность 
+* HashCode как адрес объекта - миф или реальность
     + JVM потроха: Unsafe, GC и аллокации
     + Немного баттлов про hashCode
 * Удешевление блокировок
@@ -72,7 +75,7 @@ if ( key.equals( keys[index] ) ) {
     return values[index];
 }
 return null;</code></pre>
-<span class="highlight">сложность → **O(1)**</span>
+<span class="huuuge highlight">сложность → **O(1)**</span>
 
 ## Контракт hashCode {.javadoc}
 
@@ -95,9 +98,10 @@ used in equals comparisons on the object is modified.
 
 ![](images/hashtable-collisions.svg)
 
-## Chaining
+## Chaining {.chaining}
 
 ![](images/hashtable-collisions-chaining.svg)
+<span class="huuuge highlight">сложность → **O(N)**</span>
 
 ## hashCode - функция от содержимого объекта {.hashFunctionData}
 <pre><code class="java">String s1 = new String("java");
@@ -122,23 +126,43 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
 
 <pre><code class="java">public final class String {
     private final char value[];
-    private int hash; 
-    
+    private int hash;
+
     public int hashCode() {
         int h = hash;
         if (h == 0 &amp;&amp; value.length &gt; 0) {
             char val[] = value;
 
-            <span class="hl">for (int i = 0; i < value.length; i++) 
+            <span class="hl">for (int i = 0; i < value.length; i++)
                 h = 31 * h + val[i]</span>;
-            
+
             hash = h;
         }
         return h;
     }
 }</code></pre>
 
-## java v.1.1.1 - String.hashCode() 
+## String.hashCode - часть public API {.stringHashCode}
+<pre><code class="java">public final class String {
+  /**
+   * Returns a hash code for this string. The hash code
+   * for a <span class="code">String</span> object is computed as
+   *
+   * <span class="hl">s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]</span>
+   *
+   * using <span class="code">int</span> arithmetic, where <span class="code">s[i]</span>
+   * is the <i>i</i>th character of the string,
+   * <span class="code">n</span> is the length of the string,
+   * and <span class="code">^</span> indicates exponentiation.
+   * (The hash value of the empty string is zero.)
+   *
+   * @return  a hash code value for this object.
+   */
+    public int hashCode() {        ...      }
+}
+</code></pre>
+
+## java v.1.1.1 - String.hashCode()
 <pre><code class="java">public int hashCode() {
 	int h = 0;
 	int off = offset;
@@ -166,7 +190,8 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
     + Все строки в `/bin/*`, `/usr/bin/*`, `/usr/lib/*`, `/usr/ucb/*` и `/usr/openwin/bin/*`  (66_304 строк, ср. длина 21 символов).
     + Список URL, собранных web-пауком за несколько часов (28_372 строк, ср. длина 49 символов).
 
-
+<div class="center">полиномы <span class="highlight huuuge">31</span>, <span class="highlight huuuge">33</span>, <span class="highlight huuuge">37</span> → мин. средняя длина коллизий
+</div>
 
 ## Но ведь можно подобрать... {.AaBB}
 
@@ -178,7 +203,7 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 
 ```
 ```
-<div style="text-align: center;">**`username`** ⟹ 499_331 вариантов</div>
+<div style="text-align: center;"><span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> вариантов коллизий</div>
 
 
 # JMH
@@ -188,17 +213,17 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 <pre><code class="java">@State(Scope.Benchmark)
 public class MapPerfTest {
 
-  Map map; 
-  String[] keys; 
+  Map map;
+  String[] keys;
 
   @Setup
   public void setup() { ..... }
 
 <div class="hblock"><span class="hl">@Benchmark</span> @Threads( 1 )
 public void fillMap( Blackhole blackhole ) {
-  for (String key : keys) 
+  for (String key : keys)
     map.put(key, key);
-  
+
   blackhole.consume( map );
 }</div>
 }</code></pre>
@@ -211,9 +236,9 @@ public void fillMap( Blackhole blackhole ) {
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
-  Map map; 
+  Map map;
   String[] keys;
-  
+
   @Setup
   public void setup() { ... }
 
@@ -233,13 +258,13 @@ public class MapPerfTest {
 
   Map map;
   String[] keys;
-  
+
 <div class="hblock"><span class="hl">@Setup</span>
 public void setup() {
   map = new HashMap();
   keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
 }</div>
-  
+
   @Benchmark @Threads( 1 )
   public void fillMap( Blackhole bh ) { ... }
 
@@ -251,12 +276,19 @@ public void setup() {
 int size;
 String[] keys;
 
-@Benchmark
-public Map fillMap() {
-    for (String key : keys) map.put(key, key);
-    
-    return map;
-}</code></pre>
+@Setup
+public void setup() {
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = loadUsernameCollisionsFromFile( size );
+}
+
+<div class="hblock">@Benchmark
+public void fillMap( Blackhole bh ) {
+    for (String key : keys)
+      map.put(key, key);
+
+    bh.consume( map );
+}</div></code></pre>
 
 [CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
 
@@ -266,12 +298,20 @@ public Map fillMap() {
 int size;
 String[] keys;
 
+@Setup
+public void setup() {
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = loadUsernameCollisionsFromFile( size );
+}
+
 @Benchmark
-public Map fillMap() {
-    for (String key : keys) map.put(key, key);
-    
-    return map;
-}</code></pre>
+public void fillMap( Blackhole bh ) {
+  for (String key : keys)
+    map.put(key, key);
+
+  bh.consume( map );
+}
+</code></pre>
 
 <span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
@@ -309,9 +349,11 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
 <img src="images/23derevo.png" height="100%"/>
 </div>
 
-## Бинарное дерево поиска
+## Бинарное дерево поиска {.rbTree}
 
 ![](images/hashtable-collisions-rbtree.svg)
+
+<span class="huuuge highlight">сложность → **O( log(N) )**</span>
 
 ## "username" коллизии
 
@@ -432,7 +474,7 @@ ggplot(data=d, aes(x=size, y=time_sec, group=type, colour=type)) +
 
 ```
 
-# Object.hashCode<br/> утёкшая абстракция
+# Object.hashCode<br/> <span style="margin-left:200px;">утёкшая абстракция</span>
 
 # Urban Legend {.urbanLegendC}
 
@@ -461,74 +503,82 @@ This is typically implemented by converting the <span class="highlight">internal
       public native int hashCode();
   }</code></pre>
 
+# &nbsp; {.shipilev}
+
+<div class="center">![](images/shipilёv-unsafe.jpg)</div>
+
 ## sun.misc.Unsafe{.unsafe}
 
 <pre><code class="java">public native long allocateMemory(long bytes);
 
 public native void freeMemory(long address);
 
-public native void setMemory(Object o, 
+public native void setMemory(Object o,
     long offset, long bytes, byte value);
-                 
+
 public native long getLong(Object o, long offset);
 
-public native void putLong(Object o, 
+public native void putLong(Object o,
     long offset, long x);
-    
-// etc ...    
+
+// etc ...
+</code></pre>
+
+## Unsafe :: адрес объекта {.unsafeaddress}
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      <span class="hl">Unsafe.class.getDeclaredField( "theUnsafe" )</span>;
+  field.setAccessible( true );
+  return <span class="hl">(Unsafe) field.get( null )</span>;
+}
+
+public long getAddress(final Object object) {
+  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
+
+  Unsafe unsafe = fetchUnsafe();
+
+  return unsafe.getLong( new Object[]{ object },
+      unsafe.arrayBaseOffset( Object[].class ));
+}
+</code></pre>
+
+## Unsafe :: адрес объекта {.unsafeaddress}
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      Unsafe.class.getDeclaredField( "theUnsafe" );
+  field.setAccessible( true );
+  return (Unsafe) field.get( null );
+}
+
+public long getAddress(final Object object) {
+  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
+
+  Unsafe unsafe = fetchUnsafe();
+
+  return <span class="hl">unsafe.getLong( new Object[]{ object },
+      unsafe.arrayBaseOffset( Object[].class ))</span>;
+}
 </code></pre>
 
 ## Unsafe :: адрес объекта{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
-  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return unsafe.getLong( new Object[]{ object }, 
-      unsafe.arrayBaseOffset( Object[].class ));
+<pre><code class="java">private static Unsafe fetchUnsafe() {
+  final Field field =
+      Unsafe.class.getDeclaredField( "theUnsafe" );
+  field.setAccessible( true );
+  return (Unsafe) field.get( null );
 }
 
-private static Unsafe fetchUnsafe() {
-  <span class="hl">final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null)</span>;
-}</code></pre>
-
-## Unsafe :: адрес объекта{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
-  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return <span class="hl">unsafe.getLong( new Object[]{ object }, 
-      unsafe.arrayBaseOffset( Object[].class ))</span>;
-}
-
-private static Unsafe fetchUnsafe() {
-  final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null);
-}</code></pre>
-
-## Unsafe :: адрес объекта{.unsafeaddress}
-<pre><code class="java">public long getAddress(final Object object) {
+public long getAddress(final Object object) {
   <span class="hl"><span class="static">checkVMBooleanOption</span>("UseCompressedOops", false)</span>;
 
   Unsafe unsafe = fetchUnsafe();
 
-  return unsafe.getLong( new Object[]{ object }, 
+  return unsafe.getLong( new Object[]{ object },
       unsafe.arrayBaseOffset( Object[].class ));
 }
-
-private static Unsafe fetchUnsafe() {
-  final Field field = 
-      Unsafe.class.getDeclaredField("theUnsafe");
-  field.setAccessible(true);
-  return (Unsafe) field.get(null);
-}</code></pre>
-## Java Object Layout{.jol}
+</code></pre>
+<div style="text-align: center;"><span class="huuge">⟹<span class="highlight">-XX:-UseCompressedOops</span></span></div>
+## Java Object Layout {.jol}
 
 <pre><code class="java">Object theObject</span> = new Object();
 
@@ -594,7 +644,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 ![](images/header-address0.svg)
 
-<code>-XX:<span class="hashCode">hashCode=4</span></code>
+<code><span class="huuge">-XX:<span class="hashCode">hashCode=4</span></span></code>
 
 ## Следим за адресом объекта
 
@@ -608,7 +658,7 @@ long currentAddress = initialAddress;
 while (initialAddress == currentAddress) {
     Object o = new Object();
 
-    gcKeeper.add(o);
+    gcKeeper.add( o );
 
     currentAddress = getAddress( theObject );
 }</code></pre>
@@ -627,7 +677,7 @@ long currentAddress = initialAddress;
 while (initialAddress == currentAddress) {
     <span class="hl">Object o = new Object();</span>
 
-    <span class="hl">gcKeeper.add(o);</span>
+    <span class="hl">gcKeeper.add( o );</span>
 
     currentAddress = getAddress( theObject );
 }</code></pre>
@@ -646,7 +696,7 @@ long currentAddress = initialAddress;
 <div class="hblock">while (<span class="hl">initialAddress == currentAddress</span>) {
     Object o = new Object();
 
-    gcKeeper.add(o);
+    gcKeeper.add( o );
 
     <span class="hl">currentAddress = getAddress( theObject )</span>;
 }</div></code></pre>
@@ -678,7 +728,7 @@ while (initialAddress == currentAddress) {
 
 ![](images/generations.svg)
 
-GC: Serial / Parallel / CMS 
+GC: Serial / Parallel / CMS
 
 ## Следим за адресом объекта вместе с GC
 
@@ -697,7 +747,7 @@ while (initialAddress == currentAddress) {
     currentAddress = getAddress( theObject );
 }</code></pre>
 
-<code><span class="highlight">-XX:+PrintGCDetails</span> -Xms256m -Xmx256m -XX:+UseSerialGC</code>
+<code><span class="highlight">-XX:+PrintGCDetails</span> -Xmx256m -XX:+UseSerialGC</code>
 
 ## GC - не только сборка мусора
 
@@ -744,18 +794,16 @@ Intel X86: Little Endian
 
 ## Сколько влезет в кучу ? {.heap}
 
-```-Xms256m -Xmx256m```
-
+<code><span class="huuge">-Xmx256m</span></code>
 <pre><code class="java">
-long freeMemory = 
+long freeMemory =
   Runtime.getRuntime().freeMemory();
 
-<span class="hl">239_942_568</span>
-</code></pre>
-<pre><code class="java">
+<span class="right">= <span class="hl">239_942_568</span></span>
+
 freeMemory / vm.sizeOf( new Object() )
 
-<span class="hl">14_996_410</span>
+<span class="right">= <span class="huuge hl">14_996_410</span></span>
 </code></pre>
 
 ## Граница коллизий {.IdentityHashCodeCollision}
@@ -782,7 +830,7 @@ final TIntSet uniqueHashCodes = new TIntHashSet();
 
 ## Молодое поколение {.heapSize}
 
-<pre><code>eden space <span class="highlight">65536K</span>, 2% used
+<pre><code>eden space <span class="highlight huuge">65536K</span>, 2% used
 [0x000000012a700000, 0x000000012a8db400, 0x000000012e700000)
 Объект перемещён: с 0x12A8109F0 -> 0x12E7200F8
 </code></pre>
@@ -790,31 +838,34 @@ final TIntSet uniqueHashCodes = new TIntHashSet();
 <pre><code class="java">
 65536K / vm.sizeOf( new Object() )
 
-= <span class="hl">4_194_304</span>
+= <span class="huuge hl">4_194_304</span>
 </code></pre>
 
 ## пространство hashCode{.hashCode22Bit}
 
-<div class="center"><span class="huge">32bit → 22bit</span></div>
+<div class="center">
+<br/>
+<span class="huuuge">32bit → 22bit</span><br/><br/>
+<br/>
+<code>= <span class="huge">4_194_304</span></code> <br/>
+уникальных значений</div>
 
-`= 4_194_304` уникальных значений
-
-## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults} 
+## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults}
 <pre>
 после 1,331,460 аллокаций:
-hash code collision at 0x3055A9<span class="huge highlight">9</span>0
-hash code collision at 0x3055A9<span class="huge highlight">A</span>0
-hash code collision at 0x3055A9<span class="huge highlight">B</span>0
-hash code collision at 0x3055A9<span class="huge highlight">C</span>0
-hash code collision at 0x3055A9<span class="huge highlight">D</span>0
-hash code collision at 0x3055A9<span class="huge highlight">E</span>0
-hash code collision at 0x3055A9<span class="huge highlight">F</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">9</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">A</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">B</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">C</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">D</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">E</span>0
+hash code collision at 0x3055A9<span class="huuge highlight">F</span>0
 </pre>
 
-# hashCode → address → <br/> → memory allocation
+# hashCode → address → <br/> <span style="margin-left:200px;">→ memory allocation</span>
 
 ## Memory allocation  {.simpleAllocation}
- 
+
 <pre><code class="java">public interface Allocator {
     long malloc(long size);
 }
@@ -879,7 +930,7 @@ ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 ## CAS Allocator {.casAllocation}
 <pre><code class="java">class CASAllocator implements Allocator {
-    private final AtomicLong memoryPointer = 
+    private final AtomicLong memoryPointer =
         new <span class="hl">AtomicLong</span>();
 
     @Override
@@ -991,11 +1042,11 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     title="количество объектов",
     x = "адреса объектов",
     y = "") +
-  geom_vline(xintercept = 809203744) +  
+  geom_vline(xintercept = 809203744) +
   geom_hline(yintercept = 890552) +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(200000,400000,600000,800000,1000000), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d Mb", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d MB", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -1012,7 +1063,7 @@ $$ uniqueValues = {{EdenSize} \over {sizeOf(Object) \cdot threads}} = $$
 $$ = 1048576$$
 $$ bits = log_2{1048576} = 20 $$
 
-<div class="center"><span class="huge">22bit → 20bit</span></div>
+<div class="center"><span class="huuuge">22bit → 20bit</span></div>
 
 ## Хорошая новость {.hashCodeDistribution}
 
@@ -1028,7 +1079,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     y = "") +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 808757360)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d KiB", as.integer((n - 808757360)/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -1043,7 +1094,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
 ## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
 <pre><code class="java">public class TLABLikeAllocator implements Allocator {
   private static final long <span class="hl">SIZE = 1024L * 1024L</span>;
-  
+
   private final AtomicLong memoryPointer = new AtomicLong();
   private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
        ThreadLocal.withInitial(() -&gt; new AddressHolder());
@@ -1068,7 +1119,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
 ## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
 <pre><code class="java">public class TLABLikeAllocator implements Allocator {
   private static final long SIZE = 1024L * 1024L;
-  
+
   private final AtomicLong <span class="hl">memoryPointer = new AtomicLong()</span>;
   private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
        ThreadLocal.withInitial(() -&gt; new AddressHolder());
@@ -1093,7 +1144,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
 ## Даёшь **БОЛЬШИЕ** куски памяти ! {.tlabcode}
 <pre><code class="java">public class TLABLikeAllocator implements Allocator {
   private static final long SIZE = 1024L * 1024L;
-  
+
   private final AtomicLong memoryPointer = new AtomicLong();
   private final ThreadLocal&lt;AddressHolder&gt; threadLocal =
        <span class="hl">ThreadLocal.withInitial(() -&gt; new AddressHolder())</span>;
@@ -1184,6 +1235,7 @@ public Object allocate() {
    return new Object();
 }</code></pre>
 
+<div class="center"><span class="huuuge">-XX:<span class="highlight">+</span>UseTLAB</span> vs <span class="huuuge">-XX:<span class="highlight">-</span>UseTLAB</span></div>
 ## Стоимость TLAB {.tlabAllocatorBenchmark}
 
 ```{r, fig.width=10, fig.height=5}
@@ -1205,18 +1257,18 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 ```
 ![](images/less-is-more.svg)
 
-# 32bit → 20bit
+# <span class="huuge">32bit → 20bit</span>
 
-# Может быть Random ?
+# Может быть <span class="huuge">Random</span> ?
 
 ## Парадокс дней рождения {.paradox}
 
-$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$ 
+$$p_{uniq}(n) = \left({1 - \frac{1}{d}}\right)\cdot\left({1 - \frac{2}{d}}\right)\cdot\ldots\cdot\left({1 - \frac{n - 1}{d}}\right) = $$
 $$ = \frac{d}{d^{n} \cdot (d - n)!}$$
 
 
 $$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
-$$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
+<div class="center">при <span class="huge">$$ \ d = 2^{32}, \ p = 0.5 \Rightarrow $$</span> <span class="huuuge">$$ n \approx  77162 $$</span></div>
 
 ## -XX:hashCode {.XXhashCode}
 
@@ -1226,7 +1278,7 @@ $$ при\ d = 2^{32}, \ p = 0.5 \Rightarrow n \approx  77162 $$
   1 | <span class="bad">fn(адрес объекта, глобальное состояние)</span>
   2 | <span class="bad">константа 1</span>
   3 | <span class="good">последовательный счетчик</span>
-  4 | <span class="highlight">адрес объекта</span>
+  4 | <span class="huuge highlight">адрес объекта</span>
   5 | <span class="good">[Marsagliа xor-shift ГПСЧ](https://en.wikipedia.org/wiki/Xorshift)</span> _**по умолчанию** в java 8_
 
 ## Дамп объекта при -XX:hashCode=5
@@ -1319,7 +1371,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 ```
 ![](images/less-is-more.svg)
 
-## Дамп объекта, сразу после создания {.objectDumpRightAfterCreation}  
+## Дамп объекта, сразу после создания {.objectDumpRightAfterCreation}
 
 <pre><code class="java">Object object = new Object();
 
@@ -1357,8 +1409,8 @@ String dump = dump(object);
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 
 @Benchmark @Thread(1)
-public String bufferToString() {    
-  return buffer.toString(); 
+public String bufferToString() {
+  return buffer.toString();
 }</code></pre>
 
 <code><span class="highlight">-XX:+UseBiasedLocking</span></code> VS <code><span class="highlight">-XX:-UseBiasedLocking</span></code>
@@ -1373,8 +1425,8 @@ public String bufferToString() {
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 
 @Benchmark @Thread(1)
-public String bufferToString() {    
-  return buffer.toString(); 
+public String bufferToString() {
+  return buffer.toString();
 }</code></pre>
 
 <code>-XX:+UseBiasedLocking</code> VS <code>-XX:-UseBiasedLocking</code>
@@ -1416,18 +1468,18 @@ StringBuffer <span class="hl">bufferWithIdHashCode</span> = new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
-    bh.consume( System.identityHashCode( 
+    bh.consume( System.identityHashCode(
         bufferWithIdHashCode ) );
 }
 
 @Benchmark  @Thread(1)
-public String bufferWithIdHashCode() { 
-  return <span class="hl">bufferWithIdHashCode</span>.toString(); 
+public String bufferWithIdHashCode() {
+  return <span class="hl">bufferWithIdHashCode</span>.toString();
 }
 
 @Benchmark @Thread(1)
-public String buffer() {    
-  return buffer.toString(); 
+public String buffer() {
+  return buffer.toString();
 }</code></pre>
 
 ## identityHashCode
@@ -1437,18 +1489,18 @@ StringBuffer bufferWithIdHashCode = new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
-    bh.consume( <span class="hl">System.identityHashCode( 
+    bh.consume( <span class="hl">System.identityHashCode(
         bufferWithIdHashCode )</span> );
 }
 
 @Benchmark  @Thread(1)
-public String bufferWithIdHashCode() { 
-  return bufferWithIdHashCode.toString(); 
+public String bufferWithIdHashCode() {
+  return bufferWithIdHashCode.toString();
 }
 
 @Benchmark  @Thread(1)
-public String buffer() {    
-  return buffer.toString(); 
+public String buffer() {
+  return buffer.toString();
 }</code></pre>
 
 ## identityHashCode результаты
@@ -1458,7 +1510,7 @@ df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
 
 df <- subset(df, type == "buffer -XX:-UseBiasedLocking" | type == 'buffer' | type == 'bufferWithIdHashCode')
 
-ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +  
+ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
   scale_fill_manual(values=c('buffer -XX:-UseBiasedLocking'='#fa8074', 'buffer'='#21bd83', 'bufferWithIdHashCode'='#e67bf3')) +
   geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
@@ -1477,7 +1529,7 @@ ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
 
 ## Revoke Biased Locking:  {.biasedDemo}
 
-<pre><code class="java">int idHashCode 
+<pre><code class="java">int idHashCode
     = System.identityHashCode( object );
 
 String dump = dump(object);</code></pre>

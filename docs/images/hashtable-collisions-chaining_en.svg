@@ -178,7 +178,6 @@ rect.t3 {
       </g>
       <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
       <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-      <text class="bigcomment" text-anchor="start" x="0" y="150">complexity → O(N)</text>
     </g>
   </g>
 </svg>

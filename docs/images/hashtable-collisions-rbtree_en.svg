@@ -200,6 +200,5 @@ text.w {
     <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
-    <text class="bigcomment" text-anchor="end" x="400" y="180">complexity → O(log(N))</text>
   </g>
 </svg>
