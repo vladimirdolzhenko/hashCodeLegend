@@ -83,9 +83,14 @@ slides > slide > hgroup + article p {
     margin-top: 1em !important;
 }
 
+article.jmh {
+    position: absolute;
+    bottom: 200px;
+}
+
 .jmhExample pre code div.hblock {
     margin-left: 1em;
-    width:800px !important;
+    width:900px !important;
 }
 
 .usernameCollisionsChart1 img {
@@ -327,8 +332,9 @@ code > span.highlight {
     bottom: 200px;
 }
 
+.waiting img,
 .shipilev img {
-    height: 600px;
+    height: 600px !important;
 }
 
 .unsafe > pre code,
@@ -426,10 +432,36 @@ div.center {
     line-height: 1.2em !important;
  }
 
-.jol > pre code,
-.jol2 pre code  {
+.jol pre code,
+.jol0 pre code {
     font-size: 1.5em !important;
     line-height: 1.3em !important;
+}
+
+.jol pre code span.highlight {
+    color: white !important;
+}
+
+.jol2 pre code  {
+    font-size: 1em !important;
+    line-height: 1em !important;
+    padding-bottom: 10px !important;
+}
+
+.jol2 pre code.pair,
+.jol2 pre code.pair2 {
+    background-color: #CCC !important;
+    width: 90% !important;
+}
+
+.jol2 .floating-box {
+    height: 180px !important;
+    border: none !important;
+}
+
+.jol2 pre > code div.hblock {
+    border: 3px dashed #000;
+    width: 1000px;
 }
 
 .floating-box {

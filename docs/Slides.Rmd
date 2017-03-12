@@ -38,11 +38,11 @@ knitr::opts_chunk$set(echo = FALSE)
 * Правила вычисления hashCode
     + DoS-атака с примененимем hashCode
 * HashCode как адрес объекта - миф или реальность
-    + JVM потроха: Unsafe, GC и аллокации
+    + JVM потроха: GC и аллокации
     + Немного баттлов про hashCode
 * Удешевление блокировок
 
-## Ассоциативный массив {.hash}
+## Ассоциативный массив / Dictionary / Map {.hash}
 
 ![](images/hashtable.svg)
 
@@ -206,9 +206,10 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 <div style="text-align: center;"><span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> вариантов коллизий</div>
 
 
-# JMH
+# Java Microbenchmark Harness {.jmh}
+[http://openjdk.java.net/projects/code-tools/jmh/](http://openjdk.java.net/projects/code-tools/jmh/)
 
-## Java Microbenchmark Harness :: пример{.jmhExample}
+## JMH :: "username" коллизии :: benchmark{.jmhExample}
 
 <pre><code class="java">@State(Scope.Benchmark)
 public class MapPerfTest {
@@ -220,17 +221,17 @@ public class MapPerfTest {
   public void setup() { ..... }
 
 <div class="hblock"><span class="hl">@Benchmark</span> @Threads( 1 )
-public void fillMap( Blackhole blackhole ) {
+public Map fillMap() {
   for (String key : keys)
     map.put(key, key);
 
-  blackhole.consume( map );
+  return map;
 }</div>
 }</code></pre>
 
-## Java Microbenchmark Harness :: пример
+## JMH :: "username" коллизии :: benchmark
 
-<pre><code class="java"><span class="hl">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
+<pre><code class="java"><span class="hl">@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
 @Measurement(iterations = 5, time = 5, timeUnit = SECONDS)</span>
 @State(Scope.Benchmark)
@@ -243,77 +244,31 @@ public class MapPerfTest {
   public void setup() { ... }
 
   @Benchmark <span class="hl">@Threads( 1 )</span>
-  public void fillMap( Blackhole bh ) {
+  public Map fillMap() {
     // ...
   }
 }</code></pre>
 
-## Java Microbenchmark Harness :: пример {.jmhExample}
+## JMH :: "username" коллизии :: benchmark {.jmhExample}
 
-<pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
-@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
-@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)
+<pre><code class="java">
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
+  <span class="hl">@Param</span>( {"1", "1000", "10000", "100000", "200000"})
+  int size;
   Map map;
   String[] keys;
 
 <div class="hblock"><span class="hl">@Setup</span>
 public void setup() {
-  map = new HashMap();
-  keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = <span class="hl">loadUsernameCollisionsFromFile( size )</span>;
 }</div>
-
   @Benchmark @Threads( 1 )
-  public void fillMap( Blackhole bh ) { ... }
+  public Map fillMap() { ... }
 
 }</code></pre>
-
-## "username" коллизии :: benchmark
-
-<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
-int size;
-String[] keys;
-
-@Setup
-public void setup() {
-  map = new HashMap&lt;String, String&gt;( size );
-  keys = loadUsernameCollisionsFromFile( size );
-}
-
-<div class="hblock">@Benchmark
-public void fillMap( Blackhole bh ) {
-    for (String key : keys)
-      map.put(key, key);
-
-    bh.consume( map );
-}</div></code></pre>
-
-[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
-
-## "username" коллизии :: benchmark
-
-<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
-int size;
-String[] keys;
-
-@Setup
-public void setup() {
-  map = new HashMap&lt;String, String&gt;( size );
-  keys = loadUsernameCollisionsFromFile( size );
-}
-
-@Benchmark
-public void fillMap( Blackhole bh ) {
-  for (String key : keys)
-    map.put(key, key);
-
-  bh.consume( map );
-}
-</code></pre>
-
-<span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
 ## "username" коллизии {.usernameCollisionsChart1}
 
@@ -342,12 +297,6 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
   theme(title = element_text(size = 18, face = "bold")) +
   theme(legend.position="none", aspect.ratio = 0.5)
 ```
-
-
-# 23derevo
-<div style="text-align: right;">
-<img src="images/23derevo.png" height="100%"/>
-</div>
 
 ## Бинарное дерево поиска {.rbTree}
 
@@ -507,77 +456,6 @@ This is typically implemented by converting the <span class="highlight">internal
 
 <div class="center">![](images/shipilёv-unsafe.jpg)</div>
 
-## sun.misc.Unsafe{.unsafe}
-
-<pre><code class="java">public native long allocateMemory(long bytes);
-
-public native void freeMemory(long address);
-
-public native void setMemory(Object o,
-    long offset, long bytes, byte value);
-
-public native long getLong(Object o, long offset);
-
-public native void putLong(Object o,
-    long offset, long x);
-
-// etc ...
-</code></pre>
-
-## Unsafe :: адрес объекта {.unsafeaddress}
-<pre><code class="java">private static Unsafe fetchUnsafe() {
-  final Field field =
-      <span class="hl">Unsafe.class.getDeclaredField( "theUnsafe" )</span>;
-  field.setAccessible( true );
-  return <span class="hl">(Unsafe) field.get( null )</span>;
-}
-
-public long getAddress(final Object object) {
-  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return unsafe.getLong( new Object[]{ object },
-      unsafe.arrayBaseOffset( Object[].class ));
-}
-</code></pre>
-
-## Unsafe :: адрес объекта {.unsafeaddress}
-<pre><code class="java">private static Unsafe fetchUnsafe() {
-  final Field field =
-      Unsafe.class.getDeclaredField( "theUnsafe" );
-  field.setAccessible( true );
-  return (Unsafe) field.get( null );
-}
-
-public long getAddress(final Object object) {
-  <span class="static">checkVMBooleanOption</span>("UseCompressedOops", false);
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return <span class="hl">unsafe.getLong( new Object[]{ object },
-      unsafe.arrayBaseOffset( Object[].class ))</span>;
-}
-</code></pre>
-
-## Unsafe :: адрес объекта{.unsafeaddress}
-<pre><code class="java">private static Unsafe fetchUnsafe() {
-  final Field field =
-      Unsafe.class.getDeclaredField( "theUnsafe" );
-  field.setAccessible( true );
-  return (Unsafe) field.get( null );
-}
-
-public long getAddress(final Object object) {
-  <span class="hl"><span class="static">checkVMBooleanOption</span>("UseCompressedOops", false)</span>;
-
-  Unsafe unsafe = fetchUnsafe();
-
-  return unsafe.getLong( new Object[]{ object },
-      unsafe.arrayBaseOffset( Object[].class ));
-}
-</code></pre>
-<div style="text-align: center;"><span class="huuge">⟹<span class="highlight">-XX:-UseCompressedOops</span></span></div>
 ## Java Object Layout {.jol}
 
 <pre><code class="java">Object theObject</span> = new Object();
@@ -590,7 +468,9 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 </code></pre>
 
-## JOL : sizeOf( new Pair() ) {.jol2}
+[http://openjdk.java.net/projects/code-tools/jol/](http://openjdk.java.net/projects/code-tools/jol/)
+
+## JOL : sizeOf( new Pair() ) {.jol0}
 
 <div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
   F first;
@@ -604,12 +484,12 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 ## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol2}
 
-<div class="line"><code>-XX:+UseCompressedOops</code></div>
+<div class="line"><code><span class="highlight">-XX:+UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="clear"></div>
 
-<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+<div class="floating-box"><pre><code class="java pair">class Pair&lt;F, S&gt; {
   F first;
   S second;
 }</code></pre></div>
@@ -618,12 +498,16 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   S second;
   int hashCode;
 }</code></pre></div><div class="clear"></div>
+<pre><code class="text"><span class="highlight huge">Pair</span> object internals:
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION                    
+      0    12        (object header)                
+     12     4 Object Pair.first                     
+     16     4 Object Pair.second                    
+     20     <span class="huuge">4</span>      <span class="huuge">(<span class="highlight">loss</span> due to the next</span>
+                     <span class="huuge">object alignment)</span>
+</div></code></pre>
 
 ## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol2}
-
-<div class="line"><code>-XX:+UseCompressedOops</code></div>
-<div class="floating-box2">24 b</div>
-<div class="floating-box2">24 b</div><div class="clear"></div>
 
 <div class="line"><code><span class="highlight">-XX:-UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">32 b</span></code></div>
@@ -634,12 +518,20 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   F first;
   S second;
 }</code></pre></div>
-<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+<div class="floating-box"><pre><code class="java pair2">class Pair2&lt;F, S&gt; {
   F first;
   S second;
   int hashCode;
 }</code></pre></div><div class="clear"></div>
-
+<pre><code class="text"><span class="highlight huge">Pair2</span> object internals:
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION                    
+      0    16        (object header)                
+     16     4    int Pair2.hashCode                 
+     20     <span class="huuge">4</span>      (<span class="highlight huuge">alignment/padding gap</span>)        
+     24     8 Object Pair2.first                    
+     32     8 Object Pair2.second                   
+</div></code></pre>
+     
 ## Адрес и hashCode
 
 ![](images/header-address0.svg)

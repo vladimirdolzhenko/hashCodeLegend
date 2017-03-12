@@ -1,5 +1,6 @@
 package com;
 
+import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.vm.VM;
 import org.openjdk.jol.vm.VirtualMachine;
 
@@ -16,6 +17,9 @@ public class ObjectSize {
         System.out.println(getVMBooleanFlag("UseCompressedOops"));
         System.out.println(info(new Pair()));
         System.out.println(info(new Pair2()));
+
+        System.out.println(ClassLayout.parseClass(Pair.class).toPrintable());
+        System.out.println(ClassLayout.parseClass(Pair2.class).toPrintable());
     }
 
     static String info(Object o){
