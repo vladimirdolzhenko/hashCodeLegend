@@ -107,6 +107,7 @@ public class MallocPerfTest {
     }
 
     Allocator simpleAllocator, syncAllocator, casAllocator, tlabAllocator;
+    Object theObject;
 
     @Setup
     public void setup() {
@@ -114,6 +115,7 @@ public class MallocPerfTest {
         syncAllocator = new SyncAllocator();
         casAllocator = new CASAllocator();
         tlabAllocator = new TLABLikeAllocator();
+        theObject = new Object();
     }
 
     @Benchmark
@@ -152,6 +154,12 @@ public class MallocPerfTest {
         Object object = new Object();
         object.hashCode();
         return object;
+    }
+
+    @Benchmark
+    @Threads(4)
+    public Object readHashCode() {
+        return theObject.hashCode();
     }
 
     public static void main(String[] args) throws RunnerException {
