@@ -206,9 +206,10 @@ $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 <div style="text-align: center;"><span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> variants of collision</div>
 
 
-# JMH
+# Java Microbenchmark Harness {.jmh}
+[http://openjdk.java.net/projects/code-tools/jmh/](http://openjdk.java.net/projects/code-tools/jmh/)
 
-## Java Microbenchmark Harness :: example{.jmhExample}
+## JMH :: "username" collisions :: benchmark{.jmhExample}
 
 <pre><code class="java">@State(Scope.Benchmark)
 public class MapPerfTest {
@@ -220,17 +221,17 @@ public class MapPerfTest {
   public void setup() { ..... }
 
 <div class="hblock"><span class="hl">@Benchmark</span> @Threads( 1 )
-public void fillMap( Blackhole blackhole ) {
+public Map fillMap() {
   for (String key : keys)
     map.put(key, key);
 
-  blackhole.consume( map );
+  return map;
 }</div>
 }</code></pre>
 
-## Java Microbenchmark Harness :: example
+## JMH :: "username" collisions :: benchmark
 
-<pre><code class="java"><span class="hl">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
+<pre><code class="java"><span class="hl">@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
 @Measurement(iterations = 5, time = 5, timeUnit = SECONDS)</span>
 @State(Scope.Benchmark)
@@ -243,77 +244,31 @@ public class MapPerfTest {
   public void setup() { ... }
 
   @Benchmark <span class="hl">@Threads( 1 )</span>
-  public void fillMap( Blackhole bh ) {
+  public Map fillMap() {
     // ...
   }
 }</code></pre>
 
-## Java Microbenchmark Harness :: example{.jmhExample}
+## JMH :: "username" collisions :: benchmark {.jmhExample}
 
-<pre><code class="java">@BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(NANOSECONDS)
-@Warmup(iterations = 5, time = 5, timeUnit = SECONDS)
-@Measurement(iterations = 5, time = 5, timeUnit = SECONDS)
+<pre><code class="java">
 @State(Scope.Benchmark)
 public class MapPerfTest {
 
+  <span class="hl">@Param</span>( {"1", "1000", "10000", "100000", "200000"})
+  int size;
   Map map;
   String[] keys;
 
 <div class="hblock"><span class="hl">@Setup</span>
 public void setup() {
-  map = new HashMap();
-  keys = <span class="hl">loadUsernameCollisionsFromFile()</span>;
+  map = new HashMap&lt;String, String&gt;( size );
+  keys = <span class="hl">loadUsernameCollisionsFromFile( size )</span>;
 }</div>
-
   @Benchmark @Threads( 1 )
-  public void fillMap( Blackhole bh ) { ... }
+  public Map fillMap() { ... }
 
 }</code></pre>
-
-## "username" collisions :: benchmark
-
-<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
-int size;
-String[] keys;
-
-@Setup
-public void setup() {
-  map = new HashMap&lt;String, String&gt;( size );
-  keys = loadUsernameCollisionsFromFile( size );
-}
-
-<div class="hblock">@Benchmark
-public void fillMap( Blackhole bh ) {
-    for (String key : keys)
-      map.put(key, key);
-
-    bh.consume( map );
-}</div></code></pre>
-
-[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)
-
-## "username" collisions :: benchmark
-
-<pre><code class="java">@Param( {"1", "1000", "10000", "100000", "150000", "200000"})
-int size;
-String[] keys;
-
-@Setup
-public void setup() {
-  map = new HashMap&lt;String, String&gt;( size );
-  keys = loadUsernameCollisionsFromFile( size );
-}
-
-@Benchmark
-public void fillMap( Blackhole bh ) {
-  for (String key : keys)
-    map.put(key, key);
-
-  bh.consume( map );
-}
-</code></pre>
-
-<span class="highlight">[CVE-2012-2739 java: hash table collisions CPU usage DoS](https://bugzilla.redhat.com/show_bug.cgi?id=750533)</span>
 
 ## "username" collisions {.usernameCollisionsChart1}
 
@@ -342,12 +297,6 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
   theme(title = element_text(size = 18, face = "bold")) +
   theme(legend.position="none", aspect.ratio = 0.5)
 ```
-
-
-# 23derevo<br/><span style="font-size:0.5em;">derevo = tree (Rus.)</span>
-<div style="text-align: right;">
-<img src="images/23derevo.png" height="100%"/>
-</div>
 
 ## Binary search tree  {.rbTree}
 
@@ -586,7 +535,9 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 
 </code></pre>
 
-## JOL : sizeOf( new Pair() ) {.jol2}
+[http://openjdk.java.net/projects/code-tools/jol/](http://openjdk.java.net/projects/code-tools/jol/)
+
+## JOL : sizeOf( new Pair() ) {.jol0}
 
 <div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
   F first;
@@ -598,14 +549,14 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   <span class="hl">int hashCode</span>;
 }</code></pre></div><div style="clear:both"></div>
 
-## JOL : -XX:+UseCompressedOops &amp; heap &lt; 4Gb {.jol2}
+## -XX:+UseCompressedOops &amp; heap &lt; 4Gb {.jol2}
 
-<div class="line"><code>-XX:+UseCompressedOops</code></div>
+<div class="line"><code><span class="highlight">-XX:+UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="clear"></div>
 
-<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+<div class="floating-box"><pre><code class="java pair">class Pair&lt;F, S&gt; {
   F first;
   S second;
 }</code></pre></div>
@@ -614,12 +565,16 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   S second;
   int hashCode;
 }</code></pre></div><div class="clear"></div>
+<pre><code class="text"><span class="highlight huge">Pair</span> object internals:
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION
+      0    12        (object header)
+     12     4 Object Pair.first
+     16     4 Object Pair.second
+     20     <span class="huuge">4</span>      <span class="huuge">(<span class="highlight">loss</span> due to the next</span>
+                     <span class="huuge">object alignment)</span>
+</div></code></pre>
 
-## JOL : -XX:-UseCompressedOops OR heap &gt; 4Gb{.jol2}
-
-<div class="line"><code>-XX:+UseCompressedOops</code></div>
-<div class="floating-box2">24 b</div>
-<div class="floating-box2">24 b</div><div class="clear"></div>
+## -XX:-UseCompressedOops OR heap &gt; 4Gb{.jol2}
 
 <div class="line"><code><span class="highlight">-XX:-UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">32 b</span></code></div>
@@ -630,13 +585,21 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   F first;
   S second;
 }</code></pre></div>
-<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+<div class="floating-box"><pre><code class="java pair2">class Pair2&lt;F, S&gt; {
   F first;
   S second;
   int hashCode;
 }</code></pre></div><div class="clear"></div>
+<pre><code class="text"><span class="highlight huge">Pair2</span> object internals:
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION
+      0    16        (object header)
+     16     4    int Pair2.hashCode
+     20     <span class="huuge">4</span>      (<span class="highlight huuge">alignment/padding gap</span>)
+     24     8 Object Pair2.first
+     32     8 Object Pair2.second
+</div></code></pre>
 
-## Address &amp; hashCode
+## Адрес и hashCode
 
 ![](images/header-address0.svg)
 
@@ -808,7 +771,7 @@ freeMemory / vm.sizeOf( new Object() )
 final int[] collisions = new int[maxCollisions];
 
 final List gcKeeper = new ArrayList();
-final TIntSet uniqueHashCodes = new TIntHashSet();
+final HashIntSet uniqueHashCodes = HashIntSets.newMutableSet();
 
 <div class="hblock">for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 	final Object <span class="hl">obj = new Object()</span>;
@@ -1334,13 +1297,20 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 ```
 ![](images/less-is-more_en.svg)
 
-## Object.hashCode() benchmark {.javaAllocation}
-<pre><code class="java">@Benchmark @Threads( 4 )
+## Object.hashCode() benchmark {.objectHashCodeBenchmark}
+<pre><code class="java">Object theObject = new Object();
+
+@Benchmark @Threads( 4 )
 public Object javaHashCode() {
-      Object object = new Object();
-      object.<span class="hl">hashCode()</span>;
-      return object;
-  }
+    Object object = new Object();
+    object.<span class="hl">hashCode()</span>;
+    return object;
+}
+
+@Benchmark @Threads( 4 )
+public Object readHashCode() {
+    return <span class="hl">theObject.hashCode()</span>;
+}
 </code></pre>
 
 ## Object.hashCode() benchmark
@@ -1348,7 +1318,7 @@ public Object javaHashCode() {
 ```{r, fig.width=10, fig.height=5}
 
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "tlab" )
+df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "readHashCode" | alloc == "tlab" )
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat = "identity", colour="#444444", alpha=0.95) +
@@ -1405,8 +1375,8 @@ String dump = dump(object);
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 
 @Benchmark @Thread(1)
-public String bufferToString() {    
-  return buffer.toString(); 
+public String bufferToString() {
+  return buffer.toString();
 }</code></pre>
 
 <code><span class="highlight">-XX:+UseBiasedLocking</span></code> VS <code><span class="highlight">-XX:-UseBiasedLocking</span></code>
@@ -1421,8 +1391,8 @@ public String bufferToString() {
 <pre><code class="java">StringBuffer buffer = new StringBuffer();
 
 @Benchmark @Thread(1)
-public String bufferToString() {    
-  return buffer.toString(); 
+public String bufferToString() {
+  return buffer.toString();
 }</code></pre>
 
 <code>-XX:+UseBiasedLocking</code> VS <code>-XX:-UseBiasedLocking</code>
@@ -1464,7 +1434,7 @@ StringBuffer <span class="hl">bufferWithIdHashCode</span> = new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
-    bh.consume( System.identityHashCode( 
+    bh.consume( System.identityHashCode(
         bufferWithIdHashCode ) );
 }
 
@@ -1485,7 +1455,7 @@ StringBuffer bufferWithIdHashCode = new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
-    bh.consume( <span class="hl">System.identityHashCode( 
+    bh.consume( <span class="hl">System.identityHashCode(
         bufferWithIdHashCode )</span> );
 }
 
@@ -1506,7 +1476,7 @@ df = read.csv(file = "csv/StringBufferPerfTest.csv", header = TRUE)
 
 df <- subset(df, type == "buffer -XX:-UseBiasedLocking" | type == 'buffer' | type == 'bufferWithIdHashCode')
 
-ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +  
+ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
   geom_bar(stat="identity",  colour="black") +
   scale_fill_manual(values=c('buffer -XX:-UseBiasedLocking'='#fa8074', 'buffer'='#21bd83', 'bufferWithIdHashCode'='#e67bf3')) +
   geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, position=position_dodge(0.5)) +
@@ -1525,7 +1495,7 @@ ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
 
 ## Revoke Biased Locking:  {.biasedDemo}
 
-<pre><code class="java">int idHashCode 
+<pre><code class="java">int idHashCode
     = System.identityHashCode( object );
 
 String dump = dump(object);</code></pre>

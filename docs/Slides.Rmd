@@ -704,7 +704,7 @@ freeMemory / vm.sizeOf( new Object() )
 final int[] collisions = new int[maxCollisions];
 
 final List gcKeeper = new ArrayList();
-final TIntSet uniqueHashCodes = new TIntHashSet();
+final HashIntSet uniqueHashCodes = HashIntSets.newMutableSet();
 
 <div class="hblock">for (int collisionNo = 0; collisionNo < maxCollisions; ) {
 	final Object <span class="hl">obj = new Object()</span>;
@@ -1230,13 +1230,20 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 ```
 ![](images/less-is-more.svg)
 
-## Object.hashCode() benchmark {.javaAllocation}
-<pre><code class="java">@Benchmark @Threads( 4 )
+## Object.hashCode() benchmark {.objectHashCodeBenchmark}
+<pre><code class="java">Object theObject = new Object();
+
+@Benchmark @Threads( 4 )
 public Object javaHashCode() {
-      Object object = new Object();
-      object.<span class="hl">hashCode()</span>;
-      return object;
-  }
+    Object object = new Object();
+    object.<span class="hl">hashCode()</span>;
+    return object;
+}
+  
+@Benchmark @Threads( 4 )
+public Object readHashCode() {
+    return <span class="hl">theObject.hashCode()</span>;
+}
 </code></pre>
 
 ## Object.hashCode() benchmark
@@ -1244,7 +1251,7 @@ public Object javaHashCode() {
 ```{r, fig.width=10, fig.height=5}
 
 df = read.csv(file = "csv/allocations.csv", header = TRUE)
-df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "tlab" )
+df <- subset(df, alloc == "java" | alloc == "javaHashCode" | alloc == "readHashCode" | alloc == "tlab" )
 
 ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   geom_bar(stat = "identity", colour="#444444", alpha=0.95) +

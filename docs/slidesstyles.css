@@ -366,7 +366,7 @@ code > span.highlight {
 
 code span.hashCode {
     color: black;
-    background-color: #111;
+    background-color: #050505;
 }
 
 .IdentityHashCodeCollision > pre code {
@@ -492,6 +492,11 @@ div.center {
 
 .clear {
     clear:both;
+}
+
+.objectHashCodeBenchmark > pre code {
+    font-size: 1.3em !important;
+    line-height: 1.3em !important;
 }
 
 .javaAllocation > pre code, .casAllocationBenchmark > pre code,
