@@ -1,8 +1,5 @@
 package com;
 
-import gnu.trove.set.TIntSet;
-import gnu.trove.set.hash.TIntHashSet;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +9,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Phaser;
 import java.util.stream.IntStream;
+
+import com.koloboke.collect.set.hash.HashIntSet;
+import com.koloboke.collect.set.hash.HashIntSets;
 
 import static com.VMTools.checkVMHashCodeAsAddress;
 
@@ -75,7 +75,7 @@ public class ThreadedIdentityHashCodeCollision {
             }
 
         System.out.println();
-        TIntSet uniqueCodes = new TIntHashSet(threads * count);
+        final HashIntSet uniqueCodes = HashIntSets.newMutableSet(threads * count);
         boolean found = false;
         Integer collisionIndex = null;
         Integer collisionValue = null;
