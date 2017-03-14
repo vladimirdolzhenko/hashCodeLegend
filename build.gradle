@@ -7,8 +7,12 @@ allprojects {
 	}
 
 	dependencies {
-		compile group: 'org.openjdk.jmh', name: 'jmh-core', version: '1.17.3'
-		compile group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: '1.17.3'
+		compile group: 'org.openjdk.jmh', name: 'jmh-core', version: '1.18'
+		compile group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: '1.18'
+
+		compile 'com.koloboke:koloboke-impl-common-jdk8:1.0.0'
+		compile 'com.koloboke:koloboke-api-jdk8:1.0.0'
+		runtime 'com.koloboke:koloboke-impl-jdk8:1.0.0'
 	}
 
 	compileJava.options.encoding = 'UTF-8'

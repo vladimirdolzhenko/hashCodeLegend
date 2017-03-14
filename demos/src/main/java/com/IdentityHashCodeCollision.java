@@ -3,8 +3,8 @@ package com;
 import java.util.ArrayList;
 import java.util.List;
 
-import gnu.trove.set.TIntSet;
-import gnu.trove.set.hash.TIntHashSet;
+import com.koloboke.collect.set.hash.HashIntSet;
+import com.koloboke.collect.set.hash.HashIntSets;
 
 import static com.VMTools.checkVMHashCodeAsAddress;
 
@@ -25,7 +25,7 @@ public class IdentityHashCodeCollision {
         final int[] collisions = new int[maxCollisions];
 
         final List gcKeeper = new ArrayList();
-        final TIntSet uniqueHashCodes = new TIntHashSet();
+        final HashIntSet uniqueHashCodes = HashIntSets.newMutableSet();
 
         for (int collisionNo = 0; collisionNo < maxCollisions; ) {
             final Object obj = new Object();
