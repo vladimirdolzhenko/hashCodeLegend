@@ -75,7 +75,7 @@ if ( key.equals( keys[index] ) ) {
     return values[index];
 }
 return null;</code></pre>
-<span class="huuuge highlight">сложность → **O(1)**</span>
+<span class="huuuge">сложность → <span class="highlight">**O( 1 )**</span></span>
 
 ## Контракт hashCode {.javadoc}
 
@@ -101,7 +101,17 @@ used in equals comparisons on the object is modified.
 ## Chaining {.chaining}
 
 ![](images/hashtable-collisions-chaining.svg)
-<span class="huuuge highlight">сложность → **O(N)**</span>
+<span class="huuuge">сложность → <span class="highlight">**O( N )**</span></span>
+
+## Открытая адресация
+
+![](images/hashtable-collisions-oa.svg)
+
+## Открытая адресация {.openAddressing}
+
+![](images/hashtable-collisions-oa2.svg)
+
+<span class="huuuge">сложность → <span class="highlight">**O( N )**</span></span>
 
 ## hashCode - функция от содержимого объекта {.hashFunctionData}
 <pre><code class="java">String s1 = new String("java");
@@ -201,9 +211,9 @@ $$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
 $$ 31 \cdot c_0 + c_1 = $$
 $$ = 31 \cdot (c_0 - 1) + (c_1 + 31) $$
 
-```
-```
-<div style="text-align: center;"><span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> вариантов коллизий</div>
+<div style="text-align: center;">
+<span class="huuuge">**`username`**</span> ⟹ <span class="huuuge">499_331</span> <br/>
+вариантов коллизий</div>
 
 
 # Java Microbenchmark Harness {.jmh}
@@ -298,11 +308,18 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
   theme(legend.position="none", aspect.ratio = 0.5)
 ```
 
-## Бинарное дерево поиска {.rbTree}
+# ещё одна <span class="orthogonal">функция</span> нужна
+
+## Дополнительная функция: compareTo {.rbTree}
 
 ![](images/hashtable-collisions-rbtree.svg)
 
-<span class="huuuge highlight">сложность → **O( log(N) )**</span>
+<span class="huuuge">сложность → <span class="highlight">**O( log( N ) )**</span></span>
+
+## Chaining и Красно-Чёрное-Дерево {.chainingRBTree}
+
+![](images/hashtable-collisions-rbtree2.svg)
+
 
 ## "username" коллизии
 
@@ -489,7 +506,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="clear"></div>
 
-<div class="floating-box"><pre><code class="java pair">class Pair&lt;F, S&gt; {
+<div class="floating-box pair"><pre><code class="java">class Pair&lt;F, S&gt; {
   F first;
   S second;
 }</code></pre></div>
@@ -499,10 +516,10 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   int hashCode;
 }</code></pre></div><div class="clear"></div>
 <pre><code class="text"><span class="highlight huge">Pair</span> object internals:
-<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION                    
-      0    12        (object header)                
-     12     4 Object Pair.first                     
-     16     4 Object Pair.second                    
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION
+      0    12        (object header)
+     12     4 Object Pair.first
+     16     4 Object Pair.second
      20     <span class="huuge">4</span>      <span class="huuge">(<span class="highlight">loss</span> due to the next</span>
                      <span class="huuge">object alignment)</span>
 </div></code></pre>
@@ -518,20 +535,20 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   F first;
   S second;
 }</code></pre></div>
-<div class="floating-box"><pre><code class="java pair2">class Pair2&lt;F, S&gt; {
+<div class="floating-box pair2"><pre><code class="java">class Pair2&lt;F, S&gt; {
   F first;
   S second;
   int hashCode;
 }</code></pre></div><div class="clear"></div>
 <pre><code class="text"><span class="highlight huge">Pair2</span> object internals:
-<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION                    
-      0    16        (object header)                
-     16     4    int Pair2.hashCode                 
-     20     <span class="huuge">4</span>      (<span class="highlight huuge">alignment/padding gap</span>)        
-     24     8 Object Pair2.first                    
-     32     8 Object Pair2.second                   
+<div class="hblock"> OFFSET  SIZE   TYPE DESCRIPTION
+      0    16        (object header)
+     16     4    int Pair2.hashCode
+     20     <span class="huuge">4</span>      (<span class="highlight huuge">alignment/padding gap</span>)
+     24     8 Object Pair2.first
+     32     8 Object Pair2.second
 </div></code></pre>
-     
+
 ## Адрес и hashCode
 
 ![](images/header-address0.svg)
@@ -900,7 +917,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 ```{r, out.height="600px", out.width="1000px", echo = FALSE}
 df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 36, header = TRUE)
-
+min_address = min(df$address)
 ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
   geom_point(size=4) +
   theme_classic() +
@@ -910,7 +927,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     y = "") +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(807437768, 807437928, 807438088, 807438248), labels = function(n){ifelse(n == 807437768,  base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 807437768)))}, expand = c(0, 0)) +
+  scale_x_continuous(breaks=c(min_address, min_address + 160, min_address + 160 * 2, min_address + 160 * 3), labels = function(n){ifelse(n == min_address,  base::sprintf("base"), base::sprintf("+ %d", as.integer(n - min_address)))}, expand = c(0, 0)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -926,7 +943,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
 
 ```{r, out.height="600px", out.width="1000px", echo = FALSE}
 df = read.csv(file = "csv/hashCodes.csv", header = TRUE)
-
+min_address = min(df$address)
 ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
   geom_point(size=1) +
   theme_classic() +
@@ -938,7 +955,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
   geom_hline(yintercept = 890552) +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(200000,400000,600000,800000,1000000), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,842311792,875866224), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d MB", as.integer((n - 808757360) / 1024/1024)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(min_address, min_address + 32 * 1024 * 1024, min_address + 64 * 1024 * 1024), labels = function(n){ifelse(n == min_address, base::sprintf("base"), base::sprintf("+ %d MB", as.integer((n - min_address) / 1024/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -961,7 +978,7 @@ $$ bits = log_2{1048576} = 20 $$
 
 ```{r, out.height="600px", out.width="1000px", echo = FALSE}
 df = read.csv(file = "csv/hashCodes.csv", nrows = 36, header = TRUE)
-
+min_address = min(df$address)
 ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
   geom_point(size=5) +
   theme_classic() +
@@ -971,7 +988,7 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     y = "") +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(808757360,809473680,810190000,810906320), labels = function(n){ifelse(n == 808757360, base::sprintf("base"), base::sprintf("+ %d KiB", as.integer((n - 808757360)/1024)))}, expand = c(0.2, 1000)) +
+  scale_x_continuous(breaks=c(min_address, min_address + 700 * 1024, min_address + 2 * 700 * 1024, min_address + 3 * 700 * 1024), labels = function(n){ifelse(n == min_address, base::sprintf("base"), base::sprintf("+ %d KiB", as.integer((n - min_address)/1024)))}, expand = c(0.2, 1000)) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
   theme(axis.text.y = element_text(size = 14, face = "bold")) +
   theme(axis.text.x = element_text(size = 14, face = "bold")) +
@@ -1094,32 +1111,6 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 ![](images/tlab2.svg)
 
-## Распределение hashCode БЕЗ TLAB {.hashCodeDistribution}
-
-```{r, out.height="600px", out.width="1000px", echo = FALSE}
-df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 36, header = TRUE)
-
-ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
-  geom_point(size=5) +
-  theme_classic() +
-  labs(
-    title="количество объектов",
-    x = "адреса объектов",
-    y = "") +
-  scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
-  scale_y_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
-  scale_x_continuous(breaks=c(807437768, 807437928, 807438088, 807438248), labels = function(n){ifelse(n == 807437768,  base::sprintf("base"), base::sprintf("+ %d", as.integer(n - 807437768)))}, expand = c(0, 0)) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(axis.text.y = element_text(size = 14, face = "bold")) +
-  theme(axis.text.x = element_text(size = 14, face = "bold")) +
-  theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(axis.title.x=element_text(margin=margin(t=20))) +
-  theme(legend.text = element_text(size = 14, face = "bold")) +
-  theme(title = element_text(size = 16, face = "bold")) +
-
-  theme(aspect.ratio = 0.7)
-```
-
 ## Стоимость TLAB {.tlabAllocatorBenchmark}
 
 <pre><code class="java">@Benchmark @Threads( 4 )
@@ -1171,7 +1162,7 @@ $$ n \approx \sqrt{2  d \cdot ln({1\over{1 - p_{uniq}}}) }$$
   2 | <span class="bad">константа 1</span>
   3 | <span class="good">последовательный счетчик</span>
   4 | <span class="huuge highlight">адрес объекта</span>
-  5 | <span class="good">[Marsagliа xor-shift ГПСЧ](https://en.wikipedia.org/wiki/Xorshift)</span> _**по умолчанию** в java 8_
+  5 | <span class="good">[Marsaglia xor-shift ГПСЧ](https://en.wikipedia.org/wiki/Xorshift)</span> _**по умолчанию** в java 8_
 
 ## Дамп объекта при -XX:hashCode=5
 
@@ -1239,7 +1230,7 @@ public Object javaHashCode() {
     object.<span class="hl">hashCode()</span>;
     return object;
 }
-  
+
 @Benchmark @Threads( 4 )
 public Object readHashCode() {
     return <span class="hl">theObject.hashCode()</span>;
@@ -1274,8 +1265,7 @@ ggplot(alpha=0.3, data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
 
 <pre><code class="java">Object object = new Object();
 
-String dump = dump(object);
-</code></pre>
+dump( object );</code></pre>
 
 ![](images/header-biasedlocking0.svg)
 
@@ -1286,9 +1276,7 @@ String dump = dump(object);
 
   public final native void wait(long timeout)
       throws InterruptedException;
-}
-
-</code></pre>
+}</code></pre>
 
 
 ## Biased Locking
@@ -1299,17 +1287,16 @@ String dump = dump(object);
 <pre><code class="java">synchronized (object) {
     object.notifyAll();
 }
-String dump = dump(object);
-</code></pre>
+dump( object );</code></pre>
 ![](images/header-biasedlocking1.svg)
 
 ## StringBufferPerfTest {.StringBufferPerfTestSingle}
 
-<pre><code class="java">StringBuffer buffer = new StringBuffer();
+<pre><code class="java">StringBuffer buf = new StringBuffer();
 
 @Benchmark @Thread(1)
 public String bufferToString() {
-  return buffer.toString();
+  return buf.toString();
 }</code></pre>
 
 <code><span class="highlight">-XX:+UseBiasedLocking</span></code> VS <code><span class="highlight">-XX:-UseBiasedLocking</span></code>
@@ -1321,11 +1308,11 @@ public String bufferToString() {
 
 ## StringBufferPerfTest {.StringBufferPerfTestSingle}
 
-<pre><code class="java">StringBuffer buffer = new StringBuffer();
+<pre><code class="java">StringBuffer buf = new StringBuffer();
 
 @Benchmark @Thread(1)
 public String bufferToString() {
-  return buffer.toString();
+  return buf.toString();
 }</code></pre>
 
 <code>-XX:+UseBiasedLocking</code> VS <code>-XX:-UseBiasedLocking</code>
@@ -1362,8 +1349,9 @@ ggplot(alpha=0.3, data=df, aes(x=type, y=value, fill=type)) +
 
 ## identityHashCode
 
-<pre><code class="java">StringBuffer buffer = new StringBuffer();
-StringBuffer <span class="hl">bufferWithIdHashCode</span> = new StringBuffer();
+<pre><code class="java">StringBuffer buf = new StringBuffer();
+StringBuffer <span class="hl">bufferWithIdHashCode</span> = 
+    new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
@@ -1378,13 +1366,14 @@ public String bufferWithIdHashCode() {
 
 @Benchmark @Thread(1)
 public String buffer() {
-  return buffer.toString();
+  return buf.toString();
 }</code></pre>
 
 ## identityHashCode
 
-<pre><code class="java">StringBuffer buffer = new StringBuffer();
-StringBuffer bufferWithIdHashCode = new StringBuffer();
+<pre><code class="java">StringBuffer buf = new StringBuffer();
+StringBuffer bufferWithIdHashCode = 
+   new StringBuffer();
 
 @Setup
 public void setup(Blackhole bh) {
@@ -1399,7 +1388,7 @@ public String bufferWithIdHashCode() {
 
 @Benchmark  @Thread(1)
 public String buffer() {
-  return buffer.toString();
+  return buf.toString();
 }</code></pre>
 
 ## identityHashCode результаты
@@ -1429,12 +1418,10 @@ ggplot(alpha=0.7, data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
 ## Revoke Biased Locking:  {.biasedDemo}
 
 <pre><code class="java">int idHashCode
-    = System.identityHashCode( object );
+  = System.identityHashCode( object );
 
-String dump = dump(object);</code></pre>
-
+dump( object );</code></pre>
 ![](images/header-biasedlocking2.svg)
-
 
 ## Заключение {.conclusion}
 

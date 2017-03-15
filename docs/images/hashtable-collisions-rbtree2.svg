@@ -45,8 +45,9 @@ rect.focused {
 }
 
 .bigcomment {
-    font-size:18px;
+    font-size:2.1em;
     fill:#000000;
+    font-weight: bold;
     font-family:PT Serif;
 }
 
@@ -153,6 +154,16 @@ rect.arrayKeyItemRed.selected {
     fill:#C00;
 }
 
+rect.rbTree {
+  opacity: 0.45;
+  fill: #f57670;
+}
+
+rect.chain {
+  opacity: 0.45;
+  fill: #1fbec3;
+}
+
 text.w {
   fill:#FFFFFF;
 }
@@ -163,6 +174,10 @@ text.w {
     <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
   </marker>
   <g transform="translate(160 20) scale(2)">
+
+    <rect class="chain" height="280" width="150" x="-80" y="-5"/>
+    <rect class="rbTree" height="280" width="350" x="70" y="-5"/>
+
     <rect class="arrayKeyItem" height="50" width="50" x="-50" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="0" y="0"/>
     <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
@@ -216,6 +231,26 @@ text.w {
       </g>
     </g>
     <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
+    <g transform="translate(0 0)">
+      <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+      <!-- keyA -->
+      <text class="note" text-anchor="middle" x="25" y="28">ABCD</text>
+      <path class="link" d="M25,50 0,65"/>
+      <g transform="translate(-35 70)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <!-- keyB -->
+        <text class="note" text-anchor="middle" x="25" y="28">AAbD</text>
+        <path class="link" d="M25,50 0,65"/>
+        <g transform="translate(-35 70)">
+          <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+          <!-- keyC -->
+          <text class="note" text-anchor="middle" x="25" y="28">ABBc</text>
+        </g>
+      </g>
+    </g>
     <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
+
+    <text class="bigcomment" text-anchor="end" x="50" y="250">*$Node</text>
+    <text class="bigcomment" text-anchor="end" x="320" y="250">*$TreeNode</text>
   </g>
 </svg>

@@ -61,7 +61,7 @@ public class FindCollisions {
         }
     }
 
-    private static void lookupCollisions2(Map<String, String> map, String key, int depth, boolean plus, final int hash) {
+    static void lookupCollisions2(Map<String, String> map, String key, int depth, boolean plus, final int hash) {
         if (depth > key.length()) {
             return;
         }
@@ -96,7 +96,7 @@ public class FindCollisions {
         }
     }
 
-    private static void lookupCollisions(Map<String, String> map, String key, int depth, boolean plus, final int hash) {
+    static void lookupCollisions(Map<String, String> map, String key, int depth, boolean plus, final int hash) {
         if (depth > key.length()) {
             return;
         }
