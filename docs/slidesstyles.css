@@ -98,10 +98,16 @@ article.jmh {
     left: -0px;
 }
 
-.rbTree span.highlight {
+.orthogonal {
+    transform: rotate(-90deg) !important;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+}
+
+.rbTree span.huuuge {
     position: absolute;
-    bottom: 150px;
-    right:50px;
+    bottom: 1.75em;
 }
 
 /*.segue code {
@@ -327,9 +333,10 @@ code > span.highlight {
     width: 120% !important;
 }
 
-.chaining span.highlight {
+.chaining span.huuuge,
+.openAddressing span.huuuge{
     position: absolute;
-    bottom: 200px;
+    bottom: 100px;
 }
 
 .waiting img,
@@ -448,10 +455,9 @@ div.center {
     padding-bottom: 10px !important;
 }
 
-.jol2 pre code.pair,
-.jol2 pre code.pair2 {
+.jol2 div.pair,
+.jol2 div.pair2 {
     background-color: #CCC !important;
-    width: 90% !important;
 }
 
 .jol2 .floating-box {
@@ -461,7 +467,7 @@ div.center {
 
 .jol2 pre > code div.hblock {
     border: 3px dashed #000;
-    width: 1000px;
+    width: 900px;
 }
 
 .floating-box {

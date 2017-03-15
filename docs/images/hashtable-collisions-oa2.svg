@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
+<svg height="580" version="1.1" width="789" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style type="text/css"><![CDATA[
+
+rect.arrayKeyItem, rect.arrayValueItem {
+  fill:white;
+  stroke:black;
+  stroke-width:1;
+  opacity:1;
+}
+
+rect.arrayKeyItem.selected {
+    fill:#00B7EB;
+}
+
+rect.arrayValueItem.selected {
+    fill:#6BF76B;
+}
+
+rect.focused {
+  stroke-width:3;
+}
+
+.code, .codeX {
+    font-size:16px;
+    fill:#000000;
+    font-family:PT Mono;
+}
+
+.note {
+    font-size:10px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.comment {
+    font-size:14px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.bigcomment {
+    font-size:18px;
+    fill:#000000;
+    font-family:PT Serif;
+}
+
+.link {
+  fill:none;
+  stroke:black;
+  stroke-width:1.2;
+  marker-end:url(#TriangleOutL);
+}
+
+.code1, .code2, .code3, .code4 {
+   opacity:0.8;
+}
+
+.code1 {
+  fill:red;
+}
+
+.code2 {
+  fill:green;
+}
+
+.code3 {
+  fill:blue;
+}
+
+.code4 {
+  fill:orange;
+}
+
+.header.code1 {
+  /*fill:red;*/
+  fill: #0F0;
+}
+
+.header.code2 {
+  /*fill:green;*/
+  fill: #0C0;
+}
+
+.header.code3 {
+  /*fill:blue;*/
+  fill: #0A0;
+}
+
+.header.code4 {
+  /*fill:orange;*/
+  fill: #080;
+}
+
+
+rect.unused, rect.used {
+  stroke:black;
+  stroke-width:1;
+  opacity:1;
+  fill:#ddd;
+}
+
+rect.log {
+  stroke:none;
+  stroke-width:0;
+  opacity:0.5;
+  fill:#ddf;
+}
+
+path.log {
+  fill: none;
+  stroke: #88F;
+  stroke-width:2;
+}
+
+rect.t1 {
+    fill:#30FB30;
+}
+
+rect.t2 {
+    fill:#3030FB;
+}
+
+rect.t3 {
+    fill:#FB3030;
+}
+
+/* */
+.link {
+  fill:none;
+  stroke:black;
+  stroke-width:1.2;
+  marker-end:url(#TriangleOutL);
+}
+
+.linkRed {
+  fill:none;
+  stroke:red;
+  stroke-width:1.5;
+  marker-end:url(#TriangleOutR);
+}
+    ]]></style>
+  </defs>
+  <marker id="TriangleOutL" orient="auto" refX="0.0" refY="0.0" style="overflow:visible">
+    <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
+  </marker>
+  <marker id="TriangleOutR" orient="auto" refX="0.0" refY="0.0" style="overflow:visible">
+    <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill:#ff0000;stroke:#FF0000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
+  </marker>
+  <g transform="translate(0 20) scale(2.25)">
+    <g transform="translate(0 0)">
+      <g transform="translate(100 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
+        <path class="linkRed" d="M25,50 25,60"/>
+      </g>
+    </g>
+    <g transform="translate(0 70)">
+      <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="150" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="200" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="250" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="300" y="0"/>
+      <g transform="translate(0 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Фёдор</text>
+        <path class="link" d="M25,50 C 40,120 305,120 325,55"/>
+      </g>
+      <rect class="arrayKeyItem" height="50" width="50" x="50" y="0"/>
+      <rect class="arrayKeyItem" height="50" width="50" x="100" y="0"/>
+      <g transform="translate(250 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Пётр</text>
+      </g>
+      <g transform="translate(100 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Алексей</text>
+        <path class="linkRed" d="M25,50 C 10,70 -10,70 -20,55"/>
+      </g>
+      <g transform="translate(50 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Alexander</text>
+        <path class="linkRed" d="M25,50 C 10,70 -10,70 -20,55"/>
+      </g>
+      <g transform="translate(300 0)">
+        <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
+        <text class="note" text-anchor="middle" x="25" y="28">Alex</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -62,19 +62,23 @@ rect.focused {
 }
 
 .code1 {
-  fill:#d73027;
+  /*fill:#d73027;*/
+  fill:#d70b00;
 }
 
 .code2 {
-  fill:#fee090;
+  /*fill:#fee090;*/
+  fill:#ffb900;
 }
 
 .code3 {
-  fill:#abd9e9;
+  /*fill:#abd9e9;*/
+  fill:#00ade9;
 }
 
 .code4 {
-  fill:#4575b4;
+  /*fill:#4575b4;*/
+  fill:#004eb4;
 }
 
 .header.code1 {
