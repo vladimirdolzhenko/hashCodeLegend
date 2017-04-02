@@ -1,15 +1,15 @@
 
 @media screen {
     body {
-        zoom: 1.2 !important;
+        zoom: 1.25 !important;
         background-color: transparent !important;
     }
 
     slides > slide {
         height: 100% !important;
-        width: 90% !important;
+        width: 100% !important;
         margin: 0px !important;
-        left: 5%;
+        left: 0px;
         top: 0px;
         background: white  !important;
     }
@@ -58,7 +58,7 @@ table.rmdtable th {
 }
 
 slides > slide {
-    font-size: 30px !important;
+    font-size: 1.75em !important;
     font-family: 'PT Sans', 'Open Sans', Arial, sans-serif  !important;
 }
 
@@ -168,17 +168,17 @@ span.huuuge, code > span.highlight.huuuge {
 }
 
 pre {
-    font-size: 28px !important;
+    font-size: 1em !important;
     font-family: 'PT Mono', 'monospace'  !important;
-    line-height: 28px !important;
+    line-height: 1em !important;
     /*padding: 10px 0 0px 60px !important;*/
     /*background-color: #eee;*/
 }
 
 pre > code.hljs {
-    font-size: 30px !important;
+    font-size: 1em !important;
     font-family: 'PT Mono', 'monospace'  !important;
-    line-height: 30px !important;
+    line-height: 1em !important;
     overflow: hidden;
     width: 150% !important;
     background-color: transparent !important;
@@ -319,7 +319,7 @@ code > span.highlight {
 }
 
 .stringHashCode > pre code {
-    font-size: 32px !important;
+    font-size: 1em !important;
     line-height: 33px !important;
 }
 
@@ -334,9 +334,12 @@ code > span.highlight {
 }
 
 .chaining span.huuuge,
-.openAddressing span.huuuge{
+.openAddressing span.huuuge {
     position: absolute;
-    bottom: 100px;
+    bottom: 10%;
+    width: 100%;
+    left: 10%;
+    text-align: left;
 }
 
 .waiting img,
@@ -367,8 +370,8 @@ code > span.highlight {
 
 .tlabcode > pre code,
 .multiThreadedCollisions > pre code {
-    font-size: 27px !important;
-    line-height: 28px !important;
+    font-size: 1em !important;
+    line-height: 1em !important;
 }
 
 code span.hashCode {
@@ -377,7 +380,7 @@ code span.hashCode {
 }
 
 .IdentityHashCodeCollision > pre code {
-    font-size: 28px !important;
+    font-size: 1em !important;
     line-height: 1.2em !important;
 }
 
@@ -387,7 +390,7 @@ code span.hashCode {
 }
 
 .unsafeaddress > pre code {
-    font-size: 30px !important;
+    font-size: 1em !important;
     line-height: 1.1em !important;
 }
 
@@ -400,6 +403,10 @@ code span.hashCode {
 .generations, .hashCode20Bit, .AaBB, .fourBytesOf16  {
     font-size: 1.4em !important;
     line-height: 1.2em;
+}
+
+.AaBB .MathJax_Display {
+    font-size: 1.5em !important;
 }
 
 .paradox, .detective31 li {

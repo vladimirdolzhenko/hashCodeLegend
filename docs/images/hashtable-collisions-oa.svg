@@ -3,7 +3,7 @@
   PUBLIC '-//W3C//DTD SVG 1.1//EN'
   'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
 <?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
-<svg height="580" version="1.1" width="789" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="590" version="1.1" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style type="text/css"><![CDATA[
 
@@ -152,7 +152,7 @@ rect.t3 {
   <marker id="TriangleOutR" orient="auto" refX="0.0" refY="0.0" style="overflow:visible">
     <path d="M 6,0.0 L -2,3.0 L -2,-3.0 L 6,0.0 z " style="fill:#ff0000;stroke:#FF0000;stroke-width:1.0pt;marker-start:none" transform="scale(0.6)"/>
   </marker>
-  <g transform="translate(0 20) scale(2.25)">
+  <g transform="translate(5 20) scale(2.25)">
     <g transform="translate(0 0)">
       <g transform="translate(100 0)">
         <rect class="arrayKeyItem selected" height="50" width="50" x="0" y="0"/>
