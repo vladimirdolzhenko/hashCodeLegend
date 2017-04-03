@@ -1,6 +1,12 @@
 ---
-title: 'Внутрь VM сквозь замочную скважину hashCode'
-author: 'Владимир Долженко, IHS Markit'
+title: "Внутрь VM сквозь замочную скважину hashCode"
+author: 
+  name: "Владимир Долженко"
+  email: "vladimir.dolzhenko @ gmail.com"
+  company: "IHS Markit"
+  twitter: "dolzhenko"
+  github: "github.com/vladimirdolzhenko/hashCodeLegend"
+date: "2017-04-03"
 output:
   ioslides_presentation:
     widescreen: true

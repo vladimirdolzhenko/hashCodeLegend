@@ -31,7 +31,43 @@
 
 }
 
+.title-slide a {
+    color: #909090 !important;
+}
 
+.title-slide a:hover {
+    color: #000 !important;
+    border-bottom: 1px solid #909090 !important;
+}
+
+.title-slide hgroup {
+    bottom: 50px !important;
+}
+
+.title-slide hgroup h2.presenter {
+    color: #909090;
+}
+
+.title-slide hgroup p.contact {
+    margin-top: 0px !important;
+}
+
+.title-slide hgroup h2.presenter,
+.title-slide hgroup p.contact,
+.title-slide hgroup p.date {
+    text-align: right;
+    margin-right: 150px;
+}
+
+.title-slide hgroup p.contact span.name {
+    display: none !important;
+}
+
+.title-slide hgroup p.contact span.twitter,
+.title-slide hgroup p.contact span.email,
+.title-slide hgroup p.contact span.github {
+    width: 500px !important;
+}
 
 slides > slide.dark {
     background: #515151 !important;
@@ -110,11 +146,11 @@ article.jmh {
     bottom: 1.75em;
 }
 
-/*.segue code {
+/*.dark code {
     color: white !important;
 }*/
 
-.segue hgroup {
+.dark hgroup {
     /*bottom: 150px !important;*/
 }
 
@@ -122,21 +158,22 @@ article.jmh {
     font-size: 2.6em;
 }
 
-.segue h2 {
+.dark h2 {
     font-size: 2.5em;
     line-height: 1em;
 }
 
-.segue a {
+.dark a {
     color: #d6d6d6 !important;
-    border-bottom: 1px solid white !important;
+    /*border-bottom: 1px solid white !important;*/
+    border-bottom: none;
 }
 
-.segue a:hover {
+.dark a:hover {
     color: #ffffff !important;
 }
 
-.segue pre {
+.dark pre {
     left: -120px !important;
     top: -40px !important;
 }
