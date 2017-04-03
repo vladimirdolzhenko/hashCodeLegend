@@ -128,6 +128,7 @@ $(document).ready(function() {
 <li>JVM потроха: GC и аллокации</li>
 <li>Немного баттлов про hashCode</li>
 </ul></li>
+<li>Правильные инструменты: JMH и JOL</li>
 <li>Удешевление блокировок</li>
 </ul>
 
@@ -492,7 +493,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div style="clear:both">
 </div>
 
-</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 4Gb</h2></hgroup><article  id="xxusecompressedoops--heap-4gb" class="jol2">
+</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 4Gb</h2></hgroup><article  id="xxusecompressedoops--heap-4gb" class="jol0">
 
 <div class="line">
 <code><span class="highlight">
@@ -505,6 +506,36 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div class="floating-box2">
 <code><span class="highlight">
 24 b</span></code></div>
+
+<div class="clear">
+</div>
+
+<div class="floating-box">
+<pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+
+<div class="floating-box">
+<pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div>
+
+<div class="clear">
+</div>
+
+</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 4Gb</h2></hgroup><article  id="xxusecompressedoops--heap-4gb-1" class="jol2">
+
+<div class="line">
+<code>-XX:+UseCompressedOops</code></div>
+
+<div class="floating-box2">
+<code>24 b</code></div>
+
+<div class="floating-box2">
+<code>24 b</code></div>
 
 <div class="clear">
 </div>
@@ -534,7 +565,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
                      <span class="huuge">object alignment)</span>
 </div></code></pre>
 
-</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap &gt; 4Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-4gb" class="jol2">
+</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap &gt; 4Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-4gb" class="jol0">
 
 <div class="line">
 <code><span class="highlight">
@@ -547,6 +578,36 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div class="floating-box2">
 <code><span class="highlight">
 40 b</span></code></div>
+
+<div class="clear">
+</div>
+
+<div class="floating-box">
+<pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+
+<div class="floating-box">
+<pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div>
+
+<div class="clear">
+</div>
+
+</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap &gt; 4Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-4gb-1" class="jol2">
+
+<div class="line">
+<code>-XX:-UseCompressedOops</code></div>
+
+<div class="floating-box2">
+<code>32 b</code></div>
+
+<div class="floating-box2">
+<code>40 b</code></div>
 
 <div class="clear">
 </div>
@@ -770,19 +831,6 @@ freeMemory / vm.sizeOf( new Object() )
 <br/> <span class="huuuge">
 32bit → 22bit</span><br/><br/> <br/> <code>= <span class="huge">
 4_194_304</span></code> <br/> уникальных значений</div>
-
-</article></slide><slide class=''><hgroup><h2>Граница коллизий - Результаты</h2></hgroup><article  id="----" class="IdentityHashCodeCollisionResults">
-
-<pre>
-после 1,331,460 аллокаций:
-hash code collision at 0x3055A9<span class="huuge highlight">9</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">A</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">B</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">C</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">D</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">E</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">F</span>0
-</pre>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>hashCode → address → <br/> <span style="margin-left:200px;">
 → memory allocation</span></h2></hgroup><article  id="hashcode-address-memory-allocation">
