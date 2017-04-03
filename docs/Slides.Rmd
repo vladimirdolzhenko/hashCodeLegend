@@ -40,6 +40,7 @@ knitr::opts_chunk$set(echo = FALSE)
 * HashCode как адрес объекта - миф или реальность
     + JVM потроха: GC и аллокации
     + Немного баттлов про hashCode
+* Правильные инструменты: JMH и JOL
 * Удешевление блокировок
 
 ## Ассоциативный массив / Dictionary / Map {.hash}
@@ -507,11 +508,28 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   <span class="hl">int hashCode</span>;
 }</code></pre></div><div style="clear:both"></div>
 
-## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol2}
+## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol0}
 
 <div class="line"><code><span class="highlight">-XX:+UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
+<div class="clear"></div>
+
+<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div><div class="clear"></div>
+
+## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol2}
+
+<div class="line"><code>-XX:+UseCompressedOops</code></div>
+<div class="floating-box2"><code>24 b</code></div>
+<div class="floating-box2"><code>24 b</code></div>
 <div class="clear"></div>
 
 <div class="floating-box pair"><pre><code class="java">class Pair&lt;F, S&gt; {
@@ -532,11 +550,28 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
                      <span class="huuge">object alignment)</span>
 </div></code></pre>
 
-## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol2}
+## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol0}
 
 <div class="line"><code><span class="highlight">-XX:-UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">32 b</span></code></div>
 <div class="floating-box2"><code><span class="highlight">40 b</span></code></div>
+<div class="clear"></div>
+
+<div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
+  F first;
+  S second;
+}</code></pre></div>
+<div class="floating-box"><pre><code class="java">class Pair2&lt;F, S&gt; {
+  F first;
+  S second;
+  int hashCode;
+}</code></pre></div><div class="clear"></div>
+
+## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol2}
+
+<div class="line"><code>-XX:-UseCompressedOops</code></div>
+<div class="floating-box2"><code>32 b</code></div>
+<div class="floating-box2"><code>40 b</code></div>
 <div class="clear"></div>
 
 <div class="floating-box"><pre><code class="java">class Pair&lt;F, S&gt; {
@@ -744,18 +779,6 @@ freeMemory / vm.sizeOf( new Object() )
 <br/>
 <code>= <span class="huge">4_194_304</span></code> <br/>
 уникальных значений</div>
-
-## Граница коллизий - Результаты{.IdentityHashCodeCollisionResults}
-<pre>
-после 1,331,460 аллокаций:
-hash code collision at 0x3055A9<span class="huuge highlight">9</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">A</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">B</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">C</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">D</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">E</span>0
-hash code collision at 0x3055A9<span class="huuge highlight">F</span>0
-</pre>
 
 # hashCode → address → <br/> <span style="margin-left:200px;">→ memory allocation</span>
 
