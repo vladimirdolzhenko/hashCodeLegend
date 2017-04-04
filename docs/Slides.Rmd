@@ -486,7 +486,7 @@ This is typically implemented by converting the <span class="highlight">internal
 
 # &nbsp; {.shipilev}
 
-<div class="center">![](images/shipilёv-unsafe.jpg)</div>
+<div class="center">![](images/shipilёv-unsafe_.jpg)</div>
 
 ## Java Object Layout {.jol}
 
@@ -966,8 +966,8 @@ ggplot(data=df, mapping = aes(x = address, y = index, group=thread, colour=threa
     title="количество объектов",
     x = "адреса объектов",
     y = "") +
-  geom_vline(xintercept = 809203744) +
-  geom_hline(yintercept = 890552) +
+  geom_vline(xintercept = 809203744, linetype = "dashed") +
+  geom_hline(yintercept = 890552, linetype = "dashed") +
   scale_shape_manual(values=c("thread-0"=17, "thread-1"=19, "thread-2"=15, "thread-3"=9))+
   scale_y_continuous(breaks=c(200000,400000,600000,800000,1000000), labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
   scale_x_continuous(breaks=c(min_address, min_address + 32 * 1024 * 1024, min_address + 64 * 1024 * 1024), labels = function(n){ifelse(n == min_address, base::sprintf("base"), base::sprintf("+ %d MB", as.integer((n - min_address) / 1024/1024)))}, expand = c(0.2, 1000)) +
