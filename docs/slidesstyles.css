@@ -33,6 +33,7 @@
 
 .title-slide a {
     color: #909090 !important;
+    border-bottom: none !important;
 }
 
 .title-slide a:hover {

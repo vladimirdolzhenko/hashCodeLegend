@@ -3,8 +3,6 @@ package com;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ObjectMemoryDump.getAddress;
-
 /**
  * Run with <code>-Xms256m -Xmx256m -XX:+UseSerialGC</code>
  * <p>
