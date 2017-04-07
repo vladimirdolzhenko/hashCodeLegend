@@ -78,6 +78,11 @@ task SingleObjectThreadedHashCodeNoTLAB(type:JavaExec) {
     args = ['4']
 }
 
+task BaseHashLoad(type:JavaExec) {
+    main = "com.BaseHashLoad"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task AllocationPerfTest(type:JavaExec) {
     main = "com.AllocationPerfTest"
     classpath = sourceSets.main.runtimeClasspath

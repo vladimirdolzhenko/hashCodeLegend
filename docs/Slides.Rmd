@@ -6,7 +6,7 @@ author:
   email: "vladimir.dolzhenko @ gmail.com"
   company: "IHS Markit"
   twitter: "dolzhenko"
-date: "2017-04-05"
+date: "2017-04-07"
 output:
   ioslides_presentation:
     widescreen: true
@@ -365,15 +365,15 @@ ggplot(data=d, aes(x=size, y=time_sec, group=java, colour=java)) +
 ```{r, out.height="650px", out.width="1000px"}
 df = read.csv(file = "csv/username.csv", header = TRUE)
 
-df78 <- subset(df, java == "java 8" | java == 'java 7')
+df78 <- subset(df, java == "java 8" | java == 'java 7' | java == "base")
 
 d <- transform(df78, time_per_op = time / size, time_msec = time / (10^6))
 
 ggplot(data=d, aes(x=size, y=time_msec, group=java, colour=java)) +
   geom_line(linetype="solid", size=2) +
   geom_point(aes(shape=java),size=6) +
-  scale_color_manual(values=c("java 8"="#1fbec3", "java 7"="#f57670")) +
-  scale_shape_manual(values=c("java 8"=17, "java 7"=19))+
+  scale_color_manual(values=c("java 8"="#1fbec3", "java 7"="#f57670", "base"="#BBBBBB")) +
+  scale_shape_manual(values=c("java 8"=17, "java 7"=19, "base"=18))+
   scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
   scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}) +
   labs(title = "миллисекунды",

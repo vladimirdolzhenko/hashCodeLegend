@@ -97,6 +97,11 @@ rect.focused {
   fill: #080;
 }
 
+rect.highlight {
+  fill: none;
+  stroke:black;
+  stroke-width:1;
+}
 
 rect.unused, rect.used {
   stroke:black;
@@ -181,6 +186,7 @@ text.w {
         <path class="link" d="M0,50 -15,65"/>
         <path class="link" d="M50,50 65,65"/>
         <g transform="translate(-40 70)">
+          <rect class="highlight" height="70" width="70" x="-10" y="-10"/>
           <rect class="arrayKeyItemBlack selected" height="50" width="50" x="0" y="0"/>
           <!-- key1 -->
           <text class="note w" text-anchor="middle" x="25" y="28">username</text>
