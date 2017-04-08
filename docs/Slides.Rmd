@@ -6,7 +6,7 @@ author:
   email: "vladimir.dolzhenko @ gmail.com"
   company: "IHS Markit"
   twitter: "dolzhenko"
-date: "2017-04-07"
+date: "2017-04-10"
 output:
   ioslides_presentation:
     widescreen: true
@@ -26,7 +26,6 @@ $(document).ready(function() {
 </script>
 <div class="footer"></div>
 ```{r setup, include=FALSE}
-library(gdata)
 library(ggplot2)
 
 Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
@@ -138,7 +137,12 @@ assert i1.hashCode() == i2.hashCode(); // <span class="hl">true</span>
 ```
 ```
 
-$$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  $$
+$$ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k} $$
+<br/>
+
+$$ equals \Rightarrow $$ 
+$$ this.property_k == that.property_k , $$
+$$ \forall k \in [0, n] $$
 
 ## String.hashCode() {.stringHashCode}
 
@@ -482,7 +486,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   <span class="hl">int hashCode</span>;
 }</code></pre></div><div style="clear:both"></div>
 
-## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol0}
+## -XX:+UseCompressedOops и heap &lt; 32Gb {.jol0}
 
 <div class="line"><code><span class="highlight">-XX:+UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">24 b</span></code></div>
@@ -499,7 +503,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   int hashCode;
 }</code></pre></div><div class="clear"></div>
 
-## -XX:+UseCompressedOops и heap &lt; 4Gb {.jol2}
+## -XX:+UseCompressedOops и heap &lt; 32Gb {.jol2}
 
 <div class="line"><code>-XX:+UseCompressedOops</code></div>
 <div class="floating-box2"><code>24 b</code></div>
@@ -524,7 +528,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
                      <span class="huuge">object alignment)</span>
 </div></code></pre>
 
-## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol0}
+## -XX:-UseCompressedOops или heap &ge; 32Gb{.jol0}
 
 <div class="line"><code><span class="highlight">-XX:-UseCompressedOops</span></code></div>
 <div class="floating-box2"><code><span class="highlight">32 b</span></code></div>
@@ -541,7 +545,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
   int hashCode;
 }</code></pre></div><div class="clear"></div>
 
-## -XX:-UseCompressedOops или heap &gt; 4Gb{.jol2}
+## -XX:-UseCompressedOops или heap &ge; 32Gb{.jol2}
 
 <div class="line"><code>-XX:-UseCompressedOops</code></div>
 <div class="floating-box2"><code>32 b</code></div>
@@ -1415,5 +1419,5 @@ dump( object );</code></pre>
 ### twitter: [\@dolzhenko](https://twitter.com/dolzhenko)
 
 
-<div class="thanks">спасибо: [\@VladimirSitnikv](https://twitter.com/VladimirSitnikv)  [\@dj_begemot](https://twitter.com/dj_begemot)  [\@AndreiPangin](https://twitter.com/AndreiPangin) [\@gvsmirnov](https://twitter.com/gvsmirnov) [\@i_sopov](https://twitter.com/i_sopov)</div>
+<div class="thanks">спасибо: [\@VladimirSitnikv](https://twitter.com/VladimirSitnikv)  [\@dj_begemot](https://twitter.com/dj_begemot)  [\@AndreiPangin](https://twitter.com/AndreiPangin) [\@gvsmirnov](https://twitter.com/gvsmirnov) [\@i_sopov](https://twitter.com/i_sopov) [\@relgames](https://twitter.com/relgames)</div>
 

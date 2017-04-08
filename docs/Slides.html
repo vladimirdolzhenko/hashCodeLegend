@@ -10,7 +10,7 @@
 
 
 
-  <meta name="date" content="2017-04-07" />
+  <meta name="date" content="2017-04-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,7 +97,7 @@
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <h2 class="presenter" data-config-presenter><!-- populated from slide_config.json --></h2>
       <p class="contact" data-config-contact><!-- populated from slide_config.json --></p>
-            <p class="date">2017-04-07</p>
+            <p class="date">2017-04-10</p>
           </hgroup>
   </slide>
 
@@ -231,7 +231,9 @@ assert i1.hashCode() == i2.hashCode(); // <span class="hl">true</span>
 
 <pre ></pre>
 
-<p>\[ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k}  \]</p>
+<p>\[ hashCode = \sum_{k=0}^{n} {31^{n-k} \cdot property_k} \] <br/></p>
+
+<p>\[ equals \Rightarrow \] \[ this.property_k == that.property_k , \] \[ \forall k \in [0, n] \]</p>
 
 </article></slide><slide class=''><hgroup><h2>String.hashCode()</h2></hgroup><article  id="string.hashcode" class="stringHashCode">
 
@@ -494,7 +496,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div style="clear:both">
 </div>
 
-</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 4Gb</h2></hgroup><article  id="xxusecompressedoops--heap-4gb" class="jol0">
+</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 32Gb</h2></hgroup><article  id="xxusecompressedoops--heap-32gb" class="jol0">
 
 <div class="line">
 <code><span class="highlight">
@@ -527,7 +529,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div class="clear">
 </div>
 
-</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 4Gb</h2></hgroup><article  id="xxusecompressedoops--heap-4gb-1" class="jol2">
+</article></slide><slide class=''><hgroup><h2>-XX:+UseCompressedOops и heap &lt; 32Gb</h2></hgroup><article  id="xxusecompressedoops--heap-32gb-1" class="jol2">
 
 <div class="line">
 <code>-XX:+UseCompressedOops</code></div>
@@ -566,7 +568,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
                      <span class="huuge">object alignment)</span>
 </div></code></pre>
 
-</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap &gt; 4Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-4gb" class="jol0">
+</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap ≥ 32Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-32gb" class="jol0">
 
 <div class="line">
 <code><span class="highlight">
@@ -599,7 +601,7 @@ long size = vm.<span class="hl">sizeOf</span>( theObject );
 <div class="clear">
 </div>
 
-</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap &gt; 4Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-4gb-1" class="jol2">
+</article></slide><slide class=''><hgroup><h2>-XX:-UseCompressedOops или heap ≥ 32Gb</h2></hgroup><article  id="xx-usecompressedoops--heap-32gb-1" class="jol2">
 
 <div class="line">
 <code>-XX:-UseCompressedOops</code></div>
@@ -1299,7 +1301,7 @@ TLAB</span>, не злоупотребляйте <span class="bad">
 <h3>twitter: <a href='https://twitter.com/dolzhenko' title=''>@dolzhenko</a></h3>
 
 <div class="thanks">
-спасибо: <a href='https://twitter.com/VladimirSitnikv' title=''>@VladimirSitnikv</a> <a href='https://twitter.com/dj_begemot' title=''>@dj_begemot</a> <a href='https://twitter.com/AndreiPangin' title=''>@AndreiPangin</a> <a href='https://twitter.com/gvsmirnov' title=''>@gvsmirnov</a> <a href='https://twitter.com/i_sopov' title=''>@i_sopov</a></div></article></slide>
+спасибо: <a href='https://twitter.com/VladimirSitnikv' title=''>@VladimirSitnikv</a> <a href='https://twitter.com/dj_begemot' title=''>@dj_begemot</a> <a href='https://twitter.com/AndreiPangin' title=''>@AndreiPangin</a> <a href='https://twitter.com/gvsmirnov' title=''>@gvsmirnov</a> <a href='https://twitter.com/i_sopov' title=''>@i_sopov</a> <a href='https://twitter.com/relgames' title=''>@relgames</a></div></article></slide>
 
 
   <slide class="backdrop"></slide>

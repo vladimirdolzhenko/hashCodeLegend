@@ -4,15 +4,17 @@
     <bookmark url="jar:///Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home/lib/src.zip!/java.base/java/util/HashMap.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c69016fa-1cec-45fa-9cda-5f0954ecb6ab" name="Default" comment="v.4.5">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demos/src/main/java/com/BaseHashLoad.java" />
+    <list default="true" id="c69016fa-1cec-45fa-9cda-5f0954ecb6ab" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/images/shipilёv-unsafe_.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/slides_en.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/script.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/slides.pdf" afterPath="$PROJECT_DIR$/docs/slides.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demos/build.gradle" afterPath="$PROJECT_DIR$/demos/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Slides.Rmd" afterPath="$PROJECT_DIR$/docs/Slides.Rmd" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Slides.html" afterPath="$PROJECT_DIR$/docs/Slides.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/csv/username.csv" afterPath="$PROJECT_DIR$/docs/csv/username.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/images/hashtable-collisions-rbtree.svg" afterPath="$PROJECT_DIR$/docs/images/hashtable-collisions-rbtree.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/script.md" afterPath="$PROJECT_DIR$/docs/script.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Slides_en.Rmd" afterPath="$PROJECT_DIR$/docs/Slides_en.Rmd" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Slides_en.html" afterPath="$PROJECT_DIR$/docs/Slides_en.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/slidesstyles.css" afterPath="$PROJECT_DIR$/docs/slidesstyles.css" />
     </list>
     <list id="597901a4-ed48-467c-a661-8f7cdffc24b8" name="aux" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -76,7 +78,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ObjectReallocation.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ObjectReallocation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectReallocation.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-8">
@@ -86,51 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseHashLoad.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/BaseHashLoad.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1062">
-              <caret line="59" column="26" lean-forward="false" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demos/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="74" column="29" lean-forward="false" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsernameCollisionLoadTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demo6/src/main/java/com/UsernameCollisionLoadTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="107" column="5" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="107" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Scanner.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/src.zip!/java/util/Scanner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="610" column="11" lean-forward="false" selection-start-line="610" selection-start-column="11" selection-end-line="610" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ObjectHashReallocation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectHashReallocation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="5" column="3" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+            <state relative-caret-position="149">
+              <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -183,7 +145,7 @@
   <component name="Git.Rebase.Settings">
     <option name="SHOW_TAGS" value="true" />
     <option name="SHOW_REMOTE_BRANCHES" value="true" />
-    <option name="ONTO" value="refs/tags/dev" />
+    <option name="ONTO" value="refs/tags/init" />
   </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
@@ -198,6 +160,7 @@
     </option>
     <push-targets>
       <push-target-info target-remote="origin" target-branch="master" repo="$PROJECT_DIR$" source="master" />
+      <push-target-info target-remote="origin" target-branch="master" repo="$PROJECT_DIR$" source="develop" />
     </push-targets>
   </component>
   <component name="GradleExtensions">
@@ -1141,10 +1104,11 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$/../gflogger" value="10322948876000" />
-        <entry key="$PROJECT_DIR$" value="5956969035000" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="1693020963" />
+        <entry key="$PROJECT_DIR$" value="5966530538000" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2696854952" />
         <entry key="$PROJECT_DIR$/demo6/build.gradle" value="458896892" />
-        <entry key="$PROJECT_DIR$/demos/build.gradle" value="2193202439" />
+        <entry key="$PROJECT_DIR$/demos/build.gradle" value="935413479" />
+        <entry key="$PROJECT_DIR$/settings.gradle" value="689330080" />
         <entry key="$PROJECT_DIR$/../notnullprocessor" value="1473879883000" />
         <entry key="$PROJECT_DIR$/../simple" value="1475609528000" />
       </map>
@@ -1272,7 +1236,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docs/images/header-address.svg" />
         <option value="$PROJECT_DIR$/docs/images/header-biasedlocking.svg" />
         <option value="$PROJECT_DIR$/docs/images/header-biasedlocking0.svg" />
         <option value="$PROJECT_DIR$/docs/images/header-biasedlocking1.svg" />
@@ -1288,7 +1251,6 @@
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/ObjectMemoryDump.java" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/UnsafeDemo.java" />
-        <option value="$PROJECT_DIR$/demos/src/main/java/com/ObjectReallocation.java" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/ObjectHashReallocation.java" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/MallocPerfTest.java" />
         <option value="$PROJECT_DIR$/docs/csv/UseTLAB.csv" />
@@ -1312,7 +1274,6 @@
         <option value="$PROJECT_DIR$/demos/src/main/java/com/ThreadedIdentityHashCodeCollision.java" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/T.java" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/IdentityHashCodeCollision.java" />
-        <option value="$PROJECT_DIR$/docs/Slides.Rmd" />
         <option value="$PROJECT_DIR$/docs/images/hashtable-collisions-chaining_en.svg" />
         <option value="$PROJECT_DIR$/docs/images/hashtable-collisions-rbtree_en.svg" />
         <option value="$PROJECT_DIR$/docs/Slides_en.Rmd" />
@@ -1323,6 +1284,9 @@
         <option value="$PROJECT_DIR$/demos/src/main/java/com/ObjectSize.java" />
         <option value="$PROJECT_DIR$/demos/build.gradle" />
         <option value="$PROJECT_DIR$/demos/src/main/java/com/BaseHashLoad.java" />
+        <option value="$PROJECT_DIR$/demos/src/main/java/com/ObjectReallocation.java" />
+        <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/docs/Slides.Rmd" />
       </list>
     </option>
   </component>
@@ -1957,50 +1921,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hashCodeLegend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hashCodeLegend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo6" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hashCodeLegend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hashCodeLegend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo6" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -2049,13 +1969,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.BaseHashLoad">
-    <configuration default="false" name="BaseHashLoad" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.ObjectSize +COMPRESS 32Gb">
+    <configuration default="false" name="BaseHashLoad" type="Application" factoryName="Application" folderName="extra" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.BaseHashLoad" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -2576,6 +2496,36 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="ObjectSize +COMPRESS 32Gb" type="Application" factoryName="Application" folderName="extra">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="com.ObjectSize" />
+      <option name="VM_PARAMETERS" value=" -Xms32G -Xmx32G -XX:+UseCompressedOops" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="demos_main" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="ObjectSize +COMPRESS 30Gb" type="Application" factoryName="Application" folderName="extra">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="com.ObjectSize" />
+      <option name="VM_PARAMETERS" value="-Xms30G -Xmx30G -XX:+UseCompressedOops " />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="demos_main" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="SingleObjectThreadedHashCode 4" type="Application" factoryName="Application" folderName="distribution">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.SingleObjectThreadedHashCode" />
@@ -2741,7 +2691,7 @@
       <envs />
       <method />
     </configuration>
-    <list size="35">
+    <list size="37">
       <item index="0" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 10" />
       <item index="1" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 10  -TLAB" />
       <item index="2" class="java.lang.String" itemvalue="Application.MemoryDumper default" />
@@ -2765,18 +2715,20 @@
       <item index="20" class="java.lang.String" itemvalue="Application.UnsafeDemo" />
       <item index="21" class="java.lang.String" itemvalue="Application.ObjectSize -COMPRESS" />
       <item index="22" class="java.lang.String" itemvalue="Application.ObjectSize +COMPRESS" />
-      <item index="23" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 4" />
-      <item index="24" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 4  -TLAB " />
-      <item index="25" class="java.lang.String" itemvalue="Application.ThreadedIdentityHashCodeCollision T=4 CNT=20 " />
-      <item index="26" class="java.lang.String" itemvalue="Application.ThreadedIdentityHashCodeCollision T=4 CNT=20 -TLAB" />
-      <item index="27" class="java.lang.String" itemvalue="Application.ObjectReallocation" />
-      <item index="28" class="java.lang.String" itemvalue="Application.ObjectReallocation (gc)" />
-      <item index="29" class="java.lang.String" itemvalue="Application.ObjectReallocation (epsilon)" />
-      <item index="30" class="java.lang.String" itemvalue="Application.ObjectHashReallocation" />
-      <item index="31" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision (epsilon)" />
-      <item index="32" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision CNT=1" />
-      <item index="33" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision CNT=10" />
-      <item index="34" class="java.lang.String" itemvalue="Application.BaseHashLoad" />
+      <item index="23" class="java.lang.String" itemvalue="Application.ObjectSize +COMPRESS 32Gb" />
+      <item index="24" class="java.lang.String" itemvalue="Application.ObjectSize +COMPRESS 30Gb" />
+      <item index="25" class="java.lang.String" itemvalue="Application.BaseHashLoad" />
+      <item index="26" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 4" />
+      <item index="27" class="java.lang.String" itemvalue="Application.SingleObjectThreadedHashCode 4  -TLAB " />
+      <item index="28" class="java.lang.String" itemvalue="Application.ThreadedIdentityHashCodeCollision T=4 CNT=20 " />
+      <item index="29" class="java.lang.String" itemvalue="Application.ThreadedIdentityHashCodeCollision T=4 CNT=20 -TLAB" />
+      <item index="30" class="java.lang.String" itemvalue="Application.ObjectReallocation" />
+      <item index="31" class="java.lang.String" itemvalue="Application.ObjectReallocation (gc)" />
+      <item index="32" class="java.lang.String" itemvalue="Application.ObjectReallocation (epsilon)" />
+      <item index="33" class="java.lang.String" itemvalue="Application.ObjectHashReallocation" />
+      <item index="34" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision (epsilon)" />
+      <item index="35" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision CNT=1" />
+      <item index="36" class="java.lang.String" itemvalue="Application.IdentityHashCodeCollision CNT=10" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -2835,20 +2787,6 @@
       <workItem from="1487163473264" duration="614000" />
       <workItem from="1487879918363" duration="694000" />
       <workItem from="1488008697757" duration="22564000" />
-    </task>
-    <task id="LOCAL-00025" summary="jbaruch approved!">
-      <created>1483821579753</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1483821579753</updated>
-    </task>
-    <task id="LOCAL-00026" summary="jbaruch approved!">
-      <created>1483873404281</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1483873404281</updated>
     </task>
     <task id="LOCAL-00027" summary="jbaruch approved!">
       <created>1483903753460</created>
@@ -3179,11 +3117,25 @@
       <option name="project" value="LOCAL" />
       <updated>1489152187376</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="v.4.6.10">
+      <created>1491543211284</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1491543211285</updated>
+    </task>
+    <task id="LOCAL-00075" summary="v.4.6.10 _ en">
+      <created>1491806058582</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1491806058582</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168545000" />
+    <option name="totallyTimeSpent" value="171349000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -3201,17 +3153,17 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42917848" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29461756" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3186969" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32577905" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35959885" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35888252" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879657" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46033993" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3331,7 +3283,9 @@
     <MESSAGE value="+ eng version" />
     <MESSAGE value="v.4.4" />
     <MESSAGE value="v.4.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="v.4.5" />
+    <MESSAGE value="v.4.6.10" />
+    <MESSAGE value="v.4.6.10 _ en" />
+    <option name="LAST_COMMIT_MESSAGE" value="v.4.6.10 _ en" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3348,104 +3302,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/demo6/src/main/java/com/UsernameCollisionStrLoadTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-185">
-          <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/109c5be93362e6e651e417c51d1863477a22969c/trove4j-3.0.3-sources.jar!/gnu/trove/map/hash/TObjectByteHashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="55" column="49" lean-forward="false" selection-start-line="55" selection-start-column="49" selection-end-line="55" selection-end-column="49" />
-          <folding>
-            <element signature="e#6684#6685#0" expanded="false" />
-            <element signature="e#6721#6722#0" expanded="false" />
-            <element signature="e#6795#6796#0" expanded="false" />
-            <element signature="e#6833#6834#0" expanded="false" />
-            <element signature="e#9325#9326#0" expanded="false" />
-            <element signature="e#9373#9374#0" expanded="false" />
-            <element signature="e#9643#9644#0" expanded="false" />
-            <element signature="e#9679#9680#0" expanded="false" />
-            <element signature="e#10707#10708#0" expanded="false" />
-            <element signature="e#10756#10757#0" expanded="false" />
-            <element signature="e#11755#11756#0" expanded="false" />
-            <element signature="e#11816#11817#0" expanded="false" />
-            <element signature="e#13264#13265#0" expanded="false" />
-            <element signature="e#13307#13308#0" expanded="false" />
-            <element signature="e#18000#18001#0" expanded="false" />
-            <element signature="e#18081#18082#0" expanded="false" />
-            <element signature="e#18130#18131#0" expanded="false" />
-            <element signature="e#18216#18217#0" expanded="false" />
-            <element signature="e#18267#18268#0" expanded="false" />
-            <element signature="e#18337#18338#0" expanded="false" />
-            <element signature="e#18663#18664#0" expanded="false" />
-            <element signature="e#18720#18721#0" expanded="false" />
-            <element signature="e#18806#18807#0" expanded="false" />
-            <element signature="e#18859#18860#0" expanded="false" />
-            <element signature="e#18890#18891#0" expanded="false" />
-            <element signature="e#18945#18946#0" expanded="false" />
-            <element signature="e#18984#18985#0" expanded="false" />
-            <element signature="e#19049#19050#0" expanded="false" />
-            <element signature="e#19078#19079#0" expanded="false" />
-            <element signature="e#19139#19140#0" expanded="false" />
-            <element signature="e#20008#20009#0" expanded="false" />
-            <element signature="e#20072#20073#0" expanded="false" />
-            <element signature="e#20143#20144#0" expanded="false" />
-            <element signature="e#20208#20209#0" expanded="false" />
-            <element signature="e#20774#20775#0" expanded="false" />
-            <element signature="e#20839#20840#0" expanded="false" />
-            <element signature="e#20909#20910#0" expanded="false" />
-            <element signature="e#20954#20955#0" expanded="false" />
-            <element signature="e#21012#21013#0" expanded="false" />
-            <element signature="e#21048#21049#0" expanded="false" />
-            <element signature="e#21113#21114#0" expanded="false" />
-            <element signature="e#21154#21155#0" expanded="false" />
-            <element signature="e#21232#21233#0" expanded="false" />
-            <element signature="e#21309#21310#0" expanded="false" />
-            <element signature="e#21373#21374#0" expanded="false" />
-            <element signature="e#21436#21437#0" expanded="false" />
-            <element signature="e#21513#21514#0" expanded="false" />
-            <element signature="e#21582#21583#0" expanded="false" />
-            <element signature="e#21626#21627#0" expanded="false" />
-            <element signature="e#21691#21692#0" expanded="false" />
-            <element signature="e#23415#23416#0" expanded="false" />
-            <element signature="e#23480#23481#0" expanded="false" />
-            <element signature="e#23572#23573#0" expanded="false" />
-            <element signature="e#23637#23638#0" expanded="false" />
-            <element signature="e#23715#23716#0" expanded="false" />
-            <element signature="e#23780#23781#0" expanded="false" />
-            <element signature="e#26718#26719#0" expanded="false" />
-            <element signature="e#26773#26774#0" expanded="false" />
-            <element signature="e#26864#26865#0" expanded="false" />
-            <element signature="e#26944#26945#0" expanded="false" />
-            <element signature="e#28260#28261#0" expanded="false" />
-            <element signature="e#28315#28316#0" expanded="false" />
-            <element signature="e#30893#30894#0" expanded="false" />
-            <element signature="e#30934#30935#0" expanded="false" />
-            <element signature="e#31030#31031#0" expanded="false" />
-            <element signature="e#31084#31085#0" expanded="false" />
-            <element signature="e#31144#31145#0" expanded="false" />
-            <element signature="e#31195#31196#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/109c5be93362e6e651e417c51d1863477a22969c/trove4j-3.0.3-sources.jar!/gnu/trove/impl/hash/TObjectHash.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="42" column="47" lean-forward="false" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/109c5be93362e6e651e417c51d1863477a22969c/trove4j-3.0.3-sources.jar!/gnu/trove/impl/HashFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/109c5be93362e6e651e417c51d1863477a22969c/trove4j-3.0.3-sources.jar!/gnu/trove/impl/hash/THash.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -3464,7 +3320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
           <caret line="256" column="38" lean-forward="false" selection-start-line="256" selection-start-column="21" selection-end-line="256" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3512,7 +3367,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="256" column="38" lean-forward="false" selection-start-line="256" selection-start-column="21" selection-end-line="256" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3520,7 +3374,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="33" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3528,7 +3381,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3550,7 +3402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3641,7 +3492,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="1463" column="7" lean-forward="true" selection-start-line="1451" selection-start-column="4" selection-end-line="1463" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3674,13 +3524,6 @@
             <element signature="e#1282#1283#0" expanded="false" />
             <element signature="e#1317#1318#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/BiasedLockingDump.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -3719,14 +3562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/Slides.Rmd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/IdentityHashCodeCollision.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -3741,19 +3576,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectHashReallocation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="5" column="3" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/src.zip!/java/util/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="610" column="11" lean-forward="false" selection-start-line="610" selection-start-column="11" selection-end-line="610" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3773,18 +3599,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectReallocation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/BaseHashLoad.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1062">
           <caret line="59" column="26" lean-forward="false" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectHashReallocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/BiasedLockingDump.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="61" lean-forward="false" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/script.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/Slides.Rmd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/src/main/java/com/ObjectReallocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
           <folding />
         </state>
       </provider>

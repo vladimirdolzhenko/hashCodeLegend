@@ -1,10 +1,9 @@
 pos,alloc,value,error
-10,single-threaded,2.836,0.285
-20,java,9.878,2.676
+10,single-threaded,3.574,0.085
+20,java,6.350,0.022
+25,tlab,8.083,0.143
 28,epsilon,75.289,23.667
-30,sync,186.672,21.195
-40,cas,74.721,0.192
-50,tlab,8.506,1.849
-55,javaHashCode,60.270,12.318
-57,readHashCode,7.296,0.316
-
+30,sync,175.003,0.348
+40,cas,96.696,1.466
+55,javaHashCode,79.895,0.378
+57,readHashCode,3.938,0.085

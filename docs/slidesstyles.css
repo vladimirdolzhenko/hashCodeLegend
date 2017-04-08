@@ -329,7 +329,7 @@ code > span.highlight {
     font-size: 1.5em !important;
     line-height: 1.2em !important;
 }
-.heapSize  > pre code {
+.heapSize > pre code {
     font-size: 1.3em !important;
     line-height: 1.3em !important;
 }

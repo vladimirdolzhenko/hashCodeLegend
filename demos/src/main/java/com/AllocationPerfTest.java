@@ -18,11 +18,11 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 /**
  * -XX:+UseTLAB
  * Benchmark                    Mode  Cnt  Score   Error  Units
- * AllocationPerfTest.allocate  avgt    5  6.361 ± 0.058  ns/op
+ * AllocationPerfTest.allocate  avgt    5  6.392 ± 0.078  ns/op
  * <p>
  * -XX:-UseTLAB
  * Benchmark                    Mode  Cnt  Score   Error  Units
- * AllocationPerfTest.allocate  avgt    5  306.099 ± 17.275  ns/op
+ * AllocationPerfTest.allocate  avgt    5  432.014 ± 9.231  ns/op
  *
  * @author vladimir.dolzhenko
  * @since 2016-11-30

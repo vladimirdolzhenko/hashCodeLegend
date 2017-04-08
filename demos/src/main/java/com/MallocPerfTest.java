@@ -2,12 +2,13 @@ package com;
 
 /*
 Benchmark                             Mode  Cnt    Score    Error  Units
-MallocPerfTest.casAllocator           avgt   10   74.721 ±  0.192  ns/op
-MallocPerfTest.javaAllocation         avgt   10    9.878 ±  2.676  ns/op
-MallocPerfTest.javaObjectAndHashCode  avgt   10   60.270 ± 12.318  ns/op
-MallocPerfTest.simpleAllocator        avgt   10    2.836 ±  0.285  ns/op
-MallocPerfTest.syncAllocator          avgt   10  186.672 ± 21.195  ns/op
-MallocPerfTest.tlabAllocator          avgt   10    8.506 ±  1.849  ns/op
+MallocPerfTest.casAllocator           avgt    5  118.679 ±  2.456  ns/op
+MallocPerfTest.javaAllocation         avgt    5    6.350 ±  0.022  ns/op
+MallocPerfTest.javaObjectAndHashCode  avgt    5   80.181 ±  1.759  ns/op
+MallocPerfTest.readHashCode           avgt    5    4.094 ±  0.137  ns/op
+MallocPerfTest.simpleAllocator        avgt    5    3.553 ±  0.125  ns/op
+MallocPerfTest.syncAllocator          avgt    5  160.631 ± 24.677  ns/op
+MallocPerfTest.tlabAllocator          avgt    5    8.083 ±  0.143  ns/op
 */
 
 import java.util.concurrent.TimeUnit;
@@ -31,9 +32,9 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Fork(1)
-@Warmup(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 10, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
+@Fork(4)
+@Warmup(iterations = 2, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 5000, timeUnit = TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 public class MallocPerfTest {
 
@@ -118,23 +119,23 @@ public class MallocPerfTest {
         theObject = new Object();
     }
 
-    @Benchmark
-    @Threads(1)
-    public long simpleAllocator() {
-        return simpleAllocator.malloc(16);
-    }
+//    @Benchmark
+//    @Threads(1)
+//    public long simpleAllocator() {
+//        return simpleAllocator.malloc(16);
+//    }
 
-    @Benchmark
-    @Threads(4)
-    public long syncAllocator() {
-        return syncAllocator.malloc(16);
-    }
+//    @Benchmark
+//    @Threads(4)
+//    public long syncAllocator() {
+//        return syncAllocator.malloc(16);
+//    }
 
-    @Benchmark
-    @Threads(4)
-    public long casAllocator() {
-        return casAllocator.malloc(16);
-    }
+//    @Benchmark
+//    @Threads(4)
+//    public long casAllocator() {
+//        return casAllocator.malloc(16);
+//    }
 
     @Benchmark
     @Threads(4)
@@ -148,19 +149,19 @@ public class MallocPerfTest {
         return new Object();
     }
 
-    @Benchmark
-    @Threads(4)
-    public Object javaObjectAndHashCode() {
-        Object object = new Object();
-        object.hashCode();
-        return object;
-    }
-
-    @Benchmark
-    @Threads(4)
-    public Object readHashCode() {
-        return theObject.hashCode();
-    }
+//    @Benchmark
+//    @Threads(4)
+//    public Object javaObjectAndHashCode() {
+//        Object object = new Object();
+//        object.hashCode();
+//        return object;
+//    }
+//
+//    @Benchmark
+//    @Threads(4)
+//    public int readHashCode() {
+//        return theObject.hashCode();
+//    }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()

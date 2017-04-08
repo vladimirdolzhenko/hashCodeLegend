@@ -1,0 +1,1471 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAzUABAAAAAAFNgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABbAAAABwAAAAcZMzaOEdERUYAAAGIAAAAHQAAACAAOQAET1MvMgAAAagAAAA+AAAAYHqhde9jbWFwAAAB6AAAAFIAAAFa4azkLWN2dCAAAAI8AAAAKAAAACgFgwioZnBnbQAAAmQAAAGxAAACZVO0L6dnYXNwAAAEGAAAAAgAAAAIAAAAEGdseWYAAAQgAAAFDgAACMz7eroHaGVhZAAACTAAAAAwAAAANgWEOEloaGVhAAAJYAAAAB0AAAAkDGEGa2htdHgAAAmAAAAAEwAAADBEgAAQbG9jYQAACZQAAAAaAAAAGgsICJBtYXhwAAAJsAAAACAAAAAgASgBD25hbWUAAAnQAAACZwAABOD4no+3cG9zdAAADDgAAABsAAAAmF+yXM9wcmVwAAAMpAAAAC4AAAAusPIrFAAAAAEAAAAAyYlvMQAAAADLVHQgAAAAAM/u9uZ4nGNgZGBg4ANiCQYQYGJgBEJuIGYB8xgABMMAPgAAAHicY2Bm42OcwMDKwMLSw2LMwMDQBqGZihmiwHycoKCyqJjB4YPDh4NsDP+BfNb3DIuAFCOSEgUGRgAKDgt4AAB4nGNgYGBmgGAZBkYGEAgB8hjBfBYGCyDNxcDBwMTA9MHhQ9SHrA8H//9nYACyQyFs/sP86/kX8HtB9UIBIxsDXICRCUgwMaACRoZhDwA3fxKSAAAAAAHyAHABJQB/AIEAdAFGAOsBIwC/ALgAxACGAGYAugBNACcA/wCIeJxdUbtOW0EQ3Q0PA4HE2CA52hSzmZDGe6EFCcTVjWJkO4XlCGk3cpGLcQEfQIFEDdqvGaChpEibBiEXSHxCPiESM2uIojQ7O7NzzpkzS8qRqnfpa89T5ySQwt0GzTb9Tki1swD3pOvrjYy0gwdabGb0ynX7/gsGm9GUO2oA5T1vKQ8ZTTuBWrSn/tH8Cob7/B/zOxi0NNP01DoJ6SEE5ptxS4PvGc26yw/6gtXhYjAwpJim4i4/plL+tzTnasuwtZHRvIMzEfnJNEBTa20Emv7UIdXzcRRLkMumsTaYmLL+JBPBhcl0VVO1zPjawV2ys+hggyrNgQfYw1Z5DB4ODyYU0rckyiwNEfZiq8QIEZMcCjnl3Mn+pED5SBLGvElKO+OGtQbGkdfAoDZPs/88m01tbx3C+FkcwXe/GUs6+MiG2hgRYjtiKYAJREJGVfmGGs+9LAbkUvvPQJSA5fGPf50ItO7YRDyXtXUOMVYIen7b3PLLirtWuc6LQndvqmqo0inN+17OvscDnh4Lw0FjwZvP+/5Kgfo8LK40aA4EQ3o3ev+iteqIq7wXPrIn07+xWgAAAAABAAH//wAPeJyFlctvG1UUh+/12DPN1B7P3JnYjj2Ox4/MuDHxJH5N3UdaEUQLqBIkfQQioJWQ6AMEQkIqsPGCPwA1otuWSmTBhjtps2ADWbJg3EpIXbGouqSbCraJw7kzNo2dRN1cnXN1ZvT7zuuiMEI7ncizyA0URofRBJpCdbQuIFShYY+GZRrxMDVtih5TwQPHtXDFFSIKoWIbuREBjLH27Ny4MsbVx+uOJThavebgVrNRLAiYx06rXsvhxLgWx9xpfHdrs/ekc2Pl2cpPCVEITQpwbj8VQhfXSq2m+Wxqaq2D73Kne5e3NjHqQNj3CRYlJlgUl/jRNP+2Gs2pNYRQiOnmUaQDqm30KqKiTTWPWjboxnTWpvgxjXo0KrtZXAHt7hwIz0YVcj88JnKlJKi3NPAwLyDwZudSmJSMMJFDYaOkaol6XtESx3Gt1VTytdZJ3DCLeaVhVnCBH1fycHTxFXwPX+l2e3d6H/TufGGmMTLTnbSJUdo00zuBswMO/nl3YLeL/wnu9/limCuD3vC54h5NBVz6Li414AI8Vx3iiosKcQXUbrvhFFiYb++HN4DaF4XzFW0fIN4XDWJ3a3XQoq9V8WiyRmdsatV9xUcHims1JloH0YUa090G3Tro3mC6c01f+YwCPquINr1PTaCP6rVTOOmf0GE2dBc7zWIhji3/5MchSuBHgDbU99RMWt3YUNMZMJmx92YP6NsHx/5/M1yvInpnkIOM3Z8fA3JQ2lW1RFC1KaBPDFXNAHYYvGy73aYZZZ3HifbeuiVZCpwA3oQBs0wGPYJbJfg60xrKEbKiNtTe1adwrpBRwlAuQ3q3VRaX0QmQ9a49BTSCuF1MLfQ6+tinOubRBZuWPNoMevGMT+V41KitO1is3D/tpMcq1JHZqDHGs8DoYGDkxJgKjHROeTCmhZvzPm9pod+ltKm4PN7Dyvvldlpsg8D+4AUJZ3F/JBstZz7cbFRxsaAGV6yX/dkcycWf8eS3QlQea+YLjdm3yrOnrhFpUyKVvFE4lpv4bO3Svx/6F/4xmiDu/RT5iI++lko18mY1oX+5UGKR6kmVjM/Zb76yfHtxy+h/SyQ0lLdpdKy/lWB6szatetQJ8nZ80A2Qt6ift6gJeavU3BO4gtxs/KCtNPVibCtYCWY3SIlSBPKXZALXiIR9oZeJ1AuMyxLpHIy/yO7vSiSE+kZvk0ihJ30HgHfzZtEMmvV58x6dtqns0XTAW7Vdm4HJ04OCp/crOO7rd9SGxQAE/mVA9xRN+kVSMRFF6S9JFGUtthkjBA5tFCWc2l4V43Ex9GmUP3SI37Jjmir9KqlaDJ4S4JB3vuM/jzyH1+8MuoZ+QGzfnvPoJb96cZlWjMcKLfgDwB7E634JTY+asjsPzS5CiVnEWY+KsrsIN5rn3mAPjqmQBxGjcGKB9f9ZxY3mYC2L85CJ2FXIxKKyHk+dg0FHbuEc7D5NzWUX32WxFcWNGRAbvwSx0RmIXVDuYySafluQBmzA/ssqJAMLnli+WIC90Gw4lm85wcp0qjArEDPJJV/sSx4P9ungTpgMw5gVC1XO4uULq0s3v1rqLi0vX/z65vlH50f8T/RHmSPTk5xxWBWOluMT6WiOy+tdvWxlV/XQb3o3c6Ssr+r6I708GsX9/nzp1tKFh0s3v7m4vAy/Hnb/KMOvc1wump6Il48K6mGDy02X9Yd65pa+nQIjk76lWxCkG8NBCP0HQS9IpAAAeJxjYGRgYGBhcCrq214Qz2/zlUGenQEEzr/77oug/zewFbB+AHI5GJhAogBwKQ0qeJxjYGRgYH3/P46BgZ0BBNgKGBgZUAEPAE/7At0AAAB4nGNngAB2IGYjhBsYBAAIYADVAAAAAAAAAAAAAFwAyAEeAaACCgKmAx4DggRmAAAAAQAAAAwAagAEAAAAAAACAAEAAgAWAAABAAChAAAAAHiclZI7bxQxFIWPd/JkUYQChEhIyAVKgdBMskm1QkKrRETpQiLRUczueB/K7HhlOxttg8LvoKPgP9DxFxANDR0tHRWi4NjrPIBEgh1p/dm+vufcawNYFWsQmP6e4jSyQB2fI9cwj++RE9wTjyPP4LYoI89iWbyLPIe6+Bh5Hs9rryMv4GbtW+RF3EhuRa7jbrIbeQkPkjdUETOLnL0Kip4FVvAhco1RXyMnSPEz8gzWxE7kWTwUp5HnsCLeR57HW/El8gJWa58iL+JO7UfkOh4l9yMv4UnyEtvQGGECgwF66MNBooF1bGCL1ELB/TYU+ZBRlvsKQ44Se6jQ4a7hef+fh72Crv25kp+8lNWGmeKoOI5jJLb1aGIGvb6TjfWNLdkqdFvJw4l1amjlXtXRZqRN7lSRylZZyhBqpVFWmTEXgWfUrpi/hZOQXdOd4rKuXOtEWT3k5IArPRzTUU5tHKjecZkTpnVbNOnt6jzN8240GD4xtikvZW56043rPMg/dS+dlOceXoR+WPbJ55Dsekq1lJpnypsMUsYOdCW30o103Ytu/lvh+5RWFLfBjm9/N8hJntPhvx92rnoE/kyHdGasGy754kw36vsVf/lFeBi+0COu+cfgQr42G3CRpeLoZ53gmfe3X6rcKt5oVxnptHR9JS8ehVUd5wvvahN2uqxOOpMXapibI5k7Zwbt4xBSaTfoKBufhAnO/uqNcfK8OTs0OQ6l7JIqFjDhYj5WcjevCnI/1DDiI8j4ndWb/5YzDZWh79yomWXeXj7Nnw70/2TIeFPTrlSh89k1ObOSRVZWZfgF0r/zJQB4nG2JUQuCQBCEd07TTg36fb2IyBaLd3vWaUh/vmSJnvpgmG8YcmS8X3Shf3R7QA4OBUocUKHGER5NNbOOEvwc1txnuWkTRb/aPjimJ5vXabI+3VfOiyS15UWvyezM2xiGOPyuMohOH8O8JiO4Af+FsAGNAEuwCFBYsQEBjlmxRgYrWCGwEFlLsBRSWCGwgFkdsAYrXFhZsBQrAAA=) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+  color:black !important;
+  background-color: lavender;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: lightgreen;
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>script</title></head><body><article class="markdown-body"><p><em>2017-04-08</em></p>
+<h1 id="preparation"><a name="user-content-preparation" href="#preparation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>preparation</h1>
+<ul>
+<li>Idea<ul>
+<li>default (белая) тема</li>
+<li>отключить show whitespaces</li>
+<li>presentation mode</li>
+</ul>
+</li>
+<li>MacOsX settings<ul>
+<li>Dock - automatically hide and show Dock</li>
+</ul>
+</li>
+<li>Выключить все IM!</li>
+</ul>
+<h1 id="vm-hashcode"><a name="user-content-vm-hashcode" href="#vm-hashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Внутрь VM сквозь замочную скважину hashCode</h1>
+<p><code>Меня зовут Владимир и мы будем сквозь замочную скважину hashcode заглядывать внутрь JVM. Более точнее - OpenJDK и OracleJDK</code>, как самые доступные и самые распострённые реализации java vm.</p>
+<h1 id="no-warranty"><a name="user-content-no-warranty" href="#no-warranty" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>no warranty</h1>
+<p><img align="absmiddle" alt=":godmode:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/godmode.png" title=":godmode:" width="20px" /> <img align="absmiddle" alt=":godmode:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/godmode.png" title=":godmode:" width="20px" />  <strong><code>всё, что вы здесь услышите - это моя личная точка зрения, которая может быть ошибочна.</code></strong></p>
+<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>план</h1>
+<blockquote>
+<ul>
+<li>в начале вспомним теорию, а именно ассоциативные массивы и как они устроены.</li>
+<li>расскажу о классическом способе вычисления hashcode</li>
+<li>и как можно используя эти знания устроить DoS атаку, и как вылечить её</li>
+<li>и затем окунёмся в детали виртуальной машины - разрушим старый миф, будут и потроха - сборщик мусора, и аллокация, и немного баттлов - конечно же при этом мне нужны будут ваши голоса - не стесняйтесь поднимать руки</li>
+<li>естественно мне придётся использовать джентельменский набор инженера - коснёмся и JMH, и Java Object Layout</li>
+<li>и на последок ещё один трюк виртуальной машины и как hashcode может всё изменить</li>
+</ul>
+</blockquote>
+<h1 id="dictionary-map"><a name="user-content-dictionary-map" href="#dictionary-map" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Ассоциативный массив / Dictionary / Map</h1>
+<p>ассоциативный массив - что это такое? <code>Это структура данных, позволяющая хранить пары ключ-значение и поддерживающая операции вставки, поиска и удаления по ключу.</code></p>
+<p>Как она устроена внутри ? Как правило, <code>ассоциативный массив реализуется как два массива - один для ключей, другой для значения.</code> <em>Например</em>, у нас есть телефонная книга - ключом будет выступать имя, а значением будет его номер телефона.</p>
+<p>Идея заключается в том, что <code>используя hash-функцию можно отобразить ключ на число</code> - и вычистлить индекс в массиве, куда записать ключ и соответственно значение.</p>
+<p>важный момент - <code>поскольку число может быть любым - как очень большим - так и отрицательным, а доступная память ограничена - поэтому полученное число предстоит ещё нормализовать, т.е отмасштабировать на длину массива</code> - например, можно использовать остаток от деления на длину массива.</p>
+<h1 id="javadoc"><a name="user-content-javadoc" href="#javadoc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>javadoc</h1>
+<p><code>За hash-функцией далеко ходить не надо</code> - у java.lang.Object - корневого класса всей иерархии классов в java - определен метод hashcode - <code>т.е по сути каждый объект в java обладают некоторой стандартной hash-функцией.</code></p>
+<p>Так же обратим внимание, что hashcode возвращает int - это знаковое 32х битное целое число.</p>
+<h1 id="791"><a name="user-content-791" href="#791" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Записать ( Алексей, +791… )</h1>
+<p>рассмотрим поясняющий пример - допустим уже записано несколько адресатов и надо записать Алексея - и его телефонный номер. <strong><code>Предположим</code></strong>, что его hashcode равен 23 - <code>для пояснения работы это не принципиально</code>, но о том как именно вычисляется hashcode мы вернёмся позже.</p>
+<p>И так - <code>вычисляем индекс в массиве и записываем значение</code>.</p>
+<h1 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>сложность</h1>
+<p>алгоритм поиска выглядит примерно так же - <code>вычисляем hashcode, мастшабируем и проверяем ключ, что записанный ключ равен искомому</code>.</p>
+<p><code>т.е вставка, поиск никак не зависят от длины массива - сложность константа</code>.</p>
+<p><strong><code>это самое главное свойство ассоцитивного массива</code></strong>.</p>
+<h1 id="hashcode"><a name="user-content-hashcode" href="#hashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Контракт hashCode</h1>
+<p><code>одно из ключевых свойств hashcode - это не изменчивость и постоянство</code> - и опредён контракт для hashcode -  этот метод должен постоянно возвращать одно и то же значение.</p>
+<h1 id="hashcode_1"><a name="user-content-hashcode_1" href="#hashcode_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Нарушение контракта hashCode</h1>
+<p><code>если бы не было бы этого контракта - и hashCode мог меняться - например, для Алексея он стал бы отличным от того, что было когда записали ключ-значение - то мы уже не найдём его.</code></p>
+<h1 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Коллизии</h1>
+<p>и <strong>ложка дёгтя</strong> - что, если нам предстоит записать Alexander, Alex и Jan - и, <strong><code>предположим, что у всех такой же hashcode, как и у Алексея</code></strong>.</p>
+<p>Совпадение hashcode ключей - <code>это коллизия, и её придётся как-то разрешать - ситуация не приятная, но типичная</code>.</p>
+<p>Надо сказать, что коллизии это самая большая проблема в хэш-структурах - <code>используют и разные подходы для разрешия коллизий, и чтобы их не допустить - стараются найти хэш-функцию получше, но для общего случая её сложно подобрать</code>.</p>
+<p>И т.к <code>такой идеальной функции нет - то используют то, что есть - а есть то, что либо вернул метод hashCode()</code> - и что там пользователь напишет - может быть ужас-ужас.</p>
+<h1 id="chaining"><a name="user-content-chaining" href="#chaining" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Chaining</h1>
+<p>Существует несколько <code>широкораспостраннёных способов</code> разрешать коллизии - и <code>chaining один из них</code>. По сути надо создать список и поместить все ключи с одинаковыми hashcode в него. способ универсальный, но далек от идеала, и как плата за это - сложность поиска становится линейной.</p>
+<h1 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Открытая адресация</h1>
+<p>другой способ разрешения коллизий - который, называется <strong><code>открытая адрессация</code></strong> - использует вариацию представления списка и заключается в том, что <code>исходный массив ключей используется как список для разрешения коллизии и в нём делается последовательность проб</code> относительно исходного индекса - если ячейка занята - делают следующую пробу - например, выбирают соседнюю слева ячейку.</p>
+<h1 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Открытая адресация (сложность)</h1>
+<p>если же и она занята - делают ещё пробу и так до тех пор пока не будет найдена свободная ячейка.</p>
+<p><code>очевидный плюс - не нужна дополнительная структура данных и компактное размещение данных.</code></p>
+<p><code>но и в этом случае сложность деградирует до линейной, если коллизий много</code>.</p>
+<p><strong><code>Это очень важный момент - коллизии способны сломать производительность, и чем больше коллизий, тем только хуже операции типа поиска, вставки и т.п</code></strong></p>
+<h1 id="hashcode_2"><a name="user-content-hashcode_2" href="#hashcode_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>hashCode = функция ( содержимое объекта )</h1>
+<p>Как же вычисляется hashCode ? <code>как правило hash-функция это некоторая функция над содержимым объекта</code>.</p>
+<p>И хорошо бы знать, как он должен быть как-то вычислен - ведь не важно - получили ли мы строку по сети, или пользователь ввёл в форму данные, или как-то ещё - ключ один и тот же с точки зрения содержимого - т.е они равны с точки зрения equals - а следовательно и hashcode должен быть один и тот же.</p>
+<p>Т.е, что строки java, что экземпляры 42 - каждый из них имеет один и тот же hashcode соответственно.</p>
+<p>Вообще, <code>строго говоря - в качестве hashcode может быть всё, что угодно - хотите возвращайте константу, но тогда можно забыть об быстром доступе по ключу. Т.е. чем лучше будет hash-функция и чем меньше будет коллизий - тем будет лучше</code>.</p>
+<p>Определяя hashcode не забывайте определить equals, который должен использовать те же свойсва для равенства, что и использует hashcode.</p>
+<h1 id="hashcode_3"><a name="user-content-hashcode_3" href="#hashcode_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Полиномиальный hashCode</h1>
+<p>У Джошуа Блоха в его книге Effective Java вычислению hashcode посвящёна отдельная глава -</p>
+<p><code>Традиционно для общего случая рекомендуется использовать полином по свойствам класса с простыми весами, например 31 - простые числа выбираются опять же в угоду минимизации коллизий - и с другой стороны мы хотим, чтобы метод был относительно простой и не требовал много ресурсов на вычисление</code>.</p>
+<p>Как правило, <strong><code>общий случай решает усреднённую задачу, для большинства случаев</code></strong> - однако, если у вас узко специализированная задача и вы знаете диапозон допустимых значений - то можно подобрать другие коэффециенты дабы минимизировать коллизии.</p>
+<h1 id="stringhashcode"><a name="user-content-stringhashcode" href="#stringhashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>String.hashCode()</h1>
+<p>И как раз <code>одну из типичных полиминальных реализаций hashCode можно увидеть в строке - складываем все элементы массива с весами по степеням 31</code>.</p>
+<p>так же иногда применяют lazy вычисление и кэширирование уже вычисленного значения.</p>
+<h1 id="stringhashcode-javadoc"><a name="user-content-stringhashcode-javadoc" href="#stringhashcode-javadoc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>String.hashCode() javadoc</h1>
+<p>Да - и более того - <code>этот алгоритм вычисления так же прописан в javadoc к этому методу</code> - и это <strong><code>значит, что это часть публичного API и все сертифицированые реализации JVM обязаны быть полином с весом 31</code></strong>.</p>
+<p><strong><code>Но почему именно 31 ? Не 2, не 5, а именно 31</code></strong> ? Есть идеи ?</p>
+<h1 id="java-v111-stringhashcode"><a name="user-content-java-v111-stringhashcode" href="#java-v111-stringhashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>java v.1.1.1 - String.hashCode()</h1>
+<p>в самых первых версиях java hashcode для строки <code>вычислялся архаичным способом</code> - здесь и разные коэффециенты при разных длиннах строк, и пропуск отдельных символов - жуть</p>
+<p><code>И тот же Джошуа Блох решил это исправить</code></p>
+<h1 id="31"><a name="user-content-31" href="#31" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>31 : Детективная история</h1>
+<p>Есть такой <code>замечательный баг</code> - который как раз посвящён исправлению архичному вычислению hashcode</p>
+<ul>
+<li>в книге Kernighan и Ritchie - Язык программирования Си - был дан готовый рецепт - и без доказательно даётся полиминальная функция с числом 31 - тогда Джошуа связался с Брайном Керниганом - но тот забыл уже откуда он взял это число - просто оно работает.</li>
+</ul>
+<p>Блох <code>провёл небольшое исследование</code> - взял слова и словоформы из словаря Merriam-Webster, все строки в солярисе в /bin/<em>, /usr/bin/</em> и т.д - и на последок он запустил веб-паука, который за несколько часов собрал ему около 30 тыс урлов - сейчас это выглядит более, чем забавно - но 20 лет назад таков был интернет.</p>
+<p>И вот он собрал все эти строки и проанализировал уровень коллизий - та, реализация, которая была на тот момент давала очень высокий уровень коллизий, а уровень коллизий при коэффециентах 31, 33 и 37 оказался примерно одинаковый. + 31 достаточно близко к 32, так, что многие компиляторы могут представить умножение 31 как сдвиг и вычитание.</p>
+<p><strong><code>в результате было выбрано число 31 - как и у Kernighan и Ritchie. В чём-то это Ответ на главный вопрос жизни, вселенной и всего такого в java</code></strong>.</p>
+<h1 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Но ведь можно подобрать…</h1>
+<p>Но ведь далеко не все строки это осмысленные слова - можно же подобрать такие значения, <code>которые будут иметь один и тот же hash code, зная как он вычисляется</code>.</p>
+<p><code>строки Аа и ББ - один самых известных примеров</code></p>
+<p><code>Возьмём два рядом стоящих символа в строке - если уменьшаем левый на 1, то правый - надо увеличить на 31.
+Или наоборот, если левый увеличиваем на 1 - то правый уменьшаем на 31</code>.</p>
+<p>Подобный приём можно применить для двух символов, между которыми находится ещё один, и т.д. Проще всего искать строки такой же длины - отталкиваясь от уже существующей строки - хотя конечно можно искать и варианты с бОльшей длиной строки - играя на переполнении целого числа.</p>
+<p><code>Для примера я взял строку "username" и направленным поиском - меняя соседние символы - нашёл почти полмиллиона вариантов</code>. Хотя даже этого оказалось много.</p>
+<p>и давайте измеряем влияние коллизий.</p>
+<p><img align="absmiddle" alt=":bangbang:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/203c.png" title=":bangbang:" width="20px" /> <img align="absmiddle" alt=":bangbang:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/203c.png" title=":bangbang:" width="20px" /> <code>и здесь и далее я буду использовать jmh для измерения производительности</code></p>
+<h1 id="java-microbenchmark-harness"><a name="user-content-java-microbenchmark-harness" href="#java-microbenchmark-harness" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Java Microbenchmark Harness</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /><br />
+<em> поднимите руки, если в зале кто-то не знает или не слышал о jmh ?<br />
+</em> а теперь, кто что-то хотя бы слышал о нём.<br />
+* и кто его и знает, и использует или иногда использует.</p>
+</blockquote>
+<p>Если кто не знает - буквально кратко - что это и зачем - <code>написать бенчмарк не составляет особого труда, но написать корректный бенчмарк, который будет действительно правильно измерять и измерять именно то, что хочется - это значительно сложнее</code>.</p>
+<p><code>jmh это фреймфорк по написанию правильных nano/micro/milli performance benchmarks для java. он составляет часть openjdk toolset и так же люди из openjdk его поддерживают и развивают.</code></p>
+<h1 id="jmh-username-benchmark-1"><a name="user-content-jmh-username-benchmark-1" href="#jmh-username-benchmark-1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JMH :: &ldquo;username&rdquo; коллизии :: benchmark (1)</h1>
+<p>Поскольку я <code>буду не один раз прибегать к использованию JMH - давайте я на конкеретном примере покажу, что и как можно получить используя jmh</code>.<br />
+Примерно вот так или подобно так выглядит benchmark - у нас есть <code>само тело бенчмарка - добавить ключи в map'у</code></p>
+<h1 id="jmh-username-benchmark-2"><a name="user-content-jmh-username-benchmark-2" href="#jmh-username-benchmark-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JMH :: &ldquo;username&rdquo; коллизии :: benchmark (2)</h1>
+<p><code>можно указывать как долго надо разогревать VM, дабы исключить краевые эффекты связанные с jit компиляцией, прогревом vm и не только, можно указывать как долго надо измерять сам бенчмарк, чтобы получить статистически корректные измерения, можно специфицировать в скольких нитях будет работать бенчмарк</code></p>
+<h1 id="jmh-username-benchmark-3"><a name="user-content-jmh-username-benchmark-3" href="#jmh-username-benchmark-3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JMH :: &ldquo;username&rdquo; коллизии :: benchmark (3)</h1>
+<p><code>по аналогии с junit можно специфицировать setup и teardown методы, которые соот-но вываваются перед и после работы тела бенчмарка</code> - именно там я загружаю из файла найденные коллизии для строки username - <code>всё это вспомогательные операции для самого бенчмарка</code>. и так же по аналогии с junit можно параметризовать benchmark - я хочу проследить за производительностью при разном количестве коллизий.</p>
+<p>конечно - <strong><code>это не избавляет от того, чтобы писать неправильные benchmark-и и/или неправильно их трактовать</code></strong> - если ещё не делали - смотрите записи Алексея Шипилёва, где он подробно расскаывает о jmh, на сайте проекта есть подробные примеры.</p>
+<p>словом - <strong><code>jmh - важный и полезный инструмент в руках инженера</code></strong>.</p>
+<p><code>и давайте уже посмотрим, что у нас получается</code> ?</p>
+<h1 id="username-java7"><a name="user-content-username-java7" href="#username-java7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>&ldquo;username&rdquo; коллизии :: java7 результаты</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> кто ещё свои приложения в проде держит на 7ке ?  или на 6ке ?)</p>
+</blockquote>
+<p><code>легко можно заметить параболу на графике</code> - т.е у нас квадратичная сложность - если честно - я не ожидал увидеть время отклика 1.5 минуты, передавая 200 тыс ключей.</p>
+<p><code>Откуда пробелема возникла</code>, думаю уже понятно - почти в самом начале я рассказывал про коллизии - и для их разрешения <code>использовали chaining</code>.</p>
+<blockquote>
+<p>Если посмотреть как обрабатываются cookies, или параметры http-запроса в Tomcat&rsquo;е - то там используется как раз LinkedHashMap - но для случая вставки ключей это ничем не лучше обычного HashMap. А после того, как все ключи из запроса будут загружены в map - приложение, или сервлет ищет нужный ему параметр - собственно поэтому я и выбрал в качестве ключа &ldquo;username&rdquo; - достаточно часто используемое имя параметра. А поиск ключа в мапе, в которой его нет, но есть много коллизий - заставит перебрать все ключи с одинаковым hashcode - а это ещё немного усугубит проблему.</p>
+<p>во время измерений я смотрел за загрузкой cpu - и на все эти 1.5 минуты одно ядро было загружено под 100% - доклад и конференция не про DOS-атаки, но идея думаю более, чем ясна.</p>
+</blockquote>
+<p>Что нам делать ?</p>
+<h1 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>ещё одна функция нужна</h1>
+<p><strong><code>Нужно выйти за рамки существующих возможностей</code></strong> - одна из вариаций разрешения коллизий в открытой адресации заключется в использовании <strong><code>двойного хэширования</code></strong>.</p>
+<p>Например, в SHA1 нашли коллизии - с очень маленькой вероятностью, у MD5 вероятность коллизий выше - но поскольку базис данных hash-функций разный - то результирующая вероятность коллизий почти, что нулевая.</p>
+<p>Идея заключается в том, что взять <strong><code>ещё одну функцию - желательно, ортогональной исходной</code></strong> - как это, например, может быть вторая hash-функция, либо вообще функция из другой области</p>
+<h1 id="compareto"><a name="user-content-compareto" href="#compareto" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Дополнительная функция: compareTo</h1>
+<p><code>И что у нас уже есть в стандартной библиотеке ? строки, и числа, даты и многие другие классы - все они сравниваемые - т.е у них реализована функция compareTo. Её мы и будем использовать как вторую функцию для разрешения коллизий.</code></p>
+<p>тогда для разрешения коллизий можно строить бинарное дерево поиска, которое обладает <code>логарифической сложностью</code>.</p>
+<p>В java начиная с 8ки - внутри HashMap, LinkedHashMap, ConcurrentHashMap используется красно-чёрное дерево для разрешения коллизияй <code>при привышении некоторого порогового числа коллизий</code> для конкретной ячейки.</p>
+<h1 id="chaining-"><a name="user-content-chaining-" href="#chaining-" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Chaining и Красно-Чёрное-Дерево</h1>
+<p><code>пока уровень коллизий мал, а именно меньше 8 элементов, то там по прежнему chaining.</code></p>
+<blockquote>
+<p>Если у вас есть сомнения относительно коллизий в вашем приложении - самый простой способ их оценить - это снять heapdump и посмотреть количество экземпляров TreeNode - они появляются тогда, когда уровень коллизий больше 8, если же уровень коллизий мал - то chaining и будут экземпляры класса Node</p>
+</blockquote>
+<p><code>давайте же посмотрим на результаты работы данного подхода</code>.</p>
+<h1 id="username-mapputkey-key"><a name="user-content-username-mapputkey-key" href="#username-mapputkey-key" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>&ldquo;username&rdquo; коллизии :: map.put(key, key)</h1>
+<p>вот сравнение того же самого теста с коллизиями по username <code>в 7ке и в 8ке</code> - вот тот график, который слабо отличается от нуля - это 8ка - ибо там совершенно другой масштаб времени - положить все 200 тыс ключей на 8ке занимает <code>где-то 100 мс на моей машине</code></p>
+<p><strong><code>основной эффект прежде всего из-за изменения внутренней реализации hashmap - если сделать backport hashmap из 8ки в 7ку - то цифры будут схожими с теми, что мы видим для 8ки</code></strong>.</p>
+<h1 id="username-500x-zoom-in"><a name="user-content-username-500x-zoom-in" href="#username-500x-zoom-in" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>&ldquo;username&rdquo; коллизии :: 500x zoom-in</h1>
+<p>если изменить масштаб в 500 раз - обратите внимание на шкалу времени - это миллисекунды - 7ка сразу ушла в небеса - точка возле 200 мс это при 1000 ключей - а <code>8ка кажется, что почти линейна, хотя это конечно же слабо растущий логарифм</code></p>
+<h1 id="username-comparable"><a name="user-content-username-comparable" href="#username-comparable" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>&ldquo;username&rdquo; коллизии :: Comparable</h1>
+<p>Одно очень важное замечание - для того, <strong><code>чтобы строить деревья - ключи обязаны быть сравниваемыми</code></strong> - т.е реализовывать интерфейс Comparable, но если он не сравниваемый - то нас ждёт ещё более худшая ситуация.</p>
+<p>я запустули тот же бенчмарк, но в качестве ключа я использовал не java.lang.String, а класс-обёртку, но который НЕ реализует интерфейс Comparable.</p>
+<p>И всё тот же набор ключей, полученный из коллизий по строке username.</p>
+<p>проблема заключена в том, что <strong><code>дорого обходится попытка внести упорядочивание в естественно неупорядоченные ключи</code></strong></p>
+<blockquote>
+<p>Т.е. если вы каким-то образом получаете данные из не надёжного источника - н-р внешняя сеть - и по каким-то причинам используете свои классы в качестве ключей - например, пары или кортежи в качестве ключей - стоит рассмотреть возможность реализации Comparable - хотя не всегда это может быть и естественный порядок.</p>
+</blockquote>
+<h1 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>утёкшая абстракция</h1>
+<blockquote>
+<p>Как вычислять hashcode у которого нет данных ? hashcode определён у java.lang.Object - значит все классы, которые не переопределяют этот метод - ведут себя точно так же. И что же собственно он возвращает ?</p>
+<p>Вообще это очень странно, когда корневой класс иерархии содержит в себе метод ради реализации ассоцитивного массива.<br />
+Например, существует интерфейс Comparable для сравнения объектов, но нет интерфейса Hashable.</p>
+<p>Надо сказать, что наличие этого метода у Object с реализацией по-умолчанию повлекло за собой последствия, из-за которых мы можем заглянуть в дебри виртуальной машины исследуя его.</p>
+</blockquote>
+<h1 id="urban-legend"><a name="user-content-urban-legend" href="#urban-legend" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Urban Legend</h1>
+<p>Более того - это даже породило легенду, ещё более бородатую, чем я - которая гласит, что <strong><code>hashcode это адрес объекта</code></strong> - т.е этот метот можно записать что-то в виде такого кода на Си</p>
+<h1 id="urban-legend_1"><a name="user-content-urban-legend_1" href="#urban-legend_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Urban Legend: Первоисточник</h1>
+<p><code>Первоисточником легенды является всё тот же javadoc к которому мы уже не раз обращались</code> - и в нём сказано, что типичная реализация метода hashcode у java.lang.Object это преобразование внутреннего адреса объекта к числу.</p>
+<p><strong><code>Попробуем не только разрушить этот миф, но и наглядно показать, почему это не самый лучший выбор и проникнуть внутрь VM</code></strong>.</p>
+<p>И так - <strong><code>предположим, что hashcode объекта это всё таки его адрес. В качестве инструмента будем использовать конечно же сам hashcode - и его свойства - неизменчивость и распределение значений. Будем проверять разные предположения на корректность при помощи тестов</code></strong>.</p>
+<h1 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Адрес объекта</h1>
+<p>вообще, первое, что приходит на ум, когда слышишь утверждение &ldquo;hashcode использует адрес объекта&rdquo; - это взять и проверить.</p>
+<p>Как <strong><code>надёжно получить адрес объекта ?</code></strong> Мало того, что <code>в java отстутсвует арифметика указателей на уровне языка - как, например, в Си</code>, так ещё и hashcode это только 32 бита, а адрес объекта в современном мире 64х битных платформ - может быть запросто быть больше 32х бит.</p>
+<h1 id="native-method"><a name="user-content-native-method" href="#native-method" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>native method</h1>
+<p>Если мы посмотрим на исходный java код java.lang.Object - то увидим, что этот метод является native - т.е он <code>реализован на уровне самой VM</code>.</p>
+<h1 id="-"><a name="user-content--" href="#-" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Шипилёв-слайд</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Кто любит unsafe ?</p>
+<p>Конечно же можно при помощи unsafe получить адрес объекта - но подводных камней очень много - и то, что нельзя его создать через оператор new - обычно воруют экземпляр через reflection, и что в самом unsafe нет метода по получению адреса объекта - и в довершение - размер указателя объекта может быть как 32 бита даже на 64х битной java, но может быть и 64 - словом вагон головных болей, неожиданностей, corrupted memory от неумелого обращения с адресной арифметикой - в конце концов это приватный API, который должен закрыт.</p>
+</blockquote>
+<p><strong><code>Основная причина почему unsafe стал столь популярен - не было альтернатив</code></strong>.</p>
+<h1 id="java-object-layout"><a name="user-content-java-object-layout" href="#java-object-layout" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Java Object Layout</h1>
+<p>для задач проведения анализа компоновки объекта, его адреса, размера, расположение полей, сколько байт занимают - <strong><code>есть альтернатива, созданная людьми из openjdk - Java Object Layout</code></strong>.</p>
+<p>И конечно же он сразу же из коробки даёт возможность получить - и адрес объекта, и его размер, можно достаточно просто снять дамп объекта и посмотреть его содержимое - без каких-либо Unsafe и прочей магии с головыми болями - всё это спрятанно как-то там внутри. В конце-концов авторы openjdk лучше знают и об внутреннем устройстве объекта, обо всех краевых случаях.</p>
+<p><strong><code>Словом - давайте забудем про Unsafe и будем использовать JOL</code></strong>.</p>
+<h1 id="jol"><a name="user-content-jol" href="#jol" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JOL : пример</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Кто из вас слышал и использовал Java Object Layout ?</p>
+</blockquote>
+<p>И если JMH как инструмент неплохо известен - то о JOL мало кто-то знает - давайте покажу один из примеров использования</p>
+<p><code>пусть у вас есть класс - pair - составной ключ, состоящий из двух ключей,</code> и вы захотели добавить поле - hashcode - чтобы его закэшировать и не вычислять каждый раз - как это сделано у String, например.</p>
+<p>на сколько изменится потребление памяти ? int же 4 байта ?</p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> кто за то, что потребление памяти увеличится на 4 байта на каждый объект Pair2 ? а кто за какое-то другое число ?</p>
+</blockquote>
+<h1 id="-xxusecompressedoops-heap-4gb"><a name="user-content--xxusecompressedoops-heap-4gb" href="#-xxusecompressedoops-heap-4gb" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>-XX:+UseCompressedOops и heap &lt; 4Gb</h1>
+<p>и JOL даёт ответ&hellip; <strong><code>ни на сколько не изменится, если у вас меньше 4х гб хипа и включёно сжатие указателей</code></strong> - а оно включёно по-умолчанию.</p>
+<h1 id="-xxusecompressedoops-heap-4gb_1"><a name="user-content--xxusecompressedoops-heap-4gb_1" href="#-xxusecompressedoops-heap-4gb_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>-XX:+UseCompressedOops и heap &lt; 4Gb (детализация)</h1>
+<p>детализация, которую даёт JOL показывает что <code>это произошло из-за чтого, что есть выравнивание объектов на 8 байт. и когда мы добавили hashcode - мы как раз использовали этот ранее не использованный зазор</code>.</p>
+<h1 id="jol-xx-usecompressedoops-heap-4gb"><a name="user-content-jol-xx-usecompressedoops-heap-4gb" href="#jol-xx-usecompressedoops-heap-4gb" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JOL : -XX:-UseCompressedOops или heap &gt; 4Gb</h1>
+<p>Но если у вас больше 4х гб или отключено сжатие указателей - <code>объект будет потреблять не на 4 байта больше - а на 8 байт больше</code></p>
+<h1 id="jol-xx-usecompressedoops-heap-4gb_1"><a name="user-content-jol-xx-usecompressedoops-heap-4gb_1" href="#jol-xx-usecompressedoops-heap-4gb_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>JOL : -XX:-UseCompressedOops или heap &gt; 4Gb  (детализация)</h1>
+<p><strong><code>изменились и размеры указателей</code></strong>, и тоже выравнивание размеров объекта по 8 байтам - более того - видно, что <code>свойство hashcode теперь располагается в начале объекта - т.к физическое распложение полей в runtime в java может значительно отличаться от того, что задеркларировано</code>.<br />
+<strong><code>вот на все подобные вопросы и поможет ответить JOL</code></strong>.</p>
+<h1 id="hashcode_4"><a name="user-content-hashcode_4" href="#hashcode_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Адрес и hashCode</h1>
+<p><code>вернёмся же к hashcode - при помощи одного флага VM - мы можем добится того, что наше предположение будет истино</code>.<br />
+<code>Наглядней всего заметно сходство, если мы представим всё в 16 системе счисления - hashcode использует младшие 32 бита адреса</code>, тут же и видим размер объекта - 16 байт.<br />
+Что же - <code>теперь можно смело исследовать влияние такой реализации hash-функции и что мы можем увидеть через призму этого предположения</code>.</p>
+<h1 id="1"><a name="user-content-1" href="#1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за адресом объекта (1)</h1>
+<p>И первый эксперимент - проверить <strong><code>насколько можно доверять адресу объекта</code></strong> - для проверки этой гипотезы давайте создадим новый объект - theObject - в данном демо это будет главная цель нашего наблюдения - зафиксируем адрес этого объекта в самом начале</p>
+<h1 id="2"><a name="user-content-2" href="#2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за адресом объекта (2)</h1>
+<p>затем будем создавать другие объекты и, чтобы избежать того, чтобы GC собрал их как мусор - будем хранить их в списке gcKeeper.</p>
+<h1 id="3"><a name="user-content-3" href="#3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за адресом объекта (3)</h1>
+<p>Основная цель - следить за адресом объекта theObject - как только адрес изменится -  мы выйдем из цикла и прекратим создавать объекты. Но может, что адрес никогда не изменится и мы получим OOM.</p>
+<h1 id="4"><a name="user-content-4" href="#4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за адресом объекта (4)</h1>
+<p>В демонстрационных целях - <strong><code>чтобы не ждать OOM долго</code></strong> - я ограничу размер кучи до 256Мб. И использую SerialGC - тот же самый эффект при других сборщиках мусора, возможно с небольшой разницой по цифрам.</p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" />  И так - голосуем - кто за OOM ? А кто за то, что адрес объекта изменится ?</p>
+</blockquote>
+<h1 id="demo"><a name="user-content-demo" href="#demo" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>demo</h1>
+<blockquote>
+<p>Открываем и показываем <strong>ObjectReallocation</strong> - Запускаем <strong>ObjectReallocation</strong> и смотрим демо.)</p>
+</blockquote>
+<p><code>Что произошло ??? Почему ?</code></p>
+<h1 id="gc"><a name="user-content-gc" href="#gc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>GC: поколения</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> зал - кто не слышал про поколения в сборке мусора ? поднимайте, поднимайте руки) и теперь - кто слышал ?</p>
+</blockquote>
+<p>Давайте бегло объясню общую идею - много лет назад была высказана гипотеза, что <strong><code>большинство объектов короткоживущие - т.е умирают вскоре после того как они были созданы</code></strong> - буквально слоган панков - <strong><code>жить быстро, умереть молодым</code></strong>.<br />
+это сделано из тех соображений, чтобы сборщику мусора обходить не весь граф объектов - а только очень малую часть.</p>
+<p>Т.е объекты рождаются в eden, если он не умер молодым, а выжил - то он перемещается в более старшее поколение - survivor, и потом может быть перемещён в старое поколение - GC обходит old gen только во время Full GC время полной сборки.</p>
+<p>java использует эту гипотезу о поколениях - и в общем-то она не плохо даже работает - но с ростом объёмов памяти и ростом числа объектов гипотеза уже не так удачно работает как раньше - не так давно стали появлятся другие гипотезы - как например региональная гипотеза, которая реализована в G1 и shenandoah.</p>
+<h1 id="gc_1"><a name="user-content-gc_1" href="#gc_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за адресом объекта вместе с GC</h1>
+<p>Давайте добавим <code>дополнительный флаг для запуска VM - а именно будем отслеживать GC и запустим то же самое демо</code></p>
+<p>(Запускаем <strong>ObjectReallocation (gc)</strong> и смотрим демо.)</p>
+<p>Теперь видно, что <strong><code>произошла сборка мусора - и более того, по GC логу можно даже понять откуда и куда был перемещён наш объект - рассмотрим его детальней</code></strong></p>
+<h1 id="gc-"><a name="user-content-gc-" href="#gc-" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>GC - не только сборка мусора</h1>
+<p>вот лог такого же запуска - <strong><code>объект изначально был создан в eden - и GC переместил его за пределы eden - и именно это мы и заметили</code></strong>.</p>
+<p>понимаю, что сравнивать 16тиричные числа как-то не удобно - поэтому я <strong><code>расположил адреса налача eden, старый т.е исходный адрес объекта, конец eden и новый адрес объекта в порядке возврастания адресов</code></strong></p>
+<blockquote>
+<p><strong>т.е. Garbage Collection не просто собирает мусор, но и производит перемещения объектов - это применимо как к сборщикам по поколениям, так и региональным - такие как G1</strong></p>
+</blockquote>
+<h1 id="hashcode_5"><a name="user-content-hashcode_5" href="#hashcode_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Следим за hashcode</h1>
+<p>Изменение адреса объекта, порождает следующий эксперимент <strong><code>если может изменится адрес - то возможно может и hashcode изменится - мы же помним, что hashCode это адрес объекта, не так ли ?</code></strong></p>
+<p>По сути делаем <code>всё то же самое, что и в предыдущем эксперименте</code>, только на этот раз будем <strong>следить не за адресом объекта, а за hashcode</strong> - так же зафиксируем начальное значение, и так же будем создавать новые объекты и хранить их в gcKeeper пока не изменится hashcode, либо не случится OOM</p>
+<p><code>И так же как и в предыдущем демо размер кучи уменьшил до 256Мб</code>.</p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Голосуем - Кто за то, что hashCode изменится ? Прошлый же раз адрес поменялся, а hashcode это же адрес, так ведь ?  А кто за OOM ?</p>
+</blockquote>
+<h1 id="demo_1"><a name="user-content-demo_1" href="#demo_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>demo</h1>
+<blockquote>
+<p>показываем код <strong>ObjectHashReallocation</strong> - так же как и в предыдущем демо - отличие от слайда только в сообщении после цикла - Запускаем <strong>ObjectHashReallocation</strong> и смотрим демо.</p>
+</blockquote>
+<p><code>Почему ?</code></p>
+<p><code>Объект не может нарушать контракта hashcode, hashCode является собтсвенностью объекта, более того - неизменяемой собтсвенностью.</code></p>
+<p>Напрашивается вывод, что данное <strong><code>свойство где-то хранится и оно является</code></strong></p>
+<h1 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Скрытое свойство</h1>
+<p><strong><code>Скрытым свойством</code></strong> - Как мы помним - hashcode это native метод, но на уровне java кода ни одного свойства у java.lang.Object не определено. И нам надо идти глубже, и поможет нам в этом снова Java Object Layout !</p>
+<p>Давайте при помощи <code>JOL сделаем dump объекта - т.е как объект целиком представлен в памяти.</code></p>
+<h1 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Дамп объекта</h1>
+<p><code>Ох ты ж! Мало того, что hashcode является адресом - так он же ещё и записан в заголовке объекта !</code></p>
+<p>обратный порядок байт в дампе обусловлен тем, что это всё сделано на Intel, который использует Little-Endian порядок, т.е порядок от младшего к старшему байту.</p>
+<p>Т.е что происходит - <code>hashcode вычистяется как младшие 32 бита адреса, а потом он записывается в заголовок объекта, после чего адрес объекта может менятся, а вот уже hashcode нет.</code></p>
+<p><code>Т.о. предыдущие два эксперимента нам показали, что в какой-то момент времени hashcode объекта таки может быть адресом, но адрес является ненадёжным свойством, и hashcode надо где-то хранить.</code></p>
+<p>Мы очень сильно отвлеклись с разбирательством адрес - хэшкод, казалось бы можно было бы на этом слайде и закончить - доказывать и опровергать больше нечего. Но <code>мы выбрали хэшкод как наш проводник в мир внутренностей vm и мы всё же хотим показать почему это не самый лучший способ определения хэш-функции.</code></p>
+<h1 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Сколько влезет в кучу ?</h1>
+<p><code>Давайте попытаемся оценить коллизии hashCode используя адрес в качестве hash-функции.</code></p>
+<p>Если будем использовать как и в прошлых экспериментах мы используем размер кучи 256 Мб, пусть даже часть съест сама vm - и зная размер объекта - получается, <code>что в память влезло бы около 15 млн объектов - что значительно меньше максимально возможного положительного значения hashcode - 2х млрд.</code></p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Т.е при размере кучи коллизий просто не должно быть - не так ли ? Кто согласен с утверждением, что коллизий не будет ? И теперь кто за коллизии ?</p>
+</blockquote>
+<h1 id="_13"><a name="user-content-_13" href="#_13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Граница коллизий</h1>
+<p><code>Конечно же коллизии должны быть - и наши рассуждения не совместимы с сборщиками мусора</code>, используемыми в обычной жизни - и из эксперимента по перемещению объекта между поколениями мы уже знаем, что объекты создаются в eden, который в нашем случае оказался равен 64Мб - <code>и в этом случае нам удастся создать только 4млн объектов, после чего начнутся коллизии</code>.</p>
+<p><code>Более того, как только мы встретим первую коллизию значения hashcode будут повторяться - т.к. они будут использовать то же самое адресное пространство eden</code>.</p>
+<p><em>проверить это можно экспериментом, схожим с тем, что я проводил при наблюдении за адресом объекта</em>.</p>
+<h1 id="hashcode_6"><a name="user-content-hashcode_6" href="#hashcode_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>пространство hashCode</h1>
+<p><code>И так, выбрав адрес в качестве hashcode и из-за Eden мы потеряли 10 бит - и из 4х млрд у нас остаётся только 4 млн уникальных значений.</code></p>
+<h1 id="hashcode-address-memory-allocation"><a name="user-content-hashcode-address-memory-allocation" href="#hashcode-address-memory-allocation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>hashCode → address → memory allocation</h1>
+<p><code>Поскольку мы имеем дело с адресами и созданием объектов - сделаем ещё одно отвлечение и рассмотрим вопрос выделения памяти.</code></p>
+<blockquote>
+<p>В начале мы не задумывались о том, что объект может быть перемещён и утвержение, что hashCode это адрес не выглядило как-то странно, когда мы стали разбираться - нашли несоответствие. Теперь же у нас коллизии ограниченны eden - но действительно ли это всё, что мы знаем ?</p>
+<p>Каждый раз, когда вы создаёте новый объект вы фактически резервируете некоторый объём памяти. И задачей выделения и резервирования памяти занимается аллокатор - давайте попробуем сделать модель аллокатора и так, чтобы эта модель в каких-то цифрах соотносилась с реальным поведением.</p>
+</blockquote>
+<h1 id="memory-allocation"><a name="user-content-memory-allocation" href="#memory-allocation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Упрощённый memory allocation</h1>
+<p>простейший случай выглядит так - <code>считаем, что адреса начинаются от 0 и до memoryPointer уже заняты - если мы хотим попросить ещё немного памяти - то сдвигаем границу memoryPointer и так мы зарезервировали объем памяти от старой границы размером size</code>.</p>
+<p><strong><code>На первый взгляд именно такой аллокатор в действии только что и видили</code></strong>.</p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Хорош ли такой malloc - что вообще не так с ним ? Есть ли критические замечания ?</p>
+</blockquote>
+<h1 id="syncallocator"><a name="user-content-syncallocator" href="#syncallocator" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>SyncAllocator</h1>
+<p>Да, <strong><code>предыдущая версия совсем не годилась для работы с многопоточностью и synchronized безусловно теперь её гарантирует</code></strong>.</p>
+<p><code>И логично посмотреть как себя ведёт данный allocator</code></p>
+<h1 id="syncallocator-performance-benchmark"><a name="user-content-syncallocator-performance-benchmark" href="#syncallocator-performance-benchmark" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>SyncAllocator Performance Benchmark</h1>
+<p>такой вот простой бенчмарк, конечно для модели особой разницы нет сколько байт выделять - 1 или 16 - но я буду использовать 16 - как и размер экземпляра объекта java.lang.Object.</p>
+<p><code>всё это замеряется на 4 нитях</code> - в реальных приложениях их намного больше</p>
+<h1 id="syncallocator-performance-benchmark_1"><a name="user-content-syncallocator-performance-benchmark_1" href="#syncallocator-performance-benchmark_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>SyncAllocator Performance Benchmark (результаты)</h1>
+<p>и <code>такой же самый бенчмарк был сделан, но для однопоточного аллокатора.</code> <strong><code>и здесь, и далее я буду использовать схожие графики для сравнения производительности - единица измерения нс на операцию - т.е чем меньше нс тратится на операцию, тем быстрее, и значит лучше</code></strong>.</p>
+<p>при 4х параллельных нитях - почти 190нс на одну аллокацию - это очень дорогая аллокация.</p>
+<p><img align="absmiddle" alt=":bangbang:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/203c.png" title=":bangbang:" width="20px" /> <img align="absmiddle" alt=":bangbang:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/203c.png" title=":bangbang:" width="20px" /> <strong><code>Строго говоря - нам не так принципиальны абсолютные цифры - конкретно эти цифры я получил на своем лаптопе - на другой машине они могут быть другими - для нас интересней сравнение - кто больше или меньше и во сколько раз больше или меньше</code></strong>.</p>
+<p>для сравнения single-threaded allocator, хотя он применим только к однопоточному случаю, почти в 100 раз дешевле - пока <strong><code>это будет наш ориентир</code></strong></p>
+<h1 id="_14"><a name="user-content-_14" href="#_14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Можно ли лучше ?</h1>
+<p>Можно ли лучше ? Есть какие-нибудь идеи ?</p>
+<h1 id="compare-and-swap"><a name="user-content-compare-and-swap" href="#compare-and-swap" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Compare-and-Swap</h1>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Кто-нибудь слышал про Compare-and-Swap ? CAS это операция атомарного сравнения-и-изменения значения, которая реализованая на многих железных архитектурах - и x86, и SPARC, и ARM</p>
+</blockquote>
+<h1 id="cas-allocator"><a name="user-content-cas-allocator" href="#cas-allocator" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>CAS Allocator</h1>
+<p><code>Так давайте же сделаем allocator на основе CAS</code> - AtomicLong как раз представляет обёртку вокруг cas для операций с long - getAndAdd атомарная операция на основе CAS&rsquo;а - получаем старое значение и увеличиваем на size.</p>
+<p><code>и как всегда померяем - стало ли лучше ?</code></p>
+<h1 id="allocators-performance-benchmark"><a name="user-content-allocators-performance-benchmark" href="#allocators-performance-benchmark" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Allocators Performance Benchmark</h1>
+<p><code>Так же 4 нити - стало лучше - почти в 2 раза</code>, но не сильно лучше - 74 нс на операцию очень дорого - <strong><code>мы всё так же далеки от идеала</code></strong>.</p>
+<p><code>Вообще сравнивать производительность в 4х нитях и в одной - не совсем корректно - слишком уж грубый ориентир - можно же выбрать более достоверный ориентир</code>.</p>
+<p><code>Сравним наш моделируемый эксперимент с реальным выделением памяти - т.е как сама VM выделяет память</code>.</p>
+<h1 id="java-allocation"><a name="user-content-java-allocation" href="#java-allocation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Java Allocation</h1>
+<p>Опять простой бенчмарк и так же на 4 нитях - как мы помним размер объекта 16 байт - и теперь наше моделирование по условиям измерения очень близко к реальному случаю.</p>
+<h1 id="java-allocation_1"><a name="user-content-java-allocation_1" href="#java-allocation_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Java Allocation (результаты)</h1>
+<p><strong><code>и результаты, которые подтверждают, что наша модель очень далека от желаемого</code></strong>.</p>
+<h1 id="_15"><a name="user-content-_15" href="#_15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Можно ли ещё лучше ?</h1>
+<p><code>Определённо хочется улучшить нашу модель аллокатора.</code></p>
+<p>У нас уже есть некоторое понимание того, что адрес как hashcode - это не очень хорошая хэш-функция, потому, что много коллизий. <strong><code>Коллизии это тоже инструмент для исследования - такой хороший отбойный молоток</code></strong>.</p>
+<p><code>Так вот давайте этим молотком постучим - по крайней мере мы знаем границы.</code></p>
+<h1 id="hashcode_7"><a name="user-content-hashcode_7" href="#hashcode_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Распеделение hashCode по нитям</h1>
+<p>Но <code>как hashcode при этом распределены? - и особенно в разных нитях. В нашем предположении, что hashcode вычисляется как адрес - это равносильно тому как распределены адреса объектов по нитям</code>.</p>
+<h1 id="hashcode_8"><a name="user-content-hashcode_8" href="#hashcode_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Распеделение hashCode : Ожидания</h1>
+<p>Для наглядности так же используем 4 нити, а чтобы одна нить <code>не убегала вперёд другой будем использовать барьер, чтобы каждая нить создавала N-ый объект и получала его hashcode - только тогда, когда все другие нити дошли до N-го шага</code>.</p>
+<p><code>Конечно же ожидаем увидеть разницу в 16 байт между объектами в разных нитях на каждом из этапов</code>.</p>
+<p><code>И ещё одно ожидание, что при размере кучи в 256Мб, что всего мы сможем создать не больше 4 млн уникальных значений hashcode</code>.</p>
+<h1 id="hashcode-4"><a name="user-content-hashcode-4" href="#hashcode-4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Распределение hashCode по 4 нитям</h1>
+<p>Так вот выглядит реальное распределение hashcode при размере кучи 256мб по 4м нитям в предположении, что это адрес объекта. и как и ожидалось мы органичены 64Мб.</p>
+<p><code>у меня меня две новости - одна плохая, и хорошая</code>.</p>
+<p><code>начнём с плохой - количество уникальных hashCode, которые можно создать на одну нить становится тем меньше, чем больше у нас нитей создают новые объекты - хотя это даже не новость, а вполне логично было ожидать этого</code>.</p>
+<p>пунктирные линии указывают на начало коллизий по hashcode - фактически после этого адреса, адреса объектов, а следовательно и hashcode начинают строго повторяться.</p>
+<h1 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Хорошая новость</h1>
+<p>Увеличим масштаб. Хорошая новость несколько неожиданная - <code>адреса объектов в пределах одной нити отстоят далеко от адресов объектов других нитей - т.е. совсем не так как мы ожидали</code>.</p>
+<p>в силу масштаба адресного пространства кажется, что это почти вертикальные линии, на самом деле наклон очень слабый - разница 16 байт между каждым последующим объектом внутри нити, но не между нитями. а вот разница адресов между нитями - около 700kb.</p>
+<p><strong><code>т.е словно у каждой нити есть свой собственный маленький Eden</code></strong>.</p>
+<p>используем эту идею для того, чтобы улучшить нашу модель аллокатора.</p>
+<h1 id="1_1"><a name="user-content-1_1" href="#1_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Даёшь БОЛЬШИЕ куски памяти ! (1)</h1>
+<p>Вернёмся же к нему - и напилим такой аллокатор, который будет резервировать память большими кусками синхронно, а внутри потока он будет работать как старый добрый простейший однопоточный. <strong><code>дадим ему кодовое имя - TLAB</code></strong></p>
+<p>Да код не такой уж читаемый - SIZE - это размер большого куска - для примера 1Мб</p>
+<h1 id="2_1"><a name="user-content-2_1" href="#2_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Даёшь БОЛЬШИЕ куски памяти ! (2)</h1>
+<ul>
+<li><code>memoryPointer такой же как и в cas-allocator - граница занятой памяти, которую будем менять с помощью CAS'а</code></li>
+</ul>
+<h1 id="3_1"><a name="user-content-3_1" href="#3_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Даёшь БОЛЬШИЕ куски памяти ! (3)</h1>
+<ul>
+<li><code>а в threadLocal у нас будет лежать объект, хранящий значения об использованной памяти внутри нити</code>.</li>
+</ul>
+<h1 id="allocators-performance-benchmark_1"><a name="user-content-allocators-performance-benchmark_1" href="#allocators-performance-benchmark_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Allocators Performance Benchmark</h1>
+<p>и снова померяем - стало ли лучше ?</p>
+<h1 id="allocators-performance-benchmark_2"><a name="user-content-allocators-performance-benchmark_2" href="#allocators-performance-benchmark_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Allocators Performance Benchmark (результаты)</h1>
+<p><code>вот это уже выглядит намного лучше. Как и в предыдущих замерах - так же все на 4х нитях</code></p>
+<h1 id="thread-local-allocation-buffer"><a name="user-content-thread-local-allocation-buffer" href="#thread-local-allocation-buffer" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Thread Local Allocation Buffer</h1>
+<p><code>подобным образом и ведёт себя аллокатор в java, используя Thread Local Allocation Buffer</code> - каждая нить запрашивает кусок памяти из Eden, и внутри своей нити уже выдаёт без каких-либо блокировок - маленькая проверка - не вышли ли мы за пределы зарезервированного объёма.</p>
+<h1 id="thread-local-allocation-buffer-2"><a name="user-content-thread-local-allocation-buffer-2" href="#thread-local-allocation-buffer-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Thread Local Allocation Buffer (2)</h1>
+<p><code>Когда один TLAB заполнен - запрашивается другой кусок</code> - <strong><code>через блокировки</code></strong> - <code>может быть чуть большего размера</code></p>
+<p>Когда нельзя уже больше выделить новый кусок TLAB - случается GC - он решает, что делать с объектами - убивать или перемещать их в другое место. При этом весь Eden снова чист - и после чего TLABы снова могут пилить Eden.</p>
+<h1 id="tlab"><a name="user-content-tlab" href="#tlab" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Стоимость TLAB</h1>
+<p><code>осталось только оценить стоимость TLAB в java - есть ли какой-то выигрыш или нет</code>.</p>
+<h1 id="tlab-"><a name="user-content-tlab-" href="#tlab-" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Стоимость TLAB - результаты</h1>
+<p><code>Так же, как и моделируемом аллокаторе я использовал 4 нити - и заметно, что аллокакция с TLAB значительно лучше, чем без неё - почти в 50 раз</code></p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> у кого java тормозит? запустите ваше приложение с отключённым TLAB и разделите боль аллокатора в Си</p>
+</blockquote>
+<p>вообще надо сказать в системах, где нити не являются примитивами системы - сложно добится таких же результатов как в случае, когда и нити, и сборка мусора - а соответственно и аллокации - тесно связаны друг с другом.</p>
+<h1 id="32bit-20bit"><a name="user-content-32bit-20bit" href="#32bit-20bit" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>32bit → 20bit</h1>
+<p>Итак, <strong><code>подведём итоги экспериментов - использование GC и идеи поколений, быстрой аллокации и TLAB приводят к тому, что hashCode из 32х бит потерял большУю часть - и это всего при 4х нитях. Коллизии начинают встречаться уже через какой-то миллион новых объектов, после чего все значения строго повторяются</code></strong>.</p>
+<p><code>Мы сами загнали себя в угол с идей использовать адрес в hash-функции - плохая выходит hash-функция с очень большим числом коллизий.</code></p>
+<h1 id="random"><a name="user-content-random" href="#random" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Может быть Random ?</h1>
+<p><code>Может быть ну его нафиг и взять какой-нибудь генератор случайных чисел ?</code></p>
+<p><code>Что будет с коллизиями в этом случае ?</code></p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> Зал - а вообще насколько должен быть большой набор ключей, чтобы хотя бы у двух каких-либо ключей совпал hashcode ?</p>
+</blockquote>
+<p><strong><code>Что нам ответит математика на этот вопрос ?</code></strong></p>
+<h1 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Парадокс дней рождения</h1>
+<p><code>есть такой парадокс - парадокс дней рождений - у двух людей с вероятностью 50% совпадёт день рождения в группе уже из 23х человек.</code><br />
+Можно вывести общую формулу подсчитывая вероятности - d - количество вариантов - 32 бита для нашего случая - мы получим дикие числа - особенно 2^32 факториал, но существует формула приближения</p>
+<p><code>не мучаемся - подставляем и считаем - на удивление это всего лишь 77 тыс.</code></p>
+<p>Т.е, если у нас есть 77 тыс ключей, то с вероятностью 50% у двух ключей совпадут hashcode - но не как в случае с адресом, когда значения начнут после некоторого порога строго повторяться.</p>
+<h1 id="-xxhashcode"><a name="user-content--xxhashcode" href="#-xxhashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>-XX:hashCode</h1>
+<p>Дамы и Господа, Ladies and Gentelmen - пришло время открыть карты - это была ловкость рук и никакого мошенничества - умелое жонглирование с параметрами виртуальной машины!</p>
+<p><strong><code>По-умолчанию hashcode в java это всё-таки просто случайное число и все предыдущие демо были проведены с режимом, когда hashcode вычисляется на основании текущего адреса объекта для того, чтобы показать насколько абсурдна эта идея и что есть много других, более серьёзных и важных задач в архитектуре, чем увязывать hashcode и адрес</code></strong></p>
+<p>Этим флагом можно переключать vm в разные режимы генерации hashcode - раньше, до 8ки, по-умолчанию эта был 0ой режим - использоваться генератор псевдослучайный чисел Парк-Миллера, а начиная с 8ки используется 5ый режим - генератор псевдослучайных чисел Марсальи, по своей сути ThreadLocal генератор случайных чисел</p>
+<p>Для предыдущих экспериментов, где требовалось, чтобы работало предположение, что hashcode это адрес - я использовал режим #4 - 1ый режим по своей сути ничем принципиально не отличается от генерации на основании адреса. И режим #2, который возвращает всегда единицу - хорошее испытание для работы алгоритма по разрешению коллизий.</p>
+<h1 id="-xxhashcode5"><a name="user-content--xxhashcode5" href="#-xxhashcode5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Дамп объекта при -XX:hashCode=5</h1>
+<p>Чтобы разубедить обратно - дамп памяти объекта при флаге по-умолчанию, т.е hashCode = 5. <code>hashcode хранится всё так же хранится в заголовке объекта, но с адресом никак не связан</code>.</p>
+<h1 id="hashcode-10-10"><a name="user-content-hashcode-10-10" href="#hashcode-10-10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Распределение hashCode 10 млн об-в в 10 нитях</h1>
+<p><code>И на последок, для наглядности сравним гистограму распределения hashcode по 10 млн объектов в 10 нитях в разных режимах - по адресу - синим, и на основе генератора случайных чисел - красным</code></p>
+<p><code>Как и ожидали раньше - hashcode от случайного числа равномерно распределен по числовой оси, да есть коллизии - их около 23 тыс</code><br />
+<code>И hashcode на основании адреса - в очень узкой полоске, которая соответсвует адресному пространству eden - и количество коллизий больше 10%</code></p>
+<h1 id="hashcode_9"><a name="user-content-hashcode_9" href="#hashcode_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Вычислялся ли hashCode</h1>
+<p><code>интересное наблюдение из нашей модели аллокатора - создание объекта в java занимает столько же времени, как и модель +- в пределах ошибки. и судя по всему - hashcode вообще не вычисляется, когда объект создаётся</code></p>
+<p><strong><code>Проверим ?</code></strong></p>
+<h1 id="objecthashcode-benchmark"><a name="user-content-objecthashcode-benchmark" href="#objecthashcode-benchmark" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object.hashCode() benchmark</h1>
+<p><code>пилим такой же benchmark как и раньше - только ещё явно вызываем hashcode,</code></p>
+<p><code>и для чистоты эксперимента benchmark, который будет только читать hashcode из заголовка объекта - само вычисление будет произведено, но на стадии разогрева benchmark</code></p>
+<h1 id="objecthashcode-benchmark_1"><a name="user-content-objecthashcode-benchmark_1" href="#objecthashcode-benchmark_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Object.hashCode() benchmark (результаты)</h1>
+<p>Сравнив результаты по созданию объекта, и чтению hashcode из заголовка объекта, можно заключить, что вычисление hashcode как псевдослучайного числа и его <strong><code>запись в заголовок это не дешёвая задача</code></strong></p>
+<p><code>Так, а что же у объекта там, где всегда записан hashcode, пока он ещё ни разу не вызван ?</code></p>
+<h1 id="_18"><a name="user-content-_18" href="#_18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Дамп объекта, сразу после создания</h1>
+<p><code>Да ничего у него там - у него там нули - мы опять используем JOL для снятия дампа объекта</code></p>
+<blockquote>
+<ul>
+<li>вычислять сразу hashCode - дорого</li>
+<li>hashCode может быть и переопределён</li>
+<li>но место под system hashCode выделено у всех объектов - это не сложно проверить сделав дамп для любого другого класса</li>
+</ul>
+</blockquote>
+<p><strong><code>к чему тогда пустовать 4 байтам ??? а не приспособить ли VM их под что-то полезное ?</code></strong></p>
+<blockquote>
+<p><img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> <img align="absmiddle" alt=":raised_hands:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64c.png" title=":raised_hands:" width="20px" /> зал - какое ещё есть собственное свойство, присущее любому объекту в java ?</p>
+</blockquote>
+<h1 id="monitor"><a name="user-content-monitor" href="#monitor" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>monitor</h1>
+<p><code>методы wait/notify напоминают, что это конечно же монитор</code></p>
+<h1 id="biased-locking"><a name="user-content-biased-locking" href="#biased-locking" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Biased Locking</h1>
+<p>Не редко бывает так, что <code>объект является thread-safe, но по факту он используется почти всегда одной нитью, и очень редко когда какая-то другая нить захватыает его монитор.</code></p>
+<p>особенно <code>это харакетрно для наследия java 1.1 - vector, hashtable, properties, StringBuffer и других - у них все методы синхронизированы</code></p>
+<p><code>Захват от отпускание монитора это не дешевые операции - поэтому изыскиваются возможности как облегчить</code>.<br />
+Что если сделать так - <strong><code>при захвате монитора помечать какой нитью она был захвачен - если той же - то можно избежать дорого захвата монитора. Эта привязка к нити и есть основная идея Biased locking</code></strong>.</p>
+<p><code>и именно маркер нити для biased locking и размещается в этих вакантных 4х байтах</code>.</p>
+<p><em><code>Надо сказать, что biased locking куда обширней тема, но я рассмотрю её в связке с hashcode</code></em></p>
+<h1 id="biased-locking-demo"><a name="user-content-biased-locking-demo" href="#biased-locking-demo" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Biased Locking demo</h1>
+<p><code>Если теперь захватим монитор объекта - то в заголовок объекта записывается id нити - id нити можно получить, например, используя thread dump, инструментами типа jvisualvm или через один com.sun MBean</code></p>
+<h1 id="stringbufferperftest"><a name="user-content-stringbufferperftest" href="#stringbufferperftest" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>StringBufferPerfTest</h1>
+<p>И чтобы показать эффект - давайте напилим такой вот бенчмарк - создаём пустую строку из StringBuffer - этот класс удобен для нас тем, что у него все методы synchronized - для бенчмарка только одна нить - в режиме biased locking и без него</p>
+<h1 id="stringbufferperftest-biasedlockingstartupdelay"><a name="user-content-stringbufferperftest-biasedlockingstartupdelay" href="#stringbufferperftest-biasedlockingstartupdelay" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>StringBufferPerfTest BiasedLockingStartupDelay</h1>
+<p>по-умолчанию есть задержка на включение BiasedLocking - её можно отключить этим вот флагом</p>
+<h1 id="stringbufferperftest_1"><a name="user-content-stringbufferperftest_1" href="#stringbufferperftest_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>StringBufferPerfTest результаты</h1>
+<p>видно, что без него - захват монитора дороже</p>
+<h1 id="identityhashcode"><a name="user-content-identityhashcode" href="#identityhashcode" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>identityHashCode</h1>
+<p>Так и что же происходит, когда надо записать hashCode ? <strong><code>Ведь есть место только для одного из них - либо hashcode, либо BiasedLocking</code></strong></p>
+<p><code>Добавим ещё один StringBuffer, у которого в заголовке записан hashcode как у java.lang.Object</code></p>
+<h1 id="identityhashcode_1"><a name="user-content-identityhashcode_1" href="#identityhashcode_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>identityHashCode</h1>
+<p>добится этого можно используя <code>System.identityHashCode - т.е смотрите - мы один раз - перед самим benchmark вызываем identityHashCode, и никаких изменений в теле самого benchmark</code></p>
+<h1 id="identityhashcode_2"><a name="user-content-identityhashcode_2" href="#identityhashcode_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>identityHashCode результаты</h1>
+<p>и как результат - <code>объект с системным hashcode ведёт себя точно так же, как и в случае, когда biased locking отключён</code>.</p>
+<h1 id="revoke-biased-locking"><a name="user-content-revoke-biased-locking" href="#revoke-biased-locking" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Revoke Biased Locking</h1>
+<p><code>т.е system identityHashCode отзывает biased locking</code> - И в таком случае захват монитора снова становится дорогим. у BiasedLocking ещё несколько краевых случаев, когда он может быть отозван.</p>
+<p><em>Вообще не стоит воспринимать BiasedLocking как панацею</em> - <code>это скорее такой способ как облегчить legacy код</code>, наследство из java 1.1 - на практике, как правило, редко приходится использовать и монитор объекта, и его системный hashcode, так, что <code>отзыв BiasedLocking по причине identityHashCode случается на практике редко</code></p>
+<h1 id="_19"><a name="user-content-_19" href="#_19" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Заключение</h1>
+<p>И в заключении:</p>
+<blockquote>
+<ul>
+<li>Hash структуры данных это одни из быстрых структур данных,</li>
+<li>Используя свои собственные ключи - не забывайте переоределять не только hashcode и equals, но и серьёзно рассматривайте возможность реализации интерфейс Comparable - это защитит вас в случае средне-плохого универсального способа вычисления hashcode - новой редакции Effective Java пока ещё нет, но я больше, чем уверен - это будет там.</li>
+<li>Хотите, чтобы было ещё лучше и меньше коллизий - исследуйте свои hash-функции не только на предмет абсолютных коллизий, но и на предмет коллизий после мастшабирования на размеры массива - это может сократить расход памяти.</li>
+<li>точно можно сказать - hashcode это не адрес объекта. По крайней мере, по-умолчанию.</li>
+<li>жанглируя флагами vm из протёкшей абстракции Object.HashCode можно увидеть уши нескольких отличных инженерных решений в архитектуре - это и копирующий GC, и быстрые аллокации, и облегчённый завхат монитора, но не злоупотербляйте System.identityHashCode.</li>
+<li>Meten is weten - выражение в голландском языке - буквально - измерение это знание - многие наивные рассуждения разбиваются в дребезги о реальность измерений</li>
+</ul>
+</blockquote>
+<h1 id="_20"><a name="user-content-_20" href="#_20" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Контакты</h1>
+<p>Все демо и слайды доступны на github-е.<br />
+Спасибо. <img align="absmiddle" alt=":clap:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44f.png" title=":clap:" width="20px" /> <img align="absmiddle" alt=":clap:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44f.png" title=":clap:" width="20px" /></p></article></body></html>
