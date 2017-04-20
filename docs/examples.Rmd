@@ -1,0 +1,269 @@
+---
+title: "Examples"
+author: 
+  name: "Владимир Долженко"
+  email: "vladimir.dolzhenko @ gmail.com"
+  company: "IHS Markit"
+  twitter: "dolzhenko"
+date: "2017-04-10"
+output:
+  ioslides_presentation
+---
+```{r setup, include=FALSE}
+
+library(ggplot2)
+library(png)
+library(grid)
+
+Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## SyncAllocator Performance Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+  geom_bar(stat="identity")
+  ggsave("images/rmd/allocations-st-sync0.svg")
+```
+
+## SyncAllocator Performance Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  ggsave("images/rmd/allocations-st-sync1.svg")
+```
+
+## SyncAllocator Performance Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+  ggsave("images/rmd/allocations-st-sync2.svg")
+```
+
+## SyncAllocator Performance Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+  geom_text(aes(label=value)) +
+  ggsave("images/rmd/allocations-st-sync3.svg")
+```
+
+## SyncAllocator Performance Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+  geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+  ggsave("images/rmd/allocations-st-sync4.svg")
+```
+
+## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +  
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, alpha=0.5) +
+  geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), check_overlap = TRUE,  hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+  labs(title = "@Threads( 4 )", x = "", y = "ns/op") +
+  theme_classic() +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none") +
+  ggsave("images/rmd/allocations-st-sync5.svg")
+```
+
+## SyncAllocator Performance Benchmark {.syncAllocationBenchmark}
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/allocations.csv", header = TRUE)
+df <- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+
+ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+  geom_bar(stat="identity") +
+  coord_flip() +  
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, alpha=0.5) +
+  geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+  scale_fill_manual(values=c('single-threaded'='#21bd83', 'java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+  labs(title = "@Threads( 4 )", x = "", y = "ns/op") +
+  theme_classic() +
+  scale_y_continuous(limits=c(0, max(df$value) + 40), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none") +
+  ggsave("images/rmd/allocations-st-sync.svg")
+```
+
+## Распеделение hashCode 
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv")
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=2) +
+  ggsave("images/rmd/hashCodes.png")
+```
+
+## Распеделение hashCode 
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv")
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=2) +
+  scale_x_continuous(labels = function(n){base::sprintf("0x%X", as.integer(n))}) +
+  ggsave("images/rmd/hashCodes1.png")
+```
+
+## Распеделение hashCode 
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv")
+
+min_address = min(df$address)
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=2) +
+  scale_x_continuous(
+    labels = function(n){base::sprintf("+ %d MiB", as.integer((n - min_address)/1024/1024))}
+  ) +
+  ggsave("images/rmd/hashCodes2.png")
+```
+
+## Распеделение hashCode 
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodes.csv")
+
+min_address = min(df$address)
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=2) +
+  scale_x_continuous(
+    labels = function(n){ifelse(n == min_address,  base::sprintf("base"), base::sprintf("+ %d MiB", as.integer((n - min_address)/1024/1024)))},
+     breaks=c(min_address, min_address + 16*1024*1024, min_address +  32*1024*1024,  min_address + 48*1024*1024,  min_address + 64*1024*1024)
+  ) +
+  ggsave("images/rmd/hashCodes3.png")
+```
+
+## Распеделение hashCode : Ожидания
+
+```{r, out.height="600px", out.width="1000px", echo = FALSE}
+df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 40, header = TRUE)
+
+min_address = min(df$address)
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+  geom_point(size=4) +
+  scale_x_continuous(
+    labels = function(n){ifelse(n == min_address,  base::sprintf("base"), base::sprintf("+ %d", as.integer((n - min_address))))},
+    breaks=c(min_address, min_address + 16*10, min_address +  2*16*10,  min_address + 3*16*10, min_address + 4*16*10, min_address + 5*16*10)
+) +
+  scale_y_continuous( breaks = c(1,2,3,4,5,6,7,8,9,10) ) +
+  ggsave("images/rmd/hashCodesNoTLAB0.png")
+```
+
+## Распределение hashCode 10 млн об-в в 10 нитях
+```{r  fig.width=10.5, fig.height=6, echo = FALSE}
+
+rows = 10000000
+#rows = 100
+
+addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
+
+ggplot() +
+  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500) +
+  ggsave("images/rmd/addressHashCode1.png")
+```
+
+## Распределение hashCode 10 млн об-в в 10 нитях
+```{r  fig.width=10.5, fig.height=6, echo = FALSE}
+
+rows = 10000000
+#rows = 100
+
+addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
+
+  ggplot() +
+  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500) +
+  scale_fill_manual(name="тип hashCode:", labels=c("address"="адрес", "MXSRng"="MXS-гпсч"), values=c("address" ="#003dae", "MXSRng" = "#ae003d")) +
+  labs(title =
+         sprintf("количество коллизий по адресу: %s k, по MXS-гпсч: %s k",
+                 round( sum(duplicated(addressHashCode)) / 1000, 1),
+                 round( sum(duplicated(defaultHashCode)) / 1000, 1)),
+       x = "hashCode") +
+  theme_classic() +
+  theme(axis.title.y=element_blank()) +
+  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
+  ggsave("images/rmd/addressHashCode2.png")
+```
+
+## Распределение hashCode 10 млн об-в в 10 нитях
+```{r  fig.width=10.5, fig.height=6, echo = FALSE}
+
+rows = 10000000
+#rows = 100
+
+img <- readPNG("images/pony.png")
+g <- rasterGrob(img, interpolate=TRUE, x = 0.2, y = 0.8, width = 0.3, height = 0.3)
+
+addressHashCode = read.csv(file = "csv/addressHashCode.csv", nrows = rows, header = TRUE)
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv", nrows = rows, header = TRUE)
+
+  ggplot() +
+  annotation_custom(g, xmin=-Inf, ymin = -Inf, xmax=Inf, ymax=Inf) +
+  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500) +
+  scale_fill_manual(name="тип hashCode:", labels=c("address"="адрес", "MXSRng"="MXS-гпсч"), values=c("address" ="#003dae", "MXSRng" = "#ae003d")) +
+  labs(title =
+         sprintf("количество коллизий по адресу: %s k, по MXS-гпсч: %s k",
+                 round( sum(duplicated(addressHashCode)) / 1000, 1),
+                 round( sum(duplicated(defaultHashCode)) / 1000, 1)),
+       x = "hashCode") +
+  theme_classic() +
+  theme(axis.title.y=element_blank()) +
+  scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.text.y = element_text(size = 14, face = "bold")) +
+  theme(axis.text.x = element_text(size = 14, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(axis.title.x=element_text(margin=margin(t=20))) +
+  theme(legend.text = element_text(size = 14, face = "bold")) +
+  theme(title = element_text(size = 16, face = "bold")) +
+  ggsave("images/rmd/addressHashCode3.png")
+```

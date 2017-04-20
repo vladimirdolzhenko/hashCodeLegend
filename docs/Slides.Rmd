@@ -31,7 +31,7 @@ library(ggplot2)
 Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
 
 rows = 1000
-rows = 10000000
+#rows = 10000000
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -816,7 +816,8 @@ ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
   scale_y_continuous(limits=c(0, max(df$value) + 30), expand = c(0, 0)) +
   theme(axis.text.y = element_text(size = 16, face = "bold")) +
   theme(axis.title = element_text(size = 16, face = "bold")) +
-  theme(legend.position="none")
+  theme(legend.position="none") +
+  ggsave("allocations-st-sync.png")
 ```
 ![](images/less-is-more.svg)
 

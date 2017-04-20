@@ -1,0 +1,1050 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABMAAAABwAAAAca8vGTk9TLzIAAAFMAAAARAAAAFZG1VHVY21hcAAAAZAAAAA+AAABQgAP9AdjdnQgAAAB0AAAAAQAAAAEACICiGdhc3AAAAHUAAAACAAAAAj//wADZ2x5ZgAAAdwAAADRAAABEKyikaNoZWFkAAACsAAAAC0AAAA2AtXoA2hoZWEAAALgAAAAHAAAACQHngNFaG10eAAAAvwAAAAQAAAAEAwAACJsb2NhAAADDAAAAAoAAAAKALIAVG1heHAAAAMYAAAAHwAAACABEAB2bmFtZQAAAzgAAALBAAAFu3I9x/Nwb3N0AAAF/AAAAB0AAAAvaoFvbwAAAAEAAAAAzBdyYwAAAADP2IQvAAAAAM/bz7t4nGNgZGFgnMDAysDB1Ml0hoGBoR9CM75mMGLkYGBgYmBlZsAKAtJcUxgcPsR8iGF2+O/AEMPsznAYKMwIkgMA5REMOXicY2BgYGaAYBkGRgYQsAHyGMF8FgYFIM0ChED+h5j//yEk/3KoSgZGNgYYk4GRCUgwMaACRoZhDwCs7QgGAAAAIgKIAAAAAf//AAJ4nHWMMQrCQBBF/0zWrCCIKUQsTDCL2EXMohYGSSmorScInsRGL2DOYJe0Ntp7BK+gJ1BxF1stZvjz/v8DRghQzEc4kIgKwiAppcA9LtzKLSkdNhKFY3HF4lK69ExKslx7Xa+vPRVS43G98vG1DnkDMIBUgFN0MDXflU8tbaZOUkXUH0+U27RoRpOIyCKjbMCVejwypzJJG4jIwb43rfl6wbwanocrJm9XFYfskuVC5K/TPyczNU7b84CXcbxks1Un6H6tLH9vf2LRnn8Ax7A5WQAAAHicY2BkYGAA4teL1+yI57f5ysDNwgAC529f0kOmWRiYVgEpDgYmEA8AUzEKsQAAAHicY2BkYGB2+O/AEMPCAAJAkpEBFbAAADgKAe0EAAAiAAAAAAQAAAAEAAAAAAAAKgAqACoAiAAAeJxjYGRgYGBhsGFgYgABEMkFhAwM/xn0QAIAD6YBhwB4nI1Ty07cMBS9QwKlQapQW3VXySvEqDCZGbGaHULiIQ1FKgjWMxknMfLEke2A+IJu+wntrt/QbVf9gG75jK577Lg8K1qQPCfnnnt8fX1NRC/pmjrk/zprC+8D7tBy9DHgBXoWfQ44Av8t4Bj4Z8CLtBL9CniJluPXASf0Lm4CXqFX8Q84dOLnMB17N4c7tBo1AS/Qi+hTwBH4rwHHwN8DXqQ30XXAS7QaLwSc0Gn8NuAVWou/gFmnjLrEaEh9GmDdDGgL3B4JsrRPDU2hTOiMSuJUIdKQQayiAth69r6akSSFqIJuA19TrzCIaY8sIoxyrNIrL//pw7A2iMygkX5vDj+G+kuoLdX4GlGK/8Lnlz6/h9MpmoO9rafrz7ILXEHHaAx95s9lsI7AHNMBWEZHULnfAXwG9/ZqdzLI08iuwRloXE8kfhXYAvE23+23DU3t626rbs8/8adv+9DWknsHp3E17oCf+Z48rvEQNZ78paYM38qfk3v/u3l3u3GXN2Dmvmvpf1Srwk3pB/VSsp512bA/GG5i2WJ7wu430yQ5K3nFGiOqgtmSB5pJVSizwaacmUZzZhXLlZTq8qGGFY2YcSkqbth6aW1tRmlaCFs2016m5qn36SbJrqosG4uMV4aP2PHBmB3tjtmgN2izkGQyLWprekbIntJFing32a5rKWCN/SdSoga45EJykyQ7asZvHQ8PTm6cslIpwyeyjbVltNikc2HTR7YKh9LBl9DADC0U/jLcBZDKrMhUBfQBvXRzLtFtjU9eNHKin0x5InTqb8lNpfKv1s1xHzTXRqgKzek/mb7nB8RZTCDhGEX3kK/8Q75AmUM/eLkfA+0Hi908Kx4eNsMgudg5GLdRD7a84npi+YxNr5i5KIbW5izXas7cHXIMAau1OueZhfj+cOcP3P8MNIWLyYOBuxL6DRylJ4cAAAB4nGNgYoAALjDJyIAOWMCiTIxMLDmZedkABtIBygAAAA==) format('woff');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body .markdown-body {
+    padding: 45px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+
+pre {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .plan-price-unit {
+  color: #767676;
+  font-weight: normal;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body .plan-choice {
+  padding: 15px;
+  padding-left: 40px;
+  display: block;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  font-weight: normal;
+  background-color: #fafafa;
+}
+
+.markdown-body .plan-choice.open {
+  background-color: #fff;
+}
+
+.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+  display: block;
+}
+
+.markdown-body .plan-choice-free {
+  border-radius: 3px 3px 0 0;
+}
+
+.markdown-body .plan-choice-paid {
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-body .plan-choice-radio {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+
+.markdown-body .plan-choice-exp {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.markdown-body .plan-choice-seat-breakdown {
+  margin-top: 10px;
+  display: none;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+</style><title>RMarkdown</title></head><body><article class="markdown-body"><h1>
+<a id="user-content-rmarkdown-r-и-ggplot" class="anchor" href="#rmarkdown-r-%D0%B8-ggplot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RMarkdown, R и ggplot</h1>
+<p>Данная статья <strong>не является</strong> ни документацией, <strong>ни рассказывает</strong> что-то принципиально новое, её стоит рассматривать как обзорную или как <em>шпаргалку</em>.</p>
+<h2>
+<a id="user-content-Преамбула" class="anchor" href="#%D0%9F%D1%80%D0%B5%D0%B0%D0%BC%D0%B1%D1%83%D0%BB%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Преамбула</h2>
+<p>Конференция это прежде всего доклады, и далеко не последнее место занимает то, как оформлены слайды доклада.</p>
+<p><em>Безусловно</em>, есть <a href="https://twitter.com/shipilev">докладчики</a>, которые могут не смотря ни на что, провести доклад даже без единого слайда, но всё же они как правило хорошо дополняют повествование. <a href="https://twitter.com/jbaruch">Одним</a> достаточно накидать мемасиков в доклад и дело готово, <a href="https://twitter.com/iwan0www">другим</a> обязательно надо вставить код, причём на ассемблере (кто не в курсе ещё - <a href="https://jpoint.ru/">JPoint</a> - это конференция по java), и есть ещё те, кому надо показать графики. Впрочем встречается и их комбинация.</p>
+<p>Пожалуй известные средства для создания слайдов это:</p>
+<ul>
+<li>PowerPoint, и вариации в лице LibreOffice Impress, Apple KeyNote</li>
+<li>облачные вариации с тем же подходом - <a href="https://www.google.com/slides">Google Slides</a>
+</li>
+<li><a href="https://www.latex-project.org/">LaTeX</a></li>
+<li>и относительно новый (для меня) <a href="http://rmarkdown.rstudio.com/">RMarkdown</a>
+</li>
+</ul>
+<p>И если первые два по своей сути представляют бинарные форматы, а облачные <a href="https://www.google.com/slides">Google Slides и ко </a> ещё требуют наличие интернета, что является некоторым неприятным ограничением (во время поездок и перелётов), то последние два - и оффлайновые, и исключительно текстовые, а значит можно хранить историю всех изменений в git/hg/на ваш вкус. Кроме того, область применения далеко не ограничена только слайдами.</p>
+<p><strong>LaTeX</strong> формат с историей - много написано и сказано, а вот RMarkdown молодой, даже немного хипстерский, но без подворотов.</p>
+<h3>
+<a id="user-content-markdown" class="anchor" href="#markdown" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Markdown</h3>
+<p>Markdown это облегченный язык разметки, созданный с целью написания максимально читаемого и удобного для правки текста. Markdown является и лёгким для понимания, и легким для чтения даже <em>без каких-либо трансформаций</em>.</p>
+<p>Сравните сами: <code>_курсив_</code> это <em>курсив</em>, <code>**сильное выделение**</code> это <strong>сильное выделение</strong>, и многое другое - более подробно описано в <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown cheatsheet</a>.</p>
+<p>Markdown поддерживают github, habrahabr, sublime, jira (имеет схожий синтаксис), и многие другие.</p>
+<h3>
+<a id="user-content-r" class="anchor" href="#r" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R</h3>
+<p><a href="https://www.r-project.org/">R</a> — язык программирования для статистической обработки данных и работы с графикой.</p>
+<p>Как правило это останавливает - это очень сложно, это математика, и это не надо - но никто же заставляет использовать всю доступную функциональность, пожалуй самый простой и наглядный - это графики и визуализация.</p>
+<blockquote>
+<p>Хотя часто для того, чтобы построить какой-либо график используют Excel, он с большим трудом справляется, когда количество данных приближается уже к миллиону. Тогда как для R это не является какой-то сложной задачей.</p>
+</blockquote>
+<h4>
+<a id="user-content-Данные-и-графики" class="anchor" href="#%D0%94%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B8-%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Данные и графики</h4>
+<blockquote>
+<p>Оставим за кадром баталию, что же лучше - таблицы или графики. Вопрос вкуса.</p>
+</blockquote>
+<p>Для построения графиков используем расширение <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>.</p>
+<p>Устанавливаем модуль для <em>R</em> :</p>
+<pre><code>install.packages("ggplot2")
+</code></pre>
+<p>Но чтобы строить графики нужны данные, и разумно хранить их отдельно от представления, например, в csv формате - опять же - простой текстовый формат.</p>
+<blockquote>
+<p>Мои данные - это результаты полученные при помощи <a href="openjdk.java.net/projects/code-tools/jmh">jmh</a> для моего доклада <a href="https://jpoint.ru/talks/through-the-keyhole-of-hashcode-into-vm/">Внутрь VM сквозь замочную скважину hashCode</a>. Мне нравится стиль, используемый Алексеем Шипилёвым: записывать результаты benchmark'а в виде комментария в начале файла - <strong>grep-n-sed</strong> и мы имеем csv-файл.</p>
+</blockquote>
+<p>данные <code>csv/allocations.csv</code>:</p>
+<pre lang="csv"><code>pos,alloc,value,error
+10,single-threaded,2.836,0.285
+20,java,9.878,2.676
+28,epsilon,75.289,23.667
+30,sync,186.672,21.195
+40,cas,74.721,0.192
+50,tlab,8.506,1.849
+55,javaHashCode,60.270,12.318
+57,readHashCode,7.296,0.316
+</code></pre>
+<p>Формируем <em>таблицу данных</em> (<em>data frame</em>) из csv-файла - по-умолчанию, считается, что в файле есть заголовок - это нам поможет при обращении к отдельным колонкам</p>
+<pre><code>```{r}
+df = read.csv(file = "csv/allocations.csv")
+```
+</code></pre>
+<p>если хотим отфильтровать, н-р, по конкретным значениям в колонке <strong>alloc</strong></p>
+<pre><code>df &lt;- subset(df, alloc == "cas" | alloc == "java" | alloc == "sync" | alloc == "tlab" )
+</code></pre>
+<h3>
+<a id="user-content-Бары--столбики" class="anchor" href="#%D0%91%D0%B0%D1%80%D1%8B--%D1%81%D1%82%D0%BE%D0%BB%D0%B1%D0%B8%D0%BA%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Бары / столбики</h3>
+<p>Для начала необходимо задать <em>схему соответствия переменных</em> (<strong>aes</strong>) из таблицы данных - отображать будем значение от типа, в нашем случае типа аллокации, цвет бара будет выбран также на основе типа аллокации.</p>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc))
+</code></pre>
+<p>Отображать будем в виде столбиков ( <em>bar chart</em> ) <strong>+ geom_bar()</strong></p>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc))
++ geom_bar(stat="identity")
+</code></pre>
+<p>результат:
+<a href="./images/rmd/allocations-st-sync0.svg" target="_blank"><img src="./images/rmd/allocations-st-sync0.svg" alt="" style="max-width:100%;"></a></p>
+<p>повернём систему координат (из вертикальных в горизонтальные бары) опцией <strong>+ coord_flip()</strong></p>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip()
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync1.svg" target="_blank"><img src="./images/rmd/allocations-st-sync1.svg" alt="" style="max-width:100%;"></a></p>
+<p>добавим ошибку изменений <strong>+ geom_errorbar()</strong> (помните, у нас в csv-файле есть колонка <strong>error</strong>):</p>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip() +
+geom_errorbar(aes(ymin = value - error, ymax = value + error), width=0.5, alpha=0.5)
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync2.svg" target="_blank"><img src="./images/rmd/allocations-st-sync2.svg" alt="" style="max-width:100%;"></a></p>
+<p>для наглядности стоит добавить значения рядом с баром <strong>+ geom_text()</strong> (логично, что текстом будет <strong>value</strong>)</p>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip() +
+geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+geom_text(aes(label=value))
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync3.svg" target="_blank"><img src="./images/rmd/allocations-st-sync3.svg" alt="" style="max-width:100%;"></a></p>
+<p>добавим лоска подписи <strong>+ geom_text()</strong>:</p>
+<ul>
+<li>используем функцию для изменения подписи <em>значение ± ошибка</em> - <strong>label=base::sprintf("%0.2f ± %0.2f", value, error)</strong> (привет старый добрый <em>sprintf</em> и шаблоный форматирования <em>%f</em>!)</li>
+<li>поиграемся с горизонтальным <strong>hjust</strong> и вертикальным <strong>vjust</strong> расположением подписи</li>
+<li>изменим размер шрифта <strong>size</strong> и начертание <strong>fontface</strong> подписи</li>
+</ul>
+<br>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip() +
+geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold")
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync4.svg" target="_blank"><img src="./images/rmd/allocations-st-sync4.svg" alt="" style="max-width:100%;"></a></p>
+<ul>
+<li>подкрутим тему <strong>+ theme_classic()</strong>
+</li>
+<li>уберём легенду <strong>+ theme(legend.position="none")</strong>
+</li>
+<li>добавим подписи <strong>+ labs(title = .. , x = .. , y = ..)</strong> и шрифты для осей <strong>+ theme(axis.text.y = ..)</strong>
+</li>
+</ul>
+<br>
+<pre><code>ggplot(data=df, aes(x=alloc, y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip() +
+geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+labs(title = "@Threads( 4 )", x = "", y = "ns/op") +
+theme_classic() +
+theme(axis.text.y = element_text(size = 16, face = "bold")) +
+theme(axis.title = element_text(size = 16, face = "bold")) +
+theme(legend.position="none")
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync5.svg" target="_blank"><img src="./images/rmd/allocations-st-sync5.svg" alt="" style="max-width:100%;"></a></p>
+<p>и для придания финального лоска</p>
+<ul>
+<li>специфицируем цвета <strong>+ scale_fill_manual()</strong>
+</li>
+<li>удалим зазор между вертикальной осью и баром <strong>+ scale_y_continuous()</strong> и немного расширим диапазон значений, чтобы и ошибка помещалась, и подпись</li>
+<li>и ещё зафиксируем порядок баров, согласно колонке <strong>pos</strong>: <strong>x=reorder(alloc, -pos)</strong>
+</li>
+</ul>
+<br>
+<pre><code>ggplot(data=df, aes(x=reorder(alloc, -pos), y=value, fill=alloc)) +
+geom_bar(stat="identity") +
+coord_flip() +
+geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=0.5, alpha=0.5) +
+geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+scale_fill_manual(values=c(java'='#a9a518','sync'='#fa8074', 'cas'='#00b3f6', 'tlab'='#e67bf3')) +
+labs(title = "@Threads( 4 )", x = "", y = "ns/op") +
+theme_classic() +
+scale_y_continuous(limits=c(0, max(df$value) + 40), expand = c(0, 0)) +
+theme(axis.text.y = element_text(size = 16, face = "bold")) +
+theme(axis.title = element_text(size = 16, face = "bold")) +
+theme(legend.position="none")
+</code></pre>
+<p><a href="./images/rmd/allocations-st-sync.svg" target="_blank"><img src="./images/rmd/allocations-st-sync.svg" alt="" style="max-width:100%;"></a></p>
+<p><em>tip</em>: можно сохранить график в файл <strong>+ ggsave("allocations.svg")</strong>, но не стоит злоупотреблять векторным форматом, если на графике много точек - сохраняйте в растр, н-р <strong>png</strong>.</p>
+<pre><code>install.packages("svglite")
+</code></pre>
+<blockquote>
+<p>Отдельно стоит отметить цветовую палитру, используемую по-умолчанию: выбираемые цвета хорошо различимы даже для людей с ослабленым цветовосприятием.</p>
+</blockquote>
+<blockquote>
+<p>Не используйте сочетание красный/зелёный даже если вы используете всего два цвета, чтобы выделить, что лучше/хуже - эти цвета слабо различимы для людей с ослабленым цветовосприятием.</p>
+</blockquote>
+<p><em>tip</em>: <a href="http://colorbrewer2.org/#type=diverging&amp;scheme=RdBu&amp;n=6">colorbrewer2</a> поможет выбрать в т.ч. <em>безопасные</em> цвета.</p>
+<h4>
+<a id="user-content-Точки" class="anchor" href="#%D0%A2%D0%BE%D1%87%D0%BA%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Точки</h4>
+<p>Есть некоторое распределение адресов по нитям</p>
+<pre><code>step,thread,address
+1,thread-0,807437816
+1,thread-1,807437784
+1,thread-2,807437800
+..........
+</code></pre>
+<ul>
+<li>отобразим отдельно по точкам <strong>+ geom_point</strong>
+</li>
+<li>чтобы можно было различить одну нить от другой, укажем не только цветовую <strong>aes(..., colour = thread,...)</strong> дифференциацию, но и на основе <a href="http://www.cookbook-r.com/Graphs/Shapes_and_line_types/"><em>формы</em> маркера</a> <strong>aes(..., shape = thread,...)</strong> -</li>
+</ul>
+<br>
+<pre><code>ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+geom_point(size=2)
+</code></pre>
+<p><a href="./images/rmd/hashCodes.png" target="_blank"><img src="./images/rmd/hashCodes.png" alt="" style="max-width:100%;"></a></p>
+<p>Первое, что бросается в глаза (кроме того, что много данных) - это значения адресов в научной нотации. Как-то привычней иметь дело с адресами в 16-тиричной системе: добавим форматирование значений по оси X <strong>+scale_x_continuous()</strong>:</p>
+<pre><code>ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+geom_point(size=2) +
+scale_x_continuous(
+    labels = function(n){base::sprintf("0x%X", as.integer(n))}
+)
+</code></pre>
+<p><a href="./images/rmd/hashCodes1.png" target="_blank"><img src="./images/rmd/hashCodes1.png" alt="" style="max-width:100%;"></a></p>
+<p>Лучше, но всё равно как-то сложно и мало понятно.</p>
+<p>Поскольку мы можем задавать любую функцию, то почему бы не отображать смещение относительно некоторого базового, н-р минимального, адреса:</p>
+<pre><code>min_address = min(df$address)
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+geom_point(size=2) +
+scale_x_continuous(
+    labels = function(n){base::sprintf("+ %d MiB", as.integer((n - min_address)/1024/1024))}
+)
+</code></pre>
+<p><a href="./images/rmd/hashCodes2.png" target="_blank"><img src="./images/rmd/hashCodes2.png" alt="" style="max-width:100%;"></a></p>
+<p>Опять же в силу привычки - поставим метки (<strong>breaks =</strong>) по <em>целым</em> числам - а именно 16, 32, 48, 64Мб:</p>
+<pre><code>ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+geom_point(size=2) +
+scale_x_continuous(
+    labels = function(n){ifelse(n == min_address,  base::sprintf("base"), base::sprintf("+ %d MiB", as.integer((n - min_address)/1024/1024)))},
+    breaks=c(min_address, min_address + 16*1024*1024, min_address +  32*1024*1024,  min_address + 48*1024*1024,  min_address + 64*1024*1024)
+)
+</code></pre>
+<p><a href="./images/rmd/hashCodes3.png" target="_blank"><img src="./images/rmd/hashCodes3.png" alt="" style="max-width:100%;"></a></p>
+<p>Данных много - хотим взглянуть на небольшую её часть</p>
+<ul>
+<li>ограничим набор данных по количеству <strong>nrows</strong> при загрузке <strong>read.csv(...)</strong>
+</li>
+<li>добавим метки в нужных местах на оси <strong>Y</strong>: <strong>+ scale_y_continuous(breaks = c(...))</strong>
+</li>
+</ul>
+<br>
+<pre><code>df = read.csv(file = "csv/hashCodesNoTLAB.csv", nrows = 36, header = TRUE)
+
+min_address = min(df$address)
+
+ggplot(data=df, aes(x = address, y = index, group=thread, colour=thread, shape=thread)) +
+geom_point(size=4) +
+scale_x_continuous(
+    labels = function(n){ifelse(n == min_address,  base::sprintf("base"), base::sprintf("+ %d", as.integer((n - min_address))))},
+    breaks=c(min_address, min_address + 16*10, min_address +  2*16*10,  min_address + 3*16*10, min_address + 4*16*10, min_address + 5*16*10)
+) +
+scale_y_continuous( breaks = c(1,2,3,4,5,6,7,8,9,10) ) +
+</code></pre>
+<p><a href="./images/rmd/hashCodesNoTLAB0.png" target="_blank"><img src="./images/rmd/hashCodesNoTLAB0.png" alt="" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-Гистограмма" class="anchor" href="#%D0%93%D0%B8%D1%81%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Гистограмма</h4>
+<p>И конечно же - <a href="https://ru.wikipedia.org/wiki/%D0%93%D0%B8%D1%81%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0">гистограмма</a>, частотное распределение. Очень грубо это можно описать как количество элементов попадающих в диапазон значений. Н-р, для ряда [1, 2, 3, 1, 1] - гистограмма будет выглядеть как [3, 1, 1] - т.к элемент <em>1</em> встретился 3 раза, а элементы <em>2</em> и <em>3</em> по одному разу.</p>
+<pre><code>addressHashCode = read.csv(file = "csv/addressHashCode.csv")
+defaultHashCode = read.csv(file = "csv/defaultHashCode.csv")
+
+ggplot() +
+geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500) +
+</code></pre>
+<p><a href="./images/rmd/addressHashCode1.png" target="_blank"><img src="./images/rmd/addressHashCode1.png" alt="" style="max-width:100%;"></a></p>
+<p>Добавляем уже известные опции до придания нужного вида:</p>
+<pre><code>ggplot() +
+geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500) +
+scale_fill_manual(name="тип hashCode:", labels=c("address"="адрес", "MXSRng"="MXS-гпсч"), values=c("address" ="#003dae", "MXSRng" = "#ae003d")) +
+labs(title =
+     sprintf("количество коллизий по адресу: %s k, по MXS-гпсч: %s k",
+             round( sum(duplicated(addressHashCode)) / 1000, 1),
+             round( sum(duplicated(defaultHashCode)) / 1000, 1)),
+   x = "hashCode") +
+theme_classic() +
+theme(axis.title.y=element_blank()) +
+scale_y_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+scale_x_continuous(labels = function(n){format(n, big.mark = "_", scientific = FALSE)}, expand = c(0, 0)) +
+theme(axis.title = element_text(size = 16, face = "bold")) +
+theme(axis.text.y = element_text(size = 14, face = "bold")) +
+theme(axis.text.x = element_text(size = 14, face = "bold")) +
+theme(axis.title = element_text(size = 16, face = "bold")) +
+theme(axis.title.x=element_text(margin=margin(t=20))) +
+theme(legend.text = element_text(size = 14, face = "bold")) +
+theme(title = element_text(size = 16, face = "bold")) +
+</code></pre>
+<p><a href="./images/rmd/addressHashCode2.png" target="_blank"><img src="./images/rmd/addressHashCode2.png" alt="" style="max-width:100%;"></a></p>
+<p><a href="https://twitter.com/shipilev/status/857311629847015425">А пони</a> ? Запросто!</p>
+<ul>
+<li>нужен пакет <strong>png</strong> : <code>install.packages('png')</code>
+</li>
+<li><strong>img &lt;- readPNG("images/pony.png")</strong></li>
+<li>
+<em>отрендерим</em> во внутренний буфер <strong>g &lt;- rasterGrob(img)</strong>
+</li>
+<li>добавим пони как аннотацию <strong>+ annotation_custom()</strong>:</li>
+</ul>
+<pre><code># install.packages('png')
+
+img &lt;- readPNG("images/pony.png")
+g &lt;- rasterGrob(img, interpolate=TRUE, x = 0.1, y = 0.9, width = 0.2, height = 0.2)
+
+  ggplot() +
+  annotation_custom(g, xmin=-Inf, ymin = -Inf, xmax=Inf, ymax=Inf) +
+  geom_histogram(data=addressHashCode, aes(x=hashCode, fill="address"), alpha=0.7, bins = 500) +
+  geom_histogram(data=defaultHashCode, aes(x=hashCode, fill="MXSRng"), alpha=0.7, bins = 500)
+
+</code></pre>
+<p><a href="./images/rmd/addressHashCode3.png" target="_blank"><img src="./images/rmd/addressHashCode3.png" alt="" style="max-width:100%;"></a></p>
+<p>Немного полезных ссылок: <a href="https://github.com/jennybc/ggplot2-tutorial">ggplot2 tutorial</a> и ещё один полезный блог <a href="http://stat545.com/topics.html">Data wrangling, exploration, and analysis with R</a></p>
+<h3>
+<a id="user-content-rmarkdown" class="anchor" href="#rmarkdown" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RMarkdown</h3>
+<p>Не надо быть большим капитаном, чтобы сообразить, что <strong><a href="http://rmarkdown.rstudio.com/">RMarkdown</a></strong> это <strong>R</strong> + <strong>Markdown</strong>.</p>
+<p>Устанавливаем модуль для <em>R</em> :</p>
+<pre><code>install.packages("rmarkdown")
+</code></pre>
+<p>И со словами <strong>HTML знаю, LaTeX люблю</strong> рендерим <strong>RMarkdown</strong>:</p>
+<blockquote>
+<p>rmarkdown::render("path_to_file.Rmd", encoding = "UTF-8")</p>
+</blockquote>
+<ul>
+<li>возможен вывод в следующие форматы :
+<ul>
+<li><strong><a href="http://rmarkdown.rstudio.com/html_document_format.html">html</a></strong></li>
+<li><strong><a href="http://rmarkdown.rstudio.com/pdf_document_format.html">pdf</a></strong></li>
+<li>и даже в <strong><a href="http://rmarkdown.rstudio.com/word_document_format.html">doc</a></strong>
+</li>
+</ul>
+</li>
+</ul>
+<p>В заголовке досаточно указать, например:</p>
+<blockquote>
+<p>output: pdf_document</p>
+</blockquote>
+<ul>
+<li>слайды/презентация:
+<ul>
+<li>
+<strong><a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">HTML5</a></strong> и упарываться <strong>javascript</strong> / <strong>css</strong> / <strong>html5</strong>, хотя далеко не все одобряют <em>html</em>-презентации</li>
+<li>
+<strong><a href="http://rmarkdown.rstudio.com/beamer_presentation_format.html">PDF</a></strong> и использовать в т.ч. макросы <strong>LaTeX</strong>
+</li>
+</ul>
+</li>
+</ul>
+<p>для этого в заголовке достаточно поменять <strong>output</strong>:</p>
+<blockquote>
+<p>output: ioslides_presentation</p>
+</blockquote>
+</article></body></html>
