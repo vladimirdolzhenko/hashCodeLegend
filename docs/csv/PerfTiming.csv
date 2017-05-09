@@ -1,0 +1,7 @@
+pos,type,value,error
+4,clockMicros,60.452,2.097
+2,criticalJniMicros,53.218,1.220
+5,instant,62.082,1.679
+3,jniMicros,54.001,1.089
+1,systemCurrentTimeMillis,44.332,0.625
+0,systemNanoTime,40.342,1.322

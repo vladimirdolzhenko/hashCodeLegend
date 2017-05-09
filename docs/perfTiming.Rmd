@@ -1,0 +1,40 @@
+---
+title: "PerfTiming"
+author: 
+  name: "Владимир Долженко"
+  email: "vladimir.dolzhenko @ gmail.com"
+  company: "IHS Markit"
+  twitter: "dolzhenko"
+output:
+  ioslides_presentation
+---
+```{r setup, include=FALSE}
+
+library(ggplot2)
+library(png)
+library(grid)
+
+Sys.setlocale(category = "LC_ALL", locale = 'UTF-8')
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## PerfTiming Benchmark
+```{r, fig.width=10, fig.height=5}
+df = read.csv(file = "csv/PerfTiming.csv", header = TRUE)
+
+ggplot(data=df, aes(x=reorder(type, -pos), y=value, fill=type)) +
+  geom_bar(colour='#888888', stat="identity") +
+  coord_flip() +  
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),  width=.5, alpha=0.5) +
+  geom_text(aes(label=base::sprintf("%0.2f ± %0.2f", value, error)), hjust=-0.1, vjust=-0.4, size=5, fontface = "bold") +
+  labs(title = "JDK 9-ea, VM 9-ea+163", x = "", y = "ns/op") +
+  theme_classic() +
+  scale_fill_brewer(palette="Paired") +
+  scale_y_continuous(limits=c(0, max(df$value) + 20), expand = c(0, 0)) +
+  theme(axis.text.y = element_text(size = 16, face = "bold")) +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  theme(legend.position="none") +
+  ggsave("images/rmd/PerfTiming.svg")
+```
